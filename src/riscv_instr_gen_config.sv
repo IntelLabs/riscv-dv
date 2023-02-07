@@ -266,7 +266,7 @@ class riscv_instr_gen_config extends uvm_object;
   //-----------------------------------------------------------------------------
   int                    dist_control_mode;
   int unsigned           category_dist[riscv_instr_category_t];
-
+  int unsigned           group_dist[riscv_instr_group_t];
 
   constraint default_c {
     sub_program_instr_cnt.size() == num_of_sub_program;
@@ -649,6 +649,8 @@ class riscv_instr_gen_config extends uvm_object;
     get_int_arg_value("+dist_control_mode=", dist_control_mode);
     if (dist_control_mode == 1) begin
       riscv_instr_category_t category;
+	  riscv_instr_group_t group;
+	   
       category = category.first;
       do begin
         opts = {$sformatf("dist_%0s=", category.name()), "%d"};
@@ -663,6 +665,23 @@ class riscv_instr_gen_config extends uvm_object;
         category = category.next;
       end
       while(category != category.first);
+      
+      
+      
+      group = group.first;
+      do begin
+        opts = {$sformatf("dist_%0s=", group.name()), "%d"};
+        opts = opts.tolower();
+        if ($value$plusargs(opts, val)) begin
+          group_dist[group] = val;
+        end else begin
+          group_dist[group] = 10; // Default ratio
+        end
+        `uvm_info(`gfn, $sformatf("Set dist[%0s] = %0d",
+                        group.name(), group_dist[group]), UVM_LOW)
+        group = group.next;
+      end
+      while(group != group.first);
     end
   endfunction
 

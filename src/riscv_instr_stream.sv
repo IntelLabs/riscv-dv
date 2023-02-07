@@ -165,6 +165,7 @@ class riscv_rand_instr_stream extends riscv_instr_stream;
   bit                     kernel_mode;
   riscv_instr_name_t      allowed_instr[$];
   int unsigned            category_dist[riscv_instr_category_t];
+  int unsigned            group_dist[riscv_instr_group_t];
 
   `uvm_object_utils(riscv_rand_instr_stream)
   `uvm_object_new
@@ -210,7 +211,9 @@ class riscv_rand_instr_stream extends riscv_instr_stream;
         category_dist[LOAD] = 0;
         category_dist[STORE] = 0;
       end
+      group_dist = cfg.group_dist;
       `uvm_info(`gfn, $sformatf("setup_instruction_dist: %0d", category_dist.size()), UVM_LOW)
+      `uvm_info(`gfn, $sformatf("setup_instruction_dist: %0d", group_dist.size()), UVM_LOW)
     end
   endfunction
 
@@ -233,6 +236,7 @@ class riscv_rand_instr_stream extends riscv_instr_stream;
                                 input  bit disable_dist = 1'b0,
                                 input  riscv_instr_group_t include_group[$] = {});
     riscv_instr_name_t exclude_instr[];
+	int unsigned include_dist[$];
     if ((SP inside {reserved_rd, cfg.reserved_regs}) ||
         ((avail_regs.size() > 0) && !(SP inside {avail_regs}))) begin
       exclude_instr = {C_ADDI4SPN, C_ADDI16SP, C_LWSP, C_LDSP};
@@ -246,9 +250,27 @@ class riscv_rand_instr_stream extends riscv_instr_stream;
         exclude_instr = {exclude_instr, EBREAK, C_EBREAK};
       end
     end
+    
+    if(cfg.dist_control_mode) begin
+      if(group_dist.size() > 0) begin
+	    int unsigned group_instr_cnt[riscv_instr_group_t];
+	    foreach(allowed_instr[i]) begin
+		  group_instr_cnt[riscv_instr::instr_template[allowed_instr[i]].group]++;
+	    end
+	    foreach(allowed_instr[i]) begin
+		  include_dist.push_back(group_dist[riscv_instr::instr_template[allowed_instr[i]].group]
+			  / group_instr_cnt[riscv_instr::instr_template[allowed_instr[i]].group]);
+		end
+	  end
+    end
+    else begin
+	  include_dist = {};
+    end
+    
     instr = riscv_instr::get_rand_instr(.include_instr(allowed_instr),
                                         .exclude_instr(exclude_instr),
-                                        .include_group(include_group));
+                                        .include_group(include_group),
+                                        .include_dist(include_dist));
     instr.m_cfg = cfg;
     randomize_gpr(instr);
   endfunction
