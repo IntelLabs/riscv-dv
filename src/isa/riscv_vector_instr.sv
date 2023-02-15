@@ -163,7 +163,7 @@ class riscv_vector_instr extends riscv_floating_point_instr;
   // For any vrgather instruction, the destination vector register group cannot overlap
   // with the source vector register group
   constraint vector_gather_c {
-    if (instr_name == VRGATHER) {
+    if (instr_name inside {VRGATHER, VRGATHEREI16}) {
       vd != vs2;
       vd != vs1;
       (vm == 0) -> (vd != 0);
@@ -303,6 +303,16 @@ class riscv_vector_instr extends riscv_floating_point_instr;
     (vm == 0) -> (vd != 0);
   }
 
+  // Constraints for upgrading to RVV 1.0
+  
+  // vzext.vf2/4/8, vsext.vf2/4/8 constraints
+  constraint vzext_vsext_c{
+	if (instr_name inside {VZEXT, VSEXT}) {
+      m_cfg.vector_cfg.vtype.vsew / eew inside {2, 4, 8};
+    }
+  }
+  
+  
   `uvm_object_utils(riscv_vector_instr)
   `uvm_object_new
 
@@ -351,6 +361,10 @@ class riscv_vector_instr extends riscv_floating_point_instr;
       end
       `uvm_info(`gfn, $sformatf("%0s -> %0s", super.get_instr_name(), name), UVM_LOW)
     end
+    if (instr_name inside {VZEXT, VSEXT}) begin
+	  name = $sformatf("%0s.VF%0d", name, m_cfg.vector_cfg.vtype.vsew / eew);
+	  `uvm_info(`gfn, $sformatf("%0s -> %0s", super.get_instr_name(), name), UVM_LOW)
+	end
     return name;
   endfunction
 
@@ -364,7 +378,9 @@ class riscv_vector_instr extends riscv_floating_point_instr;
         end else if (instr_name inside {VPOPC_M, VFIRST_M}) begin
           asm_str = $sformatf("%0s %0s,%0s", get_instr_name(), rd.name(), vs2.name());
         end else begin
-          asm_str = $sformatf("%0s %0s,%0s", get_instr_name(), vd.name(), vs2.name());
+	      asm_str = $sformatf("%0s ", get_instr_name());
+	      asm_str = format_string(asm_str, MAX_INSTR_STR_LEN);
+	      asm_str = {asm_str, $sformatf("%0s,%0s", vd.name(), vs2.name())};
         end
       end
       VA_FORMAT: begin
@@ -539,6 +555,11 @@ class riscv_vector_instr extends riscv_floating_point_instr;
       has_imm = 1'b1;
       has_rs1 = 1'b1;
       has_fs1 = 1'b1;
+    end
+    if (format == VS2_FORMAT) begin
+	  if (instr_name inside {VZEXT, VSEXT}) begin
+	    has_vs1 = 1'b0;
+	  end
     end
   endfunction : set_rand_mode
 
