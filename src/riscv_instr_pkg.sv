@@ -513,6 +513,7 @@ package riscv_instr_pkg;
     VAADD,
     VASUBU,
     VASUB,
+    VSMUL,
     VSSRL,
     VSSRA,
     VNCLIPU,
