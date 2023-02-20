@@ -547,8 +547,8 @@ class riscv_asm_program_gen extends uvm_object;
     LMUL = 1;
     SEW = (ELEN <= XLEN) ? ELEN : XLEN;
     instr_stream.push_back($sformatf("li x%0d, %0d", cfg.gpr[1], cfg.vector_cfg.vl));
-    instr_stream.push_back($sformatf("%svsetvli x%0d, x%0d, e%0d, m%0d, d%0d",
-                                     indent, cfg.gpr[0], cfg.gpr[1], SEW, LMUL, EDIV));
+    instr_stream.push_back($sformatf("%svsetvli x%0d, x%0d, e%0d, m%0d",
+                                     indent, cfg.gpr[0], cfg.gpr[1], SEW, LMUL));
     instr_stream.push_back("vec_reg_init:");
 
     // Vector registers will be initialized using one of the following three methods
@@ -1618,13 +1618,12 @@ class riscv_asm_program_gen extends uvm_object;
     end else begin
       lmul = $sformatf("m%0d", cfg.vector_cfg.vtype.vlmul);
     end
-    instr_stream.push_back($sformatf("%svsetvli x%0d, x%0d, e%0d, %0s, d%0d",
+    instr_stream.push_back($sformatf("%svsetvli x%0d, x%0d, e%0d, %0s",
                                      indent,
                                      cfg.gpr[0],
                                      cfg.gpr[1],
                                      cfg.vector_cfg.vtype.vsew,
-                                     lmul,
-                                     cfg.vector_cfg.vtype.vediv));
+                                     lmul));
   endfunction
 
 endclass
