@@ -664,7 +664,13 @@ def iss_sim(test_list, output_dir, iss_list, iss_yaml, iss_opts,
                     elf = prefix + ".o"
                     log = ("{}/{}.{}.log".format(log_dir, test['test'], i))
                     cmd = get_iss_cmd(base_cmd, elf, log)
-                    if 'iss_opts' in test:
+                    if 'iss_opts' in test and iss == 'spike':
+                        idx = cmd.find('--log-commits')
+                        if(idx != -1):
+                            cmd = cmd[:idx] + test['iss_opts'] + ' ' + cmd[idx:]  
+                        else:
+                            logging.error("No option --log-commits for Spike.")
+                    if 'iss_opts' in test and iss != 'spike':
                         cmd += ' '
                         cmd += test['iss_opts']
                     logging.info("Running {} sim: {}".format(iss, elf))
