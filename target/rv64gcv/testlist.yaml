@@ -119,7 +119,7 @@
     +no_csr_instr=1
     +dist_control_mode=1
     +dist_rvv=1000
-  iss_opts: --varch=vlen:256,elen:32
+  iss_opts: --varch=vlen:256,elen:64
   iterations: 2
   gen_test: riscv_instr_base_test
   rtl_test: core_base_test
