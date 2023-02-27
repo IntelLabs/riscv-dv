@@ -80,7 +80,7 @@ class riscv_vector_instr extends riscv_floating_point_instr;
      !(vs2 inside {[vd : vd + m_cfg.vector_cfg.vtype.vlmul * 2 - 1]});
      (vm == 0) -> (vd != 0);
      // Double-width result, first source double-width, second source single-width
-     if (va_variant inside {WV, WX}) {
+     if (va_variant inside {WV, WX, WF}) {
        vs2 % (m_cfg.vector_cfg.vtype.vlmul * 2) == 0;
      }
     }
@@ -327,21 +327,25 @@ class riscv_vector_instr extends riscv_floating_point_instr;
     // Disable widening/narrowing instruction when LMUL == 8
     if ((!cfg.vector_cfg.vec_narrowing_widening) &&
         (is_widening_instr || is_narrowing_instr)) begin
+	  `uvm_info(`gfn, $sformatf("Kicking out widening/narrowing vector FP: %0s", name), UVM_LOW)
       return 1'b0;
     end
     if (!cfg.vector_cfg.vec_quad_widening && is_quad_widening_instr) begin
       return 1'b0;
     end
     // TODO: Clean up this list, it's causing gcc compile error now
-    if (instr_name inside {VWMACCSU, VMERGE, VFMERGE, VMADC, VMSBC}) begin
-      return 1'b0;
-    end
+    // hcheng: Comment to enable the instructions in the list
+    // if (instr_name inside {VWMACCSU, VMERGE, VFMERGE, VMADC, VMSBC}) begin
+    //  return 1'b0;
+    //end
+    
     // The standard vector floating-point instructions treat 16-bit, 32-bit, 64-bit,
     // and 128-bit elements as IEEE-754/2008-compatible values. If the current SEW does
     // not correspond to a supported IEEE floating-pointtype, an illegal instruction
     // exception is raised
     if (!cfg.vector_cfg.vec_fp) begin
       if ((name.substr(0, 1) == "VF") || (name.substr(0, 2) == "VMF")) begin
+	    `uvm_info(`gfn, $sformatf("Skipping vector FP: %0s", name), UVM_LOW)
         return 1'b0;
       end
     end
@@ -431,6 +435,9 @@ class riscv_vector_instr extends riscv_floating_point_instr;
                 end else begin
                   asm_str = {asm_str, $sformatf("%0s,%0s,%0s", vd.name(), vs2.name(), rs1.name())};
                 end
+              end
+              WF: begin
+                asm_str = {asm_str, $sformatf("%0s,%0s,%0s", vd.name(), vs2.name(), fs1.name())};
               end
             endcase
           end
@@ -561,6 +568,12 @@ class riscv_vector_instr extends riscv_floating_point_instr;
 	    has_vs1 = 1'b0;
 	  end
     end
+    if (instr_name inside {VPOPC_M, VFIRST_M, VMV_X_S}) begin
+	   has_rd = 1'b1; 
+    end
+    if (instr_name == VFMV_F_S) begin
+	   has_fd = 1'b1; 
+	end
   endfunction : set_rand_mode
 
   virtual function string vec_vm_str();

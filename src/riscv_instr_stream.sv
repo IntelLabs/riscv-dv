@@ -187,6 +187,13 @@ class riscv_rand_instr_stream extends riscv_instr_stream;
                                       riscv_instr::instr_category[STORE]};
     end
     setup_instruction_dist(no_branch, no_load_store);
+    
+    // Logging candidates of vector floating-point instructions for debugging 
+    // foreach(allowed_instr[i]) begin
+	//  if(allowed_instr[i].name().substr(0, 1) == "VF") begin
+    //    `uvm_info(`gfn, $sformatf("Allowed vector FP: %0s", allowed_instr[i].name()), UVM_LOW)
+    //  end
+	// end
   endfunction
 
   virtual function void randomize_avail_regs();

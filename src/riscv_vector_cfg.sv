@@ -40,6 +40,10 @@ class riscv_vector_cfg extends uvm_object;
   // Allow vector quad-widening instructions.
   rand bit vec_quad_widening;
 
+  constraint allow_vec_fp_c {soft vec_fp == 1;}
+  
+  constraint allow_vec_narrowing_widening_c {soft vec_narrowing_widening == 1;}
+
   constraint vec_quad_widening_c {
     (!vec_narrowing_widening) -> (!vec_quad_widening);
     // FP requires at least 16 bits and quad-widening requires no more than ELEN/4 bits.
@@ -94,7 +98,7 @@ class riscv_vector_cfg extends uvm_object;
     vtype.vsew inside {8, 16, 32, 64, 128};
     vtype.vsew <= ELEN;
     // TODO: Determine the legal range of floating point format
-    if (vec_fp) {vtype.vsew inside {32};}
+    if (vec_fp) {vtype.vsew inside {32, 64};}
     if (vec_narrowing_widening) {vtype.vsew < ELEN;}
     if (vec_quad_widening) {vtype.vsew < (ELEN >> 1);}
   }

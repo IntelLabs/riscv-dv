@@ -20,6 +20,7 @@
   compile:
     cmd:
       - "vcs -file <cwd>/vcs.compile.option.f
+              +vcs+lic+wait
               +incdir+<setting>
               +incdir+<user_extension>
              -f <cwd>/files.f -full64
