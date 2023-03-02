@@ -698,12 +698,16 @@ class riscv_asm_program_gen extends uvm_object;
   virtual function void gen_test_done();
     string str = format_string("test_done:", LABEL_STR_LEN);
     instr_stream.push_back(str);
-    instr_stream.push_back({indent, "li gp, 1"});
+	instr_stream.push_back("#ifdef DIFFTEST");
+	instr_stream.push_back({indent, "li a0, 0"});
+    instr_stream.push_back({indent, ".word 0x0000006b"});
+	instr_stream.push_back("#else");
     if (cfg.bare_program_mode) begin
       instr_stream.push_back({indent, "j write_tohost"});
     end else begin
       instr_stream.push_back({indent, "ecall"});
     end
+    instr_stream.push_back("#endif");
   endfunction
 
   // Dump all GPR to the starting point of the program

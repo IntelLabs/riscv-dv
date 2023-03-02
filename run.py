@@ -440,7 +440,7 @@ def gcc_compile(test_list, output_dir, isa, mabi, opts, debug_cmd):
             # If march/mabi is not defined in the test gcc_opts, use the default
             # setting from the command line.
             if not re.search('march', cmd):
-                cmd += (" -march={}".format(test_isa))
+                cmd += (" -march={}_zifencei".format(test_isa))
             if not re.search('mabi', cmd):
                 cmd += (" -mabi={}".format(mabi))
             logging.info("Compiling {}".format(asm))
