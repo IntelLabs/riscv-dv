@@ -69,6 +69,8 @@ class riscv_vector_cfg extends uvm_object;
 
   constraint legal_c {
     solve vtype before vl;
+	// SEW <= ELEN * LMUL if LMUL is a fractional value 
+	solve vtype.fractional_lmul, vtype.vlmul before vtype.vsew;
     solve vl before vstart;
     vstart inside {[0:vl]};
     vl inside {[1:VLEN/vtype.vsew]};
@@ -97,6 +99,9 @@ class riscv_vector_cfg extends uvm_object;
   constraint vsew_c {
     vtype.vsew inside {8, 16, 32, 64, 128};
     vtype.vsew <= ELEN;
+	// [RVV Section 3.4.2] For a given supported fractional LMUL setting, implementations must support SEW settings between SEWMIN and LMUL * ELEN, inclusive.
+	if (vtype.fractional_lmul && vtype.vlmul > 0) {vtype.vsew <= ELEN / vtype.vlmul;}
+
     // TODO: Determine the legal range of floating point format
     if (vec_fp) {vtype.vsew inside {32, 64};}
     if (vec_narrowing_widening) {vtype.vsew < ELEN;}
