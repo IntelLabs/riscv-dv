@@ -1290,6 +1290,8 @@ package riscv_instr_pkg;
 
   typedef struct packed {
     bit ill;
+	bit vma;
+	bit vta;
     bit fractional_lmul;
     bit [XLEN-2:7] reserved;
     int vediv;

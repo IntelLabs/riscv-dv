@@ -131,11 +131,18 @@ class riscv_vector_instr extends riscv_floating_point_instr;
   // An illegal instruction exception is raised if the destination vector register group
   // overlaps the source vector mask register. If the instruction is masked, an illegal
   // instruction exception is issued if the destination vector register group overlaps v0.
-  constraint vector_itoa_c {
-    if (instr_name == VIOTA_M) {
+  constraint vector_itoa_msbf_c {
+    if (instr_name inside {VIOTA_M, VMSBF_M}) {
       vd != vs2;
       (vm == 0) -> (vd != 0);
     }
+  }
+
+  constraint vector_vmsif_vmsof_c{
+	  if (instr_name inside {VMSIF_M, VMSOF_M}) {
+		vd != vs2;
+        (vm == 0) -> (vd != 0);
+	  }
   }
 
   // 16.9. Vector Element Index Instruction
@@ -152,7 +159,7 @@ class riscv_vector_instr extends riscv_floating_point_instr;
   // The destination vector register group for vslideup cannot overlap the vector register
   // group of the source vector register group or the mask register
   constraint vector_slide_c {
-    if (instr_name inside {VSLIDEUP, VSLIDE1UP, VSLIDEDOWN, VSLIDE1DOWN}) {
+    if (instr_name inside {VSLIDEUP, VSLIDE1UP, VSLIDEDOWN, VSLIDE1DOWN, VFSLIDE1UP, VFSLIDE1DOWN}) {
       vd != vs2;
       vd != vs1;
       (vm == 0) -> (vd != 0);
@@ -229,8 +236,13 @@ class riscv_vector_instr extends riscv_floating_point_instr;
 
   constraint vector_mask_enable_c {
     // Below instruction is always masked
-    if (instr_name inside {VMERGE, VFMERGE, VADC, VSBC}) {
-      vm == 1'b0;
+    if (instr_name inside {VMERGE, VFMERGE, VADC, VSBC, VMADC, VMSBC}) {
+	  if (va_variant inside {VVM, VIM, VXM, VFM}) {
+        vm == 1'b0;
+	  }
+	  else{
+		vm == 1'b1;
+	  }
     }
   }
 
@@ -309,6 +321,8 @@ class riscv_vector_instr extends riscv_floating_point_instr;
   constraint vzext_vsext_c{
 	if (instr_name inside {VZEXT, VSEXT}) {
       m_cfg.vector_cfg.vtype.vsew / eew inside {2, 4, 8};
+	  eew >= 8;
+	  vd != vs2;
     }
   }
   
@@ -603,3 +617,66 @@ class riscv_vector_instr extends riscv_floating_point_instr;
   endfunction
 
 endclass : riscv_vector_instr
+
+class riscv_vset_instr extends riscv_instr;
+  vtype_t vtype;
+  bit [XLEN-1:0] vl;
+
+  `uvm_object_utils(riscv_vector_instr)
+  `uvm_object_new
+
+  virtual function void set_rand_mode();
+	 has_rd = 1'b0;	 
+	 has_rs1 = 1'b0;
+	 has_rs2 = 1'b0;
+	 has_imm = 1'b0;
+  endfunction
+  
+  function void pre_randomize();
+	csr.rand_mode(0);
+	csr_c.constraint_mode(0);
+  endfunction
+  
+  
+  virtual function string convert2asm(string prefix = "");
+    string asm_str;
+	asm_str = {instr_name.name(), " ", rd.name()};
+	case(instr_name)
+      VSETIVLI: begin
+	    asm_str = {asm_str, ", ", $sformatf("%0d", vl), ", ", vtype_str()};
+      end
+      VSETVLI: begin
+	    asm_str = {asm_str, ", ", rs1.name(), ", ", vtype_str()};
+      end
+      VSETVL: begin
+	    asm_str = {asm_str, ", ", rs1.name(), ", ", rs2.name()};
+      end
+	endcase
+	if(comment != "") begin
+      asm_str = {asm_str, " #",comment};
+    end
+    return asm_str.tolower();
+  endfunction
+  
+  virtual function string vtype_str();
+	  string lmul_str;
+	  string vta_str;
+	  string vma_str;
+	  if ((vtype.vlmul > 1) && (vtype.fractional_lmul)) begin
+        lmul_str = $sformatf("mf%0d", vtype.vlmul);
+      end else begin
+        lmul_str = $sformatf("m%0d", vtype.vlmul);
+      end
+      if(vtype.vta) begin
+        vta_str = "ta";
+      end else begin
+	    vta_str = "tu";
+      end
+      if(vtype.vma) begin
+        vma_str = "ma";
+      end else begin
+	    vma_str = "mu";
+	  end
+	  vtype_str = $sformatf("e%0d, %0s, %0s, %0s", vtype.vsew, lmul_str, vta_str, vma_str);
+  endfunction
+endclass
