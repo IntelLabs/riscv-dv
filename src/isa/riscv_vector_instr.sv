@@ -249,7 +249,7 @@ class riscv_vector_instr extends riscv_floating_point_instr;
   constraint vector_mask_disable_c {
     // (vm=0) is reserved for below ops
     if (instr_name inside {VMV, VFMV, VCOMPRESS, VFMV_F_S, VFMV_S_F, VMV_X_S, VMV_S_X,
-                           VMV1R_V, VMV2R_V, VMV4R_V, VMV8R_V}) {
+                           VMV1R_V, VMV2R_V, VMV4R_V, VMV8R_V, VLM_V, VSM_V}) {
       vm == 1'b1;
     }
   }
@@ -308,7 +308,13 @@ class riscv_vector_instr extends riscv_floating_point_instr;
       }
     }
   }
-
+  
+  constraint vlm_vsm_c {
+	  if (instr_name inside {VLM_V, VSM_V}) {
+		  eew == 8;
+		  emul == 1;
+	  }
+  }
   // Some temporarily constraint to avoid illegal instruction
   // TODO: Review these constraints
   constraint temp_c {
@@ -373,7 +379,9 @@ class riscv_vector_instr extends riscv_floating_point_instr;
       if (instr_name inside {VLEFF_V, VLSEGEFF_V}) begin
         name = name.substr(0, name.len() - 5);
         name = $sformatf("%0s%0dFF.V", name, eew);
-      end else begin
+      end else if (instr_name inside {VLM_V, VSM_V}) begin 
+	    // do nothing to just return name as-is
+	  end else begin
         name = name.substr(0, name.len() - 3);
         name = $sformatf("%0s%0d.V", name, eew);
       end
@@ -539,6 +547,9 @@ class riscv_vector_instr extends riscv_floating_point_instr;
     if (!(category inside {LOAD, STORE, AMO})) begin
       load_store_solve_order_c.constraint_mode(0);
     end
+    if(instr_name inside {VLM_V, VSM_V}) begin
+	  load_store_eew_emul_c.constraint_mode(0);   
+	end
   endfunction : pre_randomize
 
   virtual function void set_rand_mode();

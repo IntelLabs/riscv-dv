@@ -630,6 +630,8 @@ package riscv_instr_pkg;
     // Vector load/store instruction
     VLE_V,
     VSE_V,
+    VLM_V,
+    VSM_V,
     VLSE_V,
     VSSE_V,
     VLXEI_V,

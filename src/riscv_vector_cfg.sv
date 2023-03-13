@@ -155,7 +155,8 @@ class riscv_vector_cfg extends uvm_object;
       end else begin
         temp_eew = real'(vtype.vsew) * emul * real'(vtype.vlmul);
       end
-      if (temp_eew inside {[8:1024]}) begin
+      // For RVV 1.0, mew == 1'b1 is reserved thus EEW should no larger than 64
+      if (temp_eew inside {8, 16, 32, 64}) begin
         legal_eew.push_back(int'(temp_eew));
       end
       `uvm_info(`gfn, $sformatf("Checking emul: %.2f", emul), UVM_LOW)
