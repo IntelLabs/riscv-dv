@@ -192,22 +192,33 @@ class riscv_vector_instr extends riscv_floating_point_instr;
   // The LMUL setting must be such that LMUL * NFIELDS <= 8
   // Vector register numbers accessed by the segment load or store would increment
   // cannot past 31
+  // hcheng: move the condition to check segmented load/store subextension to pre_randomize()
   constraint nfields_c {
-    if (check_sub_extension(sub_extension, "zvlsseg")) {
-      if (m_cfg.vector_cfg.vtype.vlmul < 8) {
-        (nfields + 1) * m_cfg.vector_cfg.vtype.vlmul <= 8;
-        if (category == LOAD) {
-          vd + nfields <= 31;
-        }
-        if (category == STORE) {
-          vs3 + nfields <= 31;
-        }
-        // TODO: Check gcc compile issue with nfields == 0
-        nfields > 0;
-      } else {
-        nfields == 0;
+    if (m_cfg.vector_cfg.vtype.vlmul < 8) {
+      (nfields + 1) * m_cfg.vector_cfg.vtype.vlmul <= 8;
+      if (category == LOAD) {
+        vd + nfields <= 31;
       }
+      if (category == STORE) {
+        vs3 + nfields <= 31;
+      }
+      // TODO: Check gcc compile issue with nfields == 0
+      nfields > 0;
+    } else {
+      nfields == 0;
     }
+  }
+  // Section 7.9 NFIELDS can only be 1, 2, 4, 8 for whole-register load/store
+  constraint nfields_whole_reg_c {
+	  nfields inside {0, 1, 3, 7};
+	  if (category == LOAD) {
+        vd + nfields <= 31;
+		vd % (nfields + 1) == 0; 
+	  }
+	  if (category == STORE) {
+        vs3 + nfields <= 31;
+		vs3 % (nfields + 1) == 0; 
+      }
   }
 
   constraint vmv_alignment_c {
@@ -249,7 +260,7 @@ class riscv_vector_instr extends riscv_floating_point_instr;
   constraint vector_mask_disable_c {
     // (vm=0) is reserved for below ops
     if (instr_name inside {VMV, VFMV, VCOMPRESS, VFMV_F_S, VFMV_S_F, VMV_X_S, VMV_S_X,
-                           VMV1R_V, VMV2R_V, VMV4R_V, VMV8R_V, VLM_V, VSM_V}) {
+                           VMV1R_V, VMV2R_V, VMV4R_V, VMV8R_V, VLM_V, VSM_V, VLRE_V, VSR_V}) {
       vm == 1'b1;
     }
   }
@@ -278,7 +289,7 @@ class riscv_vector_instr extends riscv_floating_point_instr;
     // cannot overlap the source vectorregister group (specied by vs2), nor can they
     // overlap the mask register if masked
     // AMO instruction uses indexed address mode
-    if (format inside {VLX_FORMAT, VAMO_FORMAT}) {
+    if (format == VLX_FORMAT) {
       vd != vs2;
     }
   }
@@ -293,7 +304,7 @@ class riscv_vector_instr extends riscv_floating_point_instr;
   }
 
   constraint load_store_eew_emul_c {
-    if (category inside {LOAD, STORE, AMO}) {
+    if (category inside {LOAD, STORE}) {
       eew inside {m_cfg.vector_cfg.legal_eew};
       if (eew > m_cfg.vector_cfg.vtype.vsew) {
         emul == eew / m_cfg.vector_cfg.vtype.vsew;
@@ -379,7 +390,7 @@ class riscv_vector_instr extends riscv_floating_point_instr;
       if (instr_name inside {VLEFF_V, VLSEGEFF_V}) begin
         name = name.substr(0, name.len() - 5);
         name = $sformatf("%0s%0dFF.V", name, eew);
-      end else if (instr_name inside {VLM_V, VSM_V}) begin 
+      end else if (instr_name inside {VLM_V, VSM_V, VSR_V}) begin 
 	    // do nothing to just return name as-is
 	  end else begin
         name = name.substr(0, name.len() - 3);
@@ -467,23 +478,33 @@ class riscv_vector_instr extends riscv_floating_point_instr;
       end
       VL_FORMAT: begin
         if (sub_extension == "zvlsseg") begin
-          asm_str = $sformatf("%0s %s,(%s)", add_nfields(get_instr_name(), "vlseg"),
+	      if(instr_name == VLRE_V) begin
+		    asm_str = $sformatf("%0s %s,(%s)", add_nfields(get_instr_name(), 2),
+                                             vd.name(), rs1.name());  
+	      end else begin
+            asm_str = $sformatf("%0s %s,(%s)", add_nfields(get_instr_name(), 5),
                                              vd.name(), rs1.name());
+		  end
         end else begin
           asm_str = $sformatf("%0s %s,(%s)", get_instr_name(), vd.name(), rs1.name());
         end
       end
       VS_FORMAT: begin
         if (sub_extension == "zvlsseg") begin
-          asm_str = $sformatf("%0s %s,(%s)", add_nfields(get_instr_name(), "vsseg"),
+	      if(instr_name == VSR_V) begin
+		    asm_str = $sformatf("%0s %s,(%s)", add_nfields(get_instr_name(), 2),
                                              vs3.name(), rs1.name());
+          end else begin
+            asm_str = $sformatf("%0s %s,(%s)", add_nfields(get_instr_name(), 5),
+                                             vs3.name(), rs1.name());
+	      end
         end else begin
           asm_str = $sformatf("%0s %s,(%s)", get_instr_name(), vs3.name(), rs1.name());
         end
       end
       VLS_FORMAT: begin
         if (sub_extension == "zvlsseg") begin
-          asm_str = $sformatf("%0s %0s,(%0s),%0s", add_nfields(get_instr_name(), "vlsseg"),
+          asm_str = $sformatf("%0s %0s,(%0s),%0s", add_nfields(get_instr_name(), 6),
                                                    vd.name(), rs1.name(), rs2.name());
         end else begin
           asm_str = $sformatf("%0s %0s,(%0s),%0s", get_instr_name(),
@@ -492,7 +513,7 @@ class riscv_vector_instr extends riscv_floating_point_instr;
       end
       VSS_FORMAT: begin
         if (sub_extension == "zvlsseg") begin
-          asm_str = $sformatf("%0s %0s,(%0s),%0s", add_nfields(get_instr_name(), "vssseg"),
+          asm_str = $sformatf("%0s %0s,(%0s),%0s", add_nfields(get_instr_name(), 6),
                                                    vs3.name(), rs1.name(), rs2.name());
         end else begin
           asm_str = $sformatf("%0s %0s,(%0s),%0s", get_instr_name(),
@@ -501,7 +522,7 @@ class riscv_vector_instr extends riscv_floating_point_instr;
       end
       VLX_FORMAT: begin
         if (sub_extension == "zvlsseg") begin
-          asm_str = $sformatf("%0s %0s,(%0s),%0s", add_nfields(get_instr_name(), "vlxseg"),
+          asm_str = $sformatf("%0s %0s,(%0s),%0s", add_nfields(get_instr_name(), 7),
                                                    vd.name(), rs1.name(), vs2.name());
         end else begin
           asm_str = $sformatf("%0s %0s,(%0s),%0s", get_instr_name(),
@@ -510,20 +531,11 @@ class riscv_vector_instr extends riscv_floating_point_instr;
       end
       VSX_FORMAT: begin
         if (sub_extension == "zvlsseg") begin
-          asm_str = $sformatf("%0s %0s,(%0s),%0s", add_nfields(get_instr_name(), "vsxseg"),
+          asm_str = $sformatf("%0s %0s,(%0s),%0s", add_nfields(get_instr_name(), 7),
                                                    vs3.name(), rs1.name(), vs2.name());
         end else begin
           asm_str = $sformatf("%0s %0s,(%0s),%0s", get_instr_name(),
                                                    vs3.name(), rs1.name(), vs2.name());
-        end
-      end
-      VAMO_FORMAT: begin
-        if (wd) begin
-          asm_str = $sformatf("%0s %0s,(%0s),%0s,%0s", get_instr_name(), vd.name(),
-                                                   rs1.name(), vs2.name(), vd.name());
-        end else begin
-          asm_str = $sformatf("%0s x0,(%0s),%0s,%0s", get_instr_name(),
-                                                  rs1.name(), vs2.name(), vs3.name());
         end
       end
       default: begin
@@ -544,11 +556,21 @@ class riscv_vector_instr extends riscv_floating_point_instr;
     vs2.rand_mode(has_vs2);
     vs3.rand_mode(has_vs3);
     vd.rand_mode(has_vd);
-    if (!(category inside {LOAD, STORE, AMO})) begin
+    if (!(category inside {LOAD, STORE})) begin
       load_store_solve_order_c.constraint_mode(0);
     end
     if(instr_name inside {VLM_V, VSM_V}) begin
 	  load_store_eew_emul_c.constraint_mode(0);   
+    end
+    if(check_sub_extension(sub_extension, "zvlsseg")) begin
+	  if(instr_name inside {VLE_V, VSR_V}) begin
+		nfields_c.constraint_mode(0);
+	  end else begin
+		nfields_whole_reg_c.constraint_mode(0);
+	  end
+    end else begin
+	  nfields_c.constraint_mode(0);
+	  nfields_whole_reg_c.constraint_mode(0);
 	end
   endfunction : pre_randomize
 
@@ -598,6 +620,9 @@ class riscv_vector_instr extends riscv_floating_point_instr;
     end
     if (instr_name == VFMV_F_S) begin
 	   has_fd = 1'b1; 
+    end
+    if (instr_name inside {VLSE_V, VSSE_V, VLSSEGE_V, VSSSEGE_V}) begin
+	  has_rs2 = 1'b1; 
 	end
   endfunction : set_rand_mode
 
@@ -613,8 +638,9 @@ class riscv_vector_instr extends riscv_floating_point_instr;
     end
   endfunction
 
-  function string add_nfields(string instr_name, string prefix);
-    string suffix = instr_name.substr(prefix.len(), instr_name.len() - 1);
+  function string add_nfields(string instr_name, int prefix_len);
+	string prefix = instr_name.substr(0, prefix_len - 1);
+    string suffix = instr_name.substr(prefix_len, instr_name.len() - 1);
     return $sformatf("%0s%0d%0s", prefix, nfields + 1, suffix);
   endfunction
 
