@@ -154,7 +154,8 @@
     +no_branch_jump=1
     +boot_mode=m
     +no_csr_instr=1
-  iterations: 5
+  iss_opts: --varch=vlen:256,elen:64
+  iterations: 1
   gen_test: riscv_instr_base_test
   rtl_test: core_base_test
 

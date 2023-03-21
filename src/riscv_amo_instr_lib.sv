@@ -210,7 +210,7 @@ class riscv_amo_instr_stream extends riscv_amo_base_instr_stream;
 
 endclass : riscv_amo_instr_stream
 
-
+/*
 class riscv_vector_amo_instr_stream extends riscv_vector_load_store_instr_stream;
 
   constraint amo_address_mode_c {
@@ -228,3 +228,4 @@ class riscv_vector_amo_instr_stream extends riscv_vector_load_store_instr_stream
   endfunction
 
 endclass : riscv_vector_amo_instr_stream
+*/
