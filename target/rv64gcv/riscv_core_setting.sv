@@ -68,7 +68,7 @@ parameter int NUM_VEC_GPR = 32;
 // Parameter for vector extension
 parameter int VECTOR_EXTENSION_ENABLE = 1;
 
-parameter int VLEN = 256;
+parameter int VLEN = 128;
 
 // Maximum size of a single vector element
 parameter int ELEN = 64;

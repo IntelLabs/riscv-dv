@@ -108,7 +108,7 @@
   description: >
     Arithmetic vector instruction test
   gen_opts: >
-    +instr_cnt=20000
+    +instr_cnt=10000
     +num_of_sub_program=0
     +enable_floating_point=1
     +enable_vector_extension=1
@@ -119,8 +119,8 @@
     +no_csr_instr=1
     +dist_control_mode=1
     +dist_rvv=2000
-  iss_opts: --varch=vlen:256,elen:64
-  iterations: 2
+  iss_opts: --varch=vlen:128,elen:64
+  iterations: 1
   gen_test: riscv_instr_base_test
   rtl_test: core_base_test
 

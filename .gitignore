@@ -13,5 +13,24 @@ qrun.log
 *.vstf
 riscv_dv.egg-info
 pygen/pygen_src/test/out/*
+rvfi/*.log
+rvfi/test/
+rvfi/csrc/
+rvfi/simv.daidir/
+rvfi/simv.vdb/
+rvfi/urgReport/
+rvfi/.*
+rvfi/simv
+rvfi/*.old
+rvfi/.synopsys_dve_rebuild.tcl
+rvfi/DVEfiles/
+rvfi/*.v
+rvfi/*.vpd
+rvfi/*.swp
+rvfi/*.csv
+rvfi/session.inter.vpd.tcl
+.dvt/
+testplan/
+dvt_build.log
 !.gitkeep
 

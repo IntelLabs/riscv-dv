@@ -380,6 +380,10 @@ class riscv_vector_instr extends riscv_floating_point_instr;
         return 1'b0;
       end
     end
+    if ((cfg.vector_cfg.vtype.vsew == 8) && 
+	    (instr_name inside {VZEXT, VSEXT})) begin
+	  return 1'b0;
+	end
     return 1'b1;
   endfunction
 
