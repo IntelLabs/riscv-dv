@@ -70,7 +70,8 @@ class riscv_instr_base_test:
         logging.info("All directed instruction is applied")
         self.asm.gen_program()
         self.asm.gen_test_file(test_name)
-        logging.info("TEST GENERATED USING SEED VALUE = {}".format(rand_seed))
+        # Not logging random seed by default
+        # logging.info("TEST GENERATED USING SEED VALUE = {}".format(rand_seed))
         logging.info("TEST GENERATION DONE")
 
     def randomize_cfg(self):
