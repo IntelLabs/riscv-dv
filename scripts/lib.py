@@ -202,7 +202,7 @@ def run_cmd_output(cmd, debug_cmd=None):
     except subprocess.CalledProcessError as exc:
         logging.debug(exc.output)
         raise exc
-        sys.exit(RET_FAIL)
+        # sys.exit(RET_FAIL) # Unreachable
     if output:
         logging.debug(output)
 

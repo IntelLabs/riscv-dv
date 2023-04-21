@@ -282,7 +282,7 @@ class riscv_push_stack_instr(riscv_rand_instr_stream):
                 riscv_instr.get_rand_instr(include_category=[riscv_instr_name_t.BRANCH.name])
             self.branch_instr.randomize()
             self.branch_instr.imm_str = self.push_start_label
-            self.branch_instr.brach_assigned = 1
+            self.branch_instr.branch_assigned = 1
             self.push_stack_instr[0].label = self.push_start_label
             self.push_stack_instr[0].has_label = 1
             self.push_stack_instr.extend(self.branch_instr)

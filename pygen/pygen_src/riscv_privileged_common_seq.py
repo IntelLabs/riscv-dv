@@ -182,7 +182,7 @@ class riscv_privileged_common_seq():
 
     def sie_set_field(self, mode, regs):
         # Enable external and timer interrupt
-        if privileged_reg_t.SIE in rcs.implemeted_csr:
+        if privileged_reg_t.SIE in rcs.implemented_csr:
             self.sie = riscv_privil_reg()
             self.sie.init_reg(privileged_reg_t.SIE)
             if cfg.randomize_csr:
