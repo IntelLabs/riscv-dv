@@ -82,6 +82,11 @@ class riscv_vector_cfg extends uvm_object;
     vl == VLEN/vtype.vsew;
     vtype.vediv == 1;
   }
+  
+  // hcheng: Temporary constraint as XS3 VPU haven't supported fractional LMUL yet.
+  constraint frac_lmul_c {
+	soft vtype.fractional_lmul == 1'b0;
+  }
 
   // For all widening instructions, the destination element width must be a supported element
   // width and the destination LMUL value must also be a supported LMUL value

@@ -53,6 +53,11 @@ class riscv_vector_instr extends riscv_floating_point_instr;
       va_variant inside {allowed_va_variants};
     }
   }
+  
+   // hcheng: Temporary constraint as XS3 VPU haven't supported masking yet.
+  constraint avoid_masking_c {
+	soft vm == 1'b1;
+  }
 
   // Section 3.3.2: Vector Register Grouping (vlmul)
   // Instructions specifying a vector operand with an odd-numbered vector register will raisean
@@ -197,10 +202,10 @@ class riscv_vector_instr extends riscv_floating_point_instr;
     if (m_cfg.vector_cfg.vtype.vlmul < 8) {
       (nfields + 1) * m_cfg.vector_cfg.vtype.vlmul <= 8;
       if (category == LOAD) {
-        vd + nfields <= 31;
+        vd + (nfields + 1) * m_cfg.vector_cfg.vtype.vlmul - 1 <= 31;
       }
       if (category == STORE) {
-        vs3 + nfields <= 31;
+        vs3 + (nfields + 1) * m_cfg.vector_cfg.vtype.vlmul - 1 <= 31;
       }
       // TODO: Check gcc compile issue with nfields == 0
       nfields > 0;
