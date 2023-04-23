@@ -326,18 +326,65 @@ class riscv_rand_instr_stream extends riscv_instr_stream;
     return li_instr;
   endfunction
 
-  function void add_init_vector_gpr_instr(riscv_vreg_t gpr, bit [XLEN-1:0] val);
-    riscv_vector_instr instr;
-    $cast(instr, riscv_instr::get_instr(VMV));
-    instr.m_cfg = cfg;
+  function void add_init_vector_gpr_instr(riscv_vreg_t gpr, ref int unsigned val[], bit [10:0] eew);
+	riscv_vector_instr instr;
+	riscv_vreg_t tmp_vreg;
+	`DV_CHECK_STD_RANDOMIZE_WITH_FATAL(tmp_vreg,
+      tmp_vreg != gpr;
+	  tmp_vreg % (eew / cfg.vector_cfg.vtype.vsew * cfg.vector_cfg.vtype.vlmul) == 0;
+		)
+    if (val.size() % 2 != 0) begin
+	  $cast(instr, riscv_instr::get_instr(VMV));
+	  instr.m_cfg = cfg;
+      instr.avoid_reserved_vregs_c.constraint_mode(0);
+	  `DV_CHECK_RANDOMIZE_WITH_FATAL(instr,
+        va_variant == VV;
+        vd == gpr;
+        vs1 == tmp_vreg;
+		  )
+	  instr_list.push_front(instr);
+	end
+	foreach(val[i]) begin
+      $cast(instr, riscv_instr::get_instr(VSLIDE1UP));
+      instr.m_cfg = cfg;
+      instr.avoid_reserved_vregs_c.constraint_mode(0);
+	  if(i % 2 == 0) begin
+        `DV_CHECK_RANDOMIZE_WITH_FATAL(instr,
+          va_variant == VX;
+          vd == gpr;
+	      vs2 == tmp_vreg;
+          rs1 == cfg.gpr[0];
+        )     
+	  end else begin
+		`DV_CHECK_RANDOMIZE_WITH_FATAL(instr,
+          va_variant == VX;
+          vd == tmp_vreg;
+	      vs2 == gpr;
+          rs1 == cfg.gpr[0];
+        ) 
+	  end
+	  instr_list.push_front(instr);
+      instr_list.push_front(get_init_gpr_instr(cfg.gpr[0], val[i]));
+	end
+	// First two VMV.VX to zero initializing two vregs
+	$cast(instr, riscv_instr::get_instr(VMV));
+	instr.m_cfg = cfg;
     instr.avoid_reserved_vregs_c.constraint_mode(0);
-    `DV_CHECK_RANDOMIZE_WITH_FATAL(instr,
-      va_variant == VX;
-      vd == gpr;
-      rs1 == cfg.gpr[0];
-    )
-    instr_list.push_front(instr);
-    instr_list.push_front(get_init_gpr_instr(cfg.gpr[0], val));
+	`DV_CHECK_RANDOMIZE_WITH_FATAL(instr,
+        va_variant == VX;
+        vd == gpr;
+        rs1 == ZERO;
+		)
+	instr_list.push_front(instr);
+    $cast(instr, riscv_instr::get_instr(VMV));
+	instr.m_cfg = cfg;
+    instr.avoid_reserved_vregs_c.constraint_mode(0);
+	`DV_CHECK_RANDOMIZE_WITH_FATAL(instr,
+        va_variant == VX;
+        vd == gpr;
+        rs1 == ZERO;
+		)
+	instr_list.push_front(instr);
   endfunction
 
 endclass

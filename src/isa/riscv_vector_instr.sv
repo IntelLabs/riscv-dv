@@ -199,31 +199,51 @@ class riscv_vector_instr extends riscv_floating_point_instr;
   // cannot past 31
   // hcheng: move the condition to check segmented load/store subextension to pre_randomize()
   constraint nfields_c {
-    if (m_cfg.vector_cfg.vtype.vlmul < 8) {
-      (nfields + 1) * m_cfg.vector_cfg.vtype.vlmul <= 8;
-      if (category == LOAD) {
-        vd + (nfields + 1) * m_cfg.vector_cfg.vtype.vlmul - 1 <= 31;
+    solve emul before nfields;
+	if (category inside {LOAD, STORE} && !(instr_name inside {VLRE_V, VSR_V})) {
+      if (m_cfg.vector_cfg.vtype.vlmul < 8 && emul < 8) {
+	    // TODO: Check gcc compile issue with nfields == 0
+	    nfields > 0;
+	  	
+	  	(nfields + 1) * m_cfg.vector_cfg.vtype.vlmul <= 8;
+	    (nfields + 1) * emul <= 8;
+	    if (category == LOAD) {
+		  if(instr_name inside {VLUXEI_V, VLOXEI_V, VLUXSEGEI_V,VLOXSEGEI_V}) {
+			vd + (nfields + 1) * m_cfg.vector_cfg.vtype.vlmul - 1 <= 31;
+			vs2 + (nfields + 1) * emul - 1 <= 31;
+		  }
+		  else {
+			vd + (nfields + 1) * emul - 1 <= 31; 
+		  }
+	    }
+	    if (category == STORE) {
+		  if(instr_name inside {VSUXEI_V, VSOXEI_V, VSUXSEGEI_V, VSOXSEGEI_V}) {
+			vs3 + (nfields + 1) * m_cfg.vector_cfg.vtype.vlmul - 1 <= 31;
+			vs2 + (nfields + 1) * emul - 1 <= 31;
+		  }
+		  else {
+			vs3 + (nfields + 1) * emul - 1 <= 31; 
+		  }
+	    }
       }
-      if (category == STORE) {
-        vs3 + (nfields + 1) * m_cfg.vector_cfg.vtype.vlmul - 1 <= 31;
+      else {
+	    nfields == 0;
       }
-      // TODO: Check gcc compile issue with nfields == 0
-      nfields > 0;
-    } else {
-      nfields == 0;
-    }
+	}
   }
   // Section 7.9 NFIELDS can only be 1, 2, 4, 8 for whole-register load/store
   constraint nfields_whole_reg_c {
-	  nfields inside {0, 1, 3, 7};
-	  if (category == LOAD) {
-        vd + nfields <= 31;
-		vd % (nfields + 1) == 0; 
+	  if(instr_name inside {VLRE_V, VSR_V}) {
+	    nfields inside {0, 1, 3, 7};
+	    if (category == LOAD) {
+          vd + nfields <= 31;
+		  vd % (nfields + 1) == 0; 
+	    }
+	    if (category == STORE) {
+          vs3 + nfields <= 31;
+		  vs3 % (nfields + 1) == 0; 
+	    }
 	  }
-	  if (category == STORE) {
-        vs3 + nfields <= 31;
-		vs3 % (nfields + 1) == 0; 
-      }
   }
 
   constraint vmv_alignment_c {
@@ -288,14 +308,16 @@ class riscv_vector_instr extends riscv_floating_point_instr;
     // TODO: Check why this is needed?
     if (category == STORE) {
       (vm == 0) -> (vs3 != 0);
-      vs2 != vs3;
+	  !(vs2 inside {[vs3 : vs3 + m_cfg.vector_cfg.vtype.vlmul * (nfields + 1) - 1]});
+	  !((vs2 + emul - 1) inside {[vs3 : vs3 + m_cfg.vector_cfg.vtype.vlmul * (nfields + 1) - 1]});
     }
     // 7.8.3 For vector indexed segment loads, the destination vector register groups
     // cannot overlap the source vectorregister group (specied by vs2), nor can they
     // overlap the mask register if masked
     // AMO instruction uses indexed address mode
     if (format == VLX_FORMAT) {
-      vd != vs2;
+	  !(vs2 inside {[vd : vd + m_cfg.vector_cfg.vtype.vlmul * (nfields + 1) - 1]});
+	  !((vs2 + emul - 1) inside {[vd : vd + m_cfg.vector_cfg.vtype.vlmul * (nfields + 1) - 1]});
     }
   }
 
@@ -311,16 +333,31 @@ class riscv_vector_instr extends riscv_floating_point_instr;
   constraint load_store_eew_emul_c {
     if (category inside {LOAD, STORE}) {
       eew inside {m_cfg.vector_cfg.legal_eew};
-      if (eew > m_cfg.vector_cfg.vtype.vsew) {
-        emul == eew / m_cfg.vector_cfg.vtype.vsew;
-      } else {
-        emul == 1;
-      }
+	  if (eew < m_cfg.vector_cfg.vtype.vsew) {
+		  emul == 1;
+	  }
+	  else {
+	    emul == eew / m_cfg.vector_cfg.vtype.vsew * m_cfg.vector_cfg.vtype.vlmul;
+	  }
       if (emul > 1) {
-        vd % emul == 0;
-        vs1 % emul == 0;
-        vs2 % emul == 0;
-        vs3 % emul == 0;
+	    if (category == LOAD) {
+		  if(instr_name inside {VLUXEI_V, VLOXEI_V, VLUXSEGEI_V,VLOXSEGEI_V}) {
+			// vd % m_cfg.vector_cfg.vtype.vlmul == 0; // duplicated
+			vs2 % emul == 0;
+		  }
+		  else {
+			vd % emul == 0;
+		  }
+	    }
+	    if (category == STORE) {
+		  if(instr_name inside {VSUXEI_V, VSOXEI_V, VSUXSEGEI_V, VSOXSEGEI_V}) {
+			// vs3 % m_cfg.vector_cfg.vtype.vlmul == 0; // duplicated
+			vs2 % emul == 0;
+		  }
+		  else {
+			vs3 % emul == 0;
+		  }
+	    }
       }
     }
   }

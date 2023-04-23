@@ -527,7 +527,8 @@ class riscv_vector_load_store_instr_stream extends riscv_mem_access_stream;
   rand int unsigned data_page_id;
   rand int unsigned num_mixed_instr;
   rand int unsigned stride_byte_offset;
-  rand int unsigned index_addr;
+  rand int unsigned index_addr_stride;
+  rand int unsigned index_addrs[];
   rand address_mode_e address_mode;
   rand riscv_reg_t rs1_reg;  // Base address
   rand riscv_reg_t rs2_reg;  // Stride offset
@@ -539,6 +540,7 @@ class riscv_vector_load_store_instr_stream extends riscv_mem_access_stream;
 
   constraint eew_c {
     eew inside {cfg.vector_cfg.legal_eew};
+	eew / cfg.vector_cfg.vtype.vsew * cfg.vector_cfg.vtype.vlmul <= 8;
   }
 
   constraint stride_byte_offset_c {
@@ -549,10 +551,10 @@ class riscv_vector_load_store_instr_stream extends riscv_mem_access_stream;
   }
 
   constraint index_addr_c {
-    solve eew before index_addr;
+    // solve eew before index_addr;
     // Keep a reasonable index address range to avoid vector memory address overflow
-    index_addr inside {[0 : 128]};
-    index_addr % (eew / 8) == 0;
+    index_addr_stride inside {[0 : 128]};
+    // index_addr % (cfg.vector_cfg.vtype.vsew / 8) == 0;
   }
 
   constraint vec_rs_c {
@@ -563,6 +565,14 @@ class riscv_vector_load_store_instr_stream extends riscv_mem_access_stream;
 
   constraint vec_data_page_id_c {
     data_page_id < max_data_page_id;
+  }
+  
+  constraint temp_same_eew_sew_indexed_c {
+	  // Temporary constraint that make EEW == SEW for indexed vector load/store
+	  // This avoids adjusting vtype for the instruction setting vs2
+	  if (address_mode == INDEXED) {
+	    eew == cfg.vector_cfg.vtype.vsew;
+	  }
   }
 
   int base;
@@ -583,7 +593,13 @@ class riscv_vector_load_store_instr_stream extends riscv_mem_access_stream;
       instr_list.push_front(get_init_gpr_instr(rs2_reg, stride_byte_offset));
     end else if (address_mode == INDEXED) begin
       // TODO: Support different index address for each element
-      add_init_vector_gpr_instr(vs2_reg, index_addr);
+      `DV_CHECK_STD_RANDOMIZE_WITH_FATAL(index_addrs, index_addrs.size() == cfg.vector_cfg.vl; 
+	                                       foreach(index_addrs[i]) { 	                                             
+	                                         index_addrs[i] % (cfg.vector_cfg.vtype.vsew / 8) == 0; 
+	                                         index_addrs[i] >= 0; 
+	                                         index_addrs[i] <= index_addr_stride;}
+	                                    )
+      add_init_vector_gpr_instr(vs2_reg, index_addrs, eew);
     end
     super.post_randomize();
   endfunction
@@ -619,12 +635,17 @@ class riscv_vector_load_store_instr_stream extends riscv_mem_access_stream;
     case (address_mode)
       UNIT_STRIDED : address_span = num_elements * stride_bytes();
       STRIDED      : address_span = num_elements * stride_byte_offset;
-      INDEXED      : address_span = index_addr + num_elements * stride_bytes();
+      INDEXED      : address_span = index_addr_stride;
     endcase
   endfunction
 
   virtual function int stride_bytes();
-    stride_bytes = eew / 8;
+	if (address_mode == INDEXED) begin
+	  //TODO: eliminate this branch when make sure stride_bytes is not used in indexed mode
+	  stride_bytes = cfg.vector_cfg.vtype.vsew / 8;
+	end else begin
+      stride_bytes = eew / 8;
+	end
   endfunction
 
   // Generate each load/store instruction
@@ -636,13 +657,15 @@ class riscv_vector_load_store_instr_stream extends riscv_mem_access_stream;
 
 // hcheng: Temporary replace build_allowed_instr() as XS3 haven't supported vector store yet.
   virtual function void build_allowed_instr();
+	// NFIELD must greater than 1 for segmented load/store
+	bit emul_less_than_eight = eew / cfg.vector_cfg.vtype.vsew * cfg.vector_cfg.vtype.vlmul < 8;
     case (address_mode)
       UNIT_STRIDED : begin
         allowed_instr = {VLE_V, allowed_instr};
         if (cfg.vector_cfg.enable_fault_only_first_load) begin
           allowed_instr = {VLEFF_V, allowed_instr};
         end
-        if (cfg.vector_cfg.enable_zvlsseg) begin
+        if (cfg.vector_cfg.enable_zvlsseg && emul_less_than_eight) begin
           allowed_instr = {VLSEGE_V, allowed_instr};
           if (cfg.vector_cfg.enable_fault_only_first_load) begin
             allowed_instr = {VLSEGEFF_V, allowed_instr};
@@ -651,13 +674,13 @@ class riscv_vector_load_store_instr_stream extends riscv_mem_access_stream;
       end
       STRIDED : begin
         allowed_instr = {VLSE_V, allowed_instr};
-        if (cfg.vector_cfg.enable_zvlsseg) begin
+        if (cfg.vector_cfg.enable_zvlsseg && emul_less_than_eight) begin
           allowed_instr = {VLSSEGE_V, allowed_instr};
         end
       end
       INDEXED : begin
         allowed_instr = {VLUXEI_V, VLOXEI_V, allowed_instr};
-        if (cfg.vector_cfg.enable_zvlsseg) begin
+        if (cfg.vector_cfg.enable_zvlsseg && emul_less_than_eight) begin
           allowed_instr = {VLUXSEGEI_V, VLOXSEGEI_V, allowed_instr};
         end
       end
@@ -698,18 +721,21 @@ class riscv_vector_load_store_instr_stream extends riscv_mem_access_stream;
 
   virtual function void randomize_vec_load_store_instr();
     $cast(load_store_instr, riscv_instr::get_load_store_instr(allowed_instr));
-    load_store_instr.m_cfg = cfg;
+	load_store_instr.m_cfg = cfg;
     load_store_instr.has_rs1 = 0;
     load_store_instr.has_vs2 = 1;
     load_store_instr.has_imm = 0;
-    randomize_gpr(load_store_instr);
-    load_store_instr.rs1 = rs1_reg;
-    load_store_instr.rs2 = rs2_reg;
-    load_store_instr.vs2 = vs2_reg;
+	
+	`DV_CHECK_RANDOMIZE_WITH_FATAL(load_store_instr,
+	   load_store_instr.eew == local::eew;
+	)
+
+	load_store_instr.rs1 = rs1_reg;
+	load_store_instr.rs2 = rs2_reg;
     if (address_mode == INDEXED) begin
       cfg.vector_cfg.reserved_vregs = {load_store_instr.vs2};
       vs2_reg = load_store_instr.vs2;
-      `uvm_info(`gfn, $sformatf("vs2_reg = v%0d", vs2_reg), UVM_LOW)
+      // `uvm_info(`gfn, $sformatf("vs2_reg = v%0d", vs2_reg), UVM_LOW)
     end
     load_store_instr.process_load_store = 0;
   endfunction
