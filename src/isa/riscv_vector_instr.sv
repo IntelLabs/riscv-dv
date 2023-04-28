@@ -44,7 +44,16 @@ class riscv_vector_instr extends riscv_floating_point_instr;
 
   constraint avoid_reserved_vregs_c {
     if (m_cfg.vector_cfg.reserved_vregs.size() > 0) {
-      !(vd inside {m_cfg.vector_cfg.reserved_vregs});
+	  if (is_widening_instr) {
+        foreach (m_cfg.vector_cfg.reserved_vregs[i]) {
+	      !(m_cfg.vector_cfg.reserved_vregs[i] inside {[vd:(vd + 2 * m_cfg.vector_cfg.vtype.vlmul - 1)]});
+		}
+	  }
+	  else {
+		foreach (m_cfg.vector_cfg.reserved_vregs[i]) {
+	      !(m_cfg.vector_cfg.reserved_vregs[i] inside {[vd:(vd + m_cfg.vector_cfg.vtype.vlmul - 1)]});
+		}
+	  }
     }
   }
 
