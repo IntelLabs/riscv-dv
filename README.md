@@ -1,3 +1,39 @@
+## RELEASE NOTES of Intel labs' version
+This is the repo for managing our efforts to make RISCV-DV compliant with RVV 1.0, as well as adding new features for verfiying vector instructions.
+
+Our changes are on branch rvv. It will be merged to master branch later.
+Please use rvv branch before being merged to master.
+
+### Main features
+- Vector instructions are compliant with RVV 1.0 specification
+- Enable specifying group(e.g. RV64F/D,RVV) distribution for random instruction generation.
+- For vector load/store instructions, only legal and memory-aligned ones are randomly generated. Enabled different indices for indexed ones
+- Change hardcoded `vsetvli` into randomly select one from `vsetvl`,`vsetvli` and `vsetivli` when configuring `vtype` and `vl`
+
+### Getting started
+To get started, please install RTL simulator, compiler as well as instruction-set simulator according to the [official doc](https://htmlpreview.github.io/?https://github.com/google/riscv-dv/blob/master/docs/build/singlehtml/index.html#document-getting_started).
+
+We tested two RVV tests,
+- “riscv_vector_arithmetic_test” for arithmetic instructions
+- “riscv_vector_load_store_test” for vector load/store
+
+Use the following commands to **generate testcases for DIFFTEST without simulation**:
+```bash
+python3 run.py --simulator vcs --target rv64gcv --step gen,gcc_compile --test riscv_vector_arithmetic_test --gcc_opts "-DDIFFTEST"
+python3 run.py --simulator vcs --target rv64gcv --step gen,gcc_compile --test riscv_vector_load_store_test --gcc_opts "-DDIFFTEST"
+```
+Testcases in assembly, ELF and BIN can be found in the directory out_2023-xx-xx/asm_test/,
+
+Use the following commands to **generate testcases and simulated in Spike**:
+```bash
+python3 run.py --simulator vcs --target rv64gcv --test riscv_vector_arithmetic_test
+python3 run.py --simulator vcs --target rv64gcv --test riscv_vector_load_store_test
+```
+Testcases in assembly, ELF and BIN can be found in the directory out_2023-xx-xx/asm_test/, and Spike commit logs are in the directory out_2023-xx-xx/spike_sim/
+
+
+ 
+
 ## Overview
 
 RISCV-DV is a SV/UVM based open-source instruction generator for RISC-V
