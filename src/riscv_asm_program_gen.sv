@@ -377,7 +377,7 @@ class riscv_asm_program_gen extends uvm_object;
     if (SATP_MODE != BARE) begin
       instr_stream.push_back(".align 12");
     end else begin
-      instr_stream.push_back(".align 2");
+      instr_stream.push_back(".align 3");
     end
     instr_stream.push_back(get_label("user_stack_start:", hart));
     instr_stream.push_back($sformatf(".rept %0d", cfg.stack_len - 1));
@@ -403,7 +403,7 @@ class riscv_asm_program_gen extends uvm_object;
     if (SATP_MODE != BARE) begin
       instr_stream.push_back(".align 12");
     end else begin
-      instr_stream.push_back(".align 2");
+      instr_stream.push_back(".align 3");
     end
     instr_stream.push_back(get_label("kernel_stack_start:", hart));
     instr_stream.push_back($sformatf(".rept %0d", cfg.kernel_stack_len - 1));

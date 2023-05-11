@@ -1,7 +1,7 @@
-## RELEASE NOTES of Intel labs' version
+## Overview of Intel labs' version
 This is the repo for managing our efforts to make RISCV-DV compliant with RVV 1.0, as well as adding new features for verfiying vector instructions.
 
-### Main features
+Main features include:
 - Vector instructions are compliant with RVV 1.0 specification
 - Enable specifying group(e.g. RV64F/D,RVV) distribution for random instruction generation.
 - For vector load/store instructions, only legal and memory-aligned ones are randomly generated. Enabled different indices for indexed ones
@@ -29,7 +29,7 @@ python3 run.py --simulator vcs --target rv64gcv --test riscv_vector_load_store_t
 Testcases in assembly, ELF and BIN can be found in the directory out_2023-xx-xx/asm_test/, and Spike commit logs are in the directory out_2023-xx-xx/spike_sim/
 
 
-============= The following is the README of upstream =============
+# Original README of upstream RISCV-DV
 
 ## Overview
 
