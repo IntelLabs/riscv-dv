@@ -7,6 +7,8 @@ Main features include:
 - For vector load/store instructions, only legal and memory-aligned ones are randomly generated. Enabled different indices for indexed ones
 - Change hardcoded `vsetvli` into randomly select one from `vsetvl`,`vsetvli` and `vsetivli` when configuring `vtype` and `vl`
 
+We also drafted a more detailed description of RISCV-DV test generation flow. Please refer to this [link](https://htmlpreview.github.io/?https://github.com/IntelLabs/riscv-dv/blob/master/docs/generation_doc/riscv_dv_generation_doc.html).
+
 ### Getting started
 To get started, please install RTL simulator, compiler as well as instruction-set simulator according to the [official doc](https://htmlpreview.github.io/?https://github.com/google/riscv-dv/blob/master/docs/build/singlehtml/index.html#document-getting_started).
 

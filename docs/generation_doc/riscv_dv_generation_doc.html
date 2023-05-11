@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>RISCV-DV</title>
+        <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+/* From extension ms-toolsai.jupyter */
+/* These classnames are inherited from bootstrap, but are present in most notebook renderers */
+
+.alert {
+    width: auto;
+    padding: 1em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+.alert > *:last-child {
+    margin-bottom: 0;
+}
+#preview > .alert:last-child {
+    /* Prevent this being set to zero by the default notebook stylesheet */
+    padding-bottom: 1em;
+}
+
+.alert-success {
+    /* Note there is no suitable color available, so we just copy "info" */
+    background-color: var(--theme-info-background);
+    color: var(--theme-info-foreground);
+}
+.alert-info {
+    background-color: var(--theme-info-background);
+    color: var(--theme-info-foreground);
+}
+.alert-warning {
+    background-color: var(--theme-warning-background);
+    color: var(--theme-warning-foreground);
+}
+.alert-danger {
+    background-color: var(--theme-error-background);
+    color: var(--theme-error-foreground);
+}
+
+</style>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <h1 id="riscv-dv">RISCV-DV</h1>
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#riscv-dv">RISCV-DV</a>
+<ul>
+<li><a href="#table-of-contents">Table of contents</a></li>
+<li><a href="#processor-capability-settings">Processor capability Settings</a></li>
+<li><a href="#configuration-of-the-generator">Configuration of the generator</a></li>
+<li><a href="#representation-of-instructons">Representation of instructons</a>
+<ul>
+<li><a href="#base-class">Base class</a></li>
+<li><a href="#define-instructions-as-subclasses">Define instructions as subclasses</a></li>
+<li><a href="#floating-point-instructions">floating-point instructions</a></li>
+<li><a href="#vector-instructions">vector instructions</a></li>
+<li><a href="#intructions-of-other-extensions">Intructions of other extensions</a></li>
+<li><a href="#pseudo-instruction">Pseudo instruction</a></li>
+<li><a href="#illegalhint-instruction">Illegal/HINT instruction</a></li>
+</ul>
+</li>
+<li><a href="#generation-main-body">Generation main body</a>
+<ul>
+<li><a href="#overview-of-the-procedures">Overview of the procedures</a></li>
+<li><a href="#initial-construction-of-function-body">Initial construction of function body</a></li>
+<li><a href="#setting-up-callstack-among-main-and-sub-programs">Setting up callstack among main and sub programs</a></li>
+<li><a href="#generating-random-instruction-stream">Generating random instruction stream</a></li>
+<li><a href="#generating-directed-instruction-stream">Generating directed instruction stream</a>
+<ul>
+<li><a href="#loadstore-streams">Load/Store streams</a></li>
+<li><a href="#amo-streams">AMO streams</a></li>
+<li><a href="#loop-streams">Loop streams</a></li>
+<li><a href="#stack-push-and-pop-streams">Stack push and pop streams</a></li>
+<li><a href="#jump-streams">Jump streams</a>
+<ul>
+<li><a href="#stream-of-single-jump-instruction">Stream of single jump instruction</a></li>
+<li><a href="#stress-back-to-back-jump-instructions">Stress back to back jump instructions</a></li>
+</ul>
+</li>
+<li><a href="#numeric-corner-streams">Numeric corner streams</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#page-tables">Page tables</a>
+<ul>
+<li><a href="#page-table-entry-and-page-table">Page table entry and page table</a></li>
+<li><a href="#page-table-lists-construction-and-exception-handling">Page table lists: construction and exception handling</a></li>
+<li><a href="#exceptions-and-handling">Exceptions and handling</a></li>
+</ul>
+</li>
+<li><a href="#pmp-and-epmp">PMP and ePMP</a></li>
+<li><a href="#handshake-between-testbench-and-dut">Handshake between testbench and DUT</a></li>
+<li><a href="#instruction-generation-flow">Instruction generation flow</a></li>
+<li><a href="#appendix">Appendix</a>
+<ul>
+<li><a href="#setting-up-privileged-csr-registers">Setting up privileged CSR registers</a></li>
+<li><a href="#kernel-sp">Kernel SP:</a></li>
+</ul>
+</li>
+<li><a href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="processor-capability-settings">Processor capability Settings</h2>
+<p>The capacity of the simulated processor is specified in file &quot;target/rv[32|64]xxx/riscv_core_setting.sv&quot;, which is included in file &quot;src/riscv_instr_pkg.sv&quot; according specified target option of <a href="http://run.py">run.py</a>.</p>
+<p>This file includes parameters and key variables specifying the processor capability.</p>
+<pre><code class="language-sv"><span class="hljs-comment">// Processor features</span>
+<span class="hljs-keyword">parameter</span> <span class="hljs-keyword">int</span> XLEN;
+privileged_mode_t supported_privileged_mode[];
+riscv_instr_name_t unsupported_instr[];
+riscv_instr_group_t supported_isa[$];
+mtvec_mode_t supported_interrupt_mode[$];
+...
+<span class="hljs-comment">// Vector extension parameters</span>
+<span class="hljs-keyword">parameter</span> <span class="hljs-keyword">int</span> VECTOR_EXTENSION_ENABLE;
+<span class="hljs-keyword">parameter</span> <span class="hljs-keyword">int</span> VLEN;
+...
+<span class="hljs-comment">// Multi-harts parameters</span>
+<span class="hljs-keyword">parameter</span> <span class="hljs-keyword">int</span> NUM_HARTS = <span class="hljs-number">1</span>;
+<span class="hljs-comment">// Previliged CSR implementation</span>
+privileged_reg_t implemented_csr[];
+<span class="hljs-comment">// Supported interrupts/exceptions</span>
+interrupt_cause_t implemented_interrupt[];
+exception_cause_t implemented_exception[];
+</code></pre>
+<h2 id="configuration-of-the-generator">Configuration of the generator</h2>
+<p>The class <code>riscv_instr_gen_config</code> is used to hold settings of instruction generation.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/XLEnJiCm4Dtx5HuG0g5Mi7QgXDWG0on8LMMvpYMrYEtexb84LV-TInetLgkMB4dUUxxdTpulY0row-k9hGsHGaTsgrqWHbr1q3Q6qbMxYP9dDbCzqLfsCIYX0Kt_IS3iGaKYwPKFoXiNT8EnGkE7SZQmcYiqeP0oFEYeNP_BbgjJuMmeB5jeq6rT3KK5XNh-UCyz9GktbDQk7Qlbv-lBstpwD7zS9SF_HPaPGkM80JENqX9gzAb0gJ6seP3qsiS2T0e6mQnhq5H2i92v3NJLO08FBHUdurgoqbUxwR0hekOonrSuD9SuoHjv0wWEXvvbteBbA4TJdkndn0TXuvjprG0cZvR4ubPz0GQe9OQH_dZm4N_wTiiuZISANX-mvKqt4-F_COxnyQ949KiRlU_sKxi0AZRTp6RfGkjrB7KsYb9d7D5yUaTqMCH0J1cHpOvqKHRAFU2ZLsAdq_wryy2RMEnJIVY-kq-DHD1T2wDtlp2YaVWCxehk9mi8HNUD_m00"><p>In the function <code>new</code>, command line options are handled with regard to the properties in &quot;command line options&quot; part. Also, it creates instances of associated members <code>vector_cfg</code> and <code>pmp_cfg</code> respectively.</p>
+<h2 id="representation-of-instructons">Representation of instructons</h2>
+<h3 id="base-class">Base class</h3>
+<p>A base class <code>riscv_instr</code> is defined for the most general instructions. Its members consist of rand operands, helper fields, attributes, static containers for managing supported instructions, a handle for gobal instruction gen config, as well as constraints.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/dLRVRzem47xVN-67FMpgZxMqtGFggWP6In2KBi2c2g7892POYsDaEsXLjVzzTko4E0cb7IyvV_UTxxlpnU6M2yX4Ik8FGFw2678E6ER1riS95moyPBZwdPu2ka4C9Y6NTW4VWO0pq0RN0OqfQpCKtYZEzPTiVGEMM83v-NdxR54AOVpybH2Tdw785rPCw_qnuRj3C267ghcmgf5zMQDOTWQiC8ghpLb3xkjgPMWDRpNZOIEibTcun7m2-M_jg4hJVl6yGTAVcHLNZ98yyj8EX88I7DJpSJ-WPCCGvwYkKhe8IeJ4vUZW92htA1kdD12O9d9pwLwc0bMQ5J6QRcHqQG3z3BE4hoWZK5He6hHu0HGeekovminXkncPAu44LTWAAZ5b8VA54R8pbd3DbQE4vVDvNjzWKUzauUNpZulNinw19UGuqCuti3Ki4Dd4ijWzSafeBJJlqRovSOiz6chxP8StRpZEnHkgG7-2E0sHQkjSaJSCRt6C8XJMNzhaZLHvVW5LwI1EX3LzfvQjM2iSsQTC_60LLSSJ9Rxc5iIJay9y8KYiQVYtj8aP7pqhyjBuzBdk31YIlJOPOiaxo6eaB5CSXtvfTFJhjt_720bVNNUlxAae-xtbBuTYnXI6FXUKDShSOldbWR7gzHOnqOASbFpvWUZc9LGWkNsq5e2koddQxMoaCfAwwKAq0YX9oUvMCzymx-T5opqsvjVBmhneZNQeCVFSA0bLuaCAzEMpHyBLJiB0lnjx8sSAle4pdMXc4BrohLN7MddMQcAjtYatVv4F2nwEdUyxiPFfsEiPi-_UcUIEvqxxezxKxHwRc7ktwmpreZiUFJfvKCTp7hfzRGzceqUprLC1Jfucqzx_7S7k3gbNPMgPcIDtPkwZqJh8TKh3Co9xFupnaCiUvWTolqDc1MIiOSSyJIt3NpcU4_h6c7Jo7ZPNUYiDzOVi7m00"><h3 id="define-instructions-as-subclasses">Define instructions as subclasses</h3>
+<p>Specific instruction is defined as a subclass of <code>riscv_insn</code> with the name <code>riscv_INSTR_NAME_insn</code>.
+Each instruction has a static property <code>valid</code> which is initialized by calling <code>riscv_insn::register()</code>. This function adds a item in the static associated array <code>riscv_insn::instr_registry</code>.
+In <code>new</code> function of instruction-specific subclass, attribute fields of instr_name, format, group, category, imm_type are initialized. Then virtual methods such as <code>set_imm_len</code> and <code>set_rand_mode</code> are invoked to set other fields according to the attributes.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/SoWkIImgAStDuL80WkISnE9YXQBCukIoU4SNb_ZClEAIecgm50XeAm1LbsGcAoHbbYYK9UPafYZOGbM3LLfP5QMcPnQNf1PfWFdnUPf8UlDIopKW_5emYQHHmQP6LnVTNWAAF0ch2lRn8KeH4KRvX1DX4X5gFFs2GuBY_HnzNQ5g7LBpKa313m00"><h3 id="floating-point-instructions">floating-point instructions</h3>
+<p>To represent floating-point instructions, a base class <code>riscv_floating_point_instr</code> extends the base class of instruction <code>riscv_instr</code>, shown in the Figure.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/dPHDIyGm48Rl_egSH96jsBqj7dQnBWYwXrRq6B9DQWFvA9cq8Al_tQGVqfPQsUPKvfatC-zaw1OiCRQKuWAvame2W0o7jCAPqCHozO4BpPN5N84rfphBdo10yTl-DaAwO8Oe2kWIFIGnEF2RSuCokDiWZxix2uFjW8V_yFKyfxFOo1PdsEXIKUz6Qie6IIMm4SsCbetVLdxajcyyPyAPHXbdWeuCvmImCuqs0qqN3_-8hwVZT1HsfLFjsoBkGGQ5WzxtIJARQ_hTb-cA6SCfewY1ewuhxbQ027-xIxGX0NbrFUIbTHoOsmCfiM1gp6izrJZLnUSayre_p7h4lOokzQRVvXthsQFxhzLgPXTx-LEuBz_leWWdosJH-RBdzmMQ1NMI1NMIy-iy7PBN61zsBu-jTCiKzN-C7m00"><p>It adds new properties like floating-point operands, related helper fields and constraints. Some of the virtual methods are overrided accordingly.
+Similar to integer instructions, floating instructions are subclasses of <code>riscv_floating_point_instr</code>. In function <code>new()</code>, they registered themselves by <code>riscv_insn::register()</code> and initialized properties instr_name, format, group, category, imm_type as well as other fields by calling overrided <code>set_imm_len</code> and <code>set_rand_mode</code>.</p>
+<h3 id="vector-instructions">vector instructions</h3>
+<p>To represent vector instructions, a base class <code>riscv_vector_instr</code> extends the base class of instruction <code>riscv_floating_point_instr</code>, shown in the Figure.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/bLLDRzim3BtlL-YmmugbMPlSZ1rQ8DbGeEaXsPm1HI6e4Pq8a2L3KcnitVxxw8_Kag4qgKxYUuyKIPFmZNNCk7qkFn0y6yci9KROJKbBs3Xjg53McPU6hSzuJ9PfIdG1XYbkqNwbFfFINYUanWyX36of2mIJKuBf2G4_mJDQCYEOSgGJzeWloplsMVXmnQCmG4LwWZnUNoLNJnwlCW4Ic-5h9g44yhqC-AdFOrTt8B6df8iKj7N7BCNMedkOLejFZk3JECxZS1w7_Mw6jB2q4XoKKDjsHc8AnOpHrPkIZLOb67T4mAJK5N0l4VluyGbbFU1zVcmZXiCuJA3GR-BOkx_au7QQ__EUAGpG-jFeNFo1JnT-G8tP6IoKazPjEF82juV9kXAxBmfj770lG2_ewfmmcqTv2wv9WUQQXocqpxNfAkq0Ht-xSqHdaKLDaiYukzy5SCW8g7tU3n_fbxe-QJeAxRk1_MjWVmljzS1_FV1V3_mFTO7YTL5zTHAoeyNX8ZR2RajGrV94QiQ_MBn1qaQ5QdHOor6pVC5ZZT4-aA6hgoUqq3WqtHX-_Njv6Kd0S_DXNvxUpcRdYnVpvVVv-VBbVBRwkQ3fwdoN-pbDprUltgE-UrZzMDA7syMXWXjiR_qd-Gy0"><p>The function <code>new()</code> of <code>riscv_vector_instr</code> is not trival compared to its parents. It handles the plus command options. An <code>post_randmize()</code> mehtod is used to initialized <code>legal_eew</code> acccording to random <code>vtype</code>.</p>
+<p>It adds new properties like vector operands, VA variants, vm bit and related helper fields and constraints. Some of the virtual methods are overrided accordingly.
+Similar to integer and floating-point instructions, vector instructions are subclasses of <code>riscv_vector_instr</code>. In function <code>new()</code>, they registered themselves by <code>riscv_insn::register()</code> and initialized properties instr_name, format, group, category, imm_type, allowed_va_variants, sub_extension as well as other fields by calling overrided <code>set_imm_len</code> and <code>set_rand_mode</code>.</p>
+<p>Note:</p>
+<ul>
+<li>function <code>new()</code> of base <code>riscv_vector_instr</code> and those of instrction-specific class <code>riscv_INSTR_NAME_instr</code> are different things.</li>
+</ul>
+<p>The CSRs of RVV are defined in a separate configuration class <code>riscv_vector_cfg</code> which is instatiated as a member of the top-level configuration class <code>riscv_instr_gen_config</code>. Most of these RVV CSR related fields are rand variables. The function <code>new()</code> of this class handles plus command options. And the function <code>post_randomize()</code> initialized un-random field <code>legal_eew</code> according to randomly generated <code>vtype</code>.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/XLDDJyCm3BttLrWJ1pwq2Qux82xS46SaD4MXSLDBgJCbMJk6-EyuRJSO7QoN97xFpyznyn2J3cdJkA9qEaO85CjM4SSKb4LMfUUAx17OOfbyK6LbFmgGxmRQzBv6M4BGR8Q3Idl8xUDlbE3rvUdnUNwtl5tjuRxy_vHjQ0xQil-MtaRzCtKC1umOMZIg3MZZwyKgKmRZ4ZXaExJQASHkO10ds70aosX6XcVtdfiTRcDQA4FL-dISTGY-8xQg8uCicobFE-SxHMvmSgPGjbxhdGucJWd8-isXshKkHhH_ufNUkAJwjYeACIddjVdDNYn0PYu-j5n9bECO7TRvl5y-6aorDv-ZFcDtUJNkrrw4iw9lQ8SI_YmAzWbb1hPEuAl9NxHSIdwVNVgcaKn7ZE3NYSG7zC3ivhZ56MJBnz39xcO3IGU4EYkZMHJ89XiwR-kubLw8c19f9qUe29s1sU4_sfSgInzC7dZomrluBdZwSS7rV59SfbBh2FV5WoJdr_a5"><h3 id="intructions-of-other-extensions">Intructions of other extensions</h3>
+<p>The same way is used to define instructions of other extensions. That is, a base class <code>riscv_EXT_NAME_instr</code> extends the base class of instruction <code>riscv_floating_point_instr</code>. In the subclasses of extensions, there are random extension-specific operands, related fields and constraints. Methods of base class are overrided, such as <code>is_supported()</code>, <code>set_rand_mode()</code>, <code>convert2asm()</code>, <code>do_copy()</code> etc.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/ZTEz3e8m4C3ndQVW1HXqTX2BaQ620Gt6fO72G29WUjN1-F1-GB1N2xZ2B__qhkaIP2hajJfReWH-OoNKKjYBX-FOxOUCbJL8CVGxhPfnm9lg8Wg08XztzooT0jaKu5C0Ec2XsLIp2IE2AWOJqn1t-YMeYaOiGIMZYaclBFF2L4qOJU9TEzbVFFboIzipEeK_SpqFTGVS_EFKy_Rtea8ty08ql54HUj9RtAIs1wh5XfYlz-0NhiZhQd3EfDR7VQUMHPs_NyWJ"><p>The instructions thereof are subclasses of <code>riscv_EXT_NAME_instr</code>. In function <code>new()</code>, they registered themselves by <code>riscv_insn::register()</code> and initialized properties instr_name, format, group, category, imm_type as well as other fields by calling overrided <code>set_imm_len</code> and <code>set_rand_mode</code>.</p>
+<h3 id="pseudo-instruction">Pseudo instruction</h3>
+<p>Only two pseudo instructions are defined so far, which are LI and LA. They are in the same format and are modeled in class <code>riscv_pseudo_instr</code>, which also means the class may not suitable for other pseduo instructions in different format.</p>
+<p>Class <code>riscv_pseudo_instr</code> is a subclass of <code>riscv_instr</code> as below.</p>
+<p>Note:</p>
+<ul>
+<li>Pseudo instructions is not registered in the static members of 'riscv_instr', which is different from other native instructions.</li>
+</ul>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/dLB1IiGm4BtdA-Qek5sMzI1KXTsJ5FQau4MapQRJ6cYJCfbMYkw_ctIBhhGBOa-JzpBllSnqurWIjtKbL2MT0z9ETMdZiCrjgerZ-X3WloiunL8ZQuGOI9fyfcMWKnuQbqjGDe1I6tR-ECeTknwVhzT9kajIDGTlHpYAHjRW-yNbM7VQvvPLKE-GU2rTFU5Av9D4dZu8OnczI_d6O8kPx74yUOdWli4S2q3Jrh3N32ytyUeLmcHs2Tp3QX6ghJYSdyMjG9C7xsE02ekp_fF9FEWE3MGJrMpnCrgH5PPgoHxBb6GiBVKPXFLa9TcsyRLIbd9jogh_PvQmZYTTwqeIi0MvjnsUBFVlgh_N8WYv9GF-xDC1OKFeqB1aROsN43Cl__OwoWyCt7r6qOoVsFZBuG__0W00"><p>To create an pseudo instruction, create a instance of <code>riscv_pseudo_instr</code>. And set <code>pseudo_instr_name</code> to LI or LA, and set <code>rd</code> and <code>imm_str</code>.
+The created instance as an element of <code>riscv_instr_stream::instr_list[$]</code>, is the same as other native instructions, for which the asm string can be got by calling <code>convert2asm()</code>.</p>
+<h3 id="illegalhint-instruction">Illegal/HINT instruction</h3>
+<p>The illegal/HINT instructions are defined by instances of class <code>riscv_illegal_instr</code>. It is different from ordinary instructions in two aspects. First, all illegal/HINT instruction are <strong>instances</strong> of this class only. The other one is the class is inherited from <code>uvm_object</code> rather than <code>riscv_instr</code>.</p>
+<p>The illegal/HINT instructions will be generated in binary format. In <code>riscv_instr_sequence::insert_illegal_hint_instr()</code>, it first calls method <code>init()</code> of its member <code>illegal_instr</code> that is a handle of the <code>riscv_illegal_instr</code>. Then it calls <code>randomize()</code> to generate one illegal/HINT instruction and appends its binary format to <code>riscv_instr_sequence::instr_string_list[$]</code>. This process is repeated a few times corrresponding to <code>cfg.illegal_instr_ratio</code> for inserting multiple ones.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/dLVRRjms47tdL_2XQ6r4kzwr0Hjm6o2kwo2B6YbW5tce4OXQYTAoqGqajRwq-VVCKDI5aho8uWVREzV3CyCPxZkb0wchB2LX6YX5fL3XtXTfofCWzKMkjFoFKFXvGyCuePUD0IhyXET-MEInI1gJ8YibLuf7Q1da4TqA3HgZNYwfZKlrSydXi_NYJo4ljIZonib9xwEnpwqjHETopoC_R8mxYRNd7PYCvnhiG2hof05HGr1STmZgT4KP5X5_-Eapk03kX_FBrMVgM8IhrSZg5AnSe_L1er19LIjAAVO2V02xv8cl6u1RaGVocSQ5p0BDuO0f_8awjFKnmQfFyiFPkijHftVKvpq40C_HhVkwJ6qTPG_wBb1-NENXMSzWeBeOguOUJiYXJmyeC07D1KSDHAxLHBluaL3Q3qTYqp2DM3qhpJFR6esmQR2Qfv6uQsEmQBLTetLgD-mEW0v5bXV_R2ow62KsL4rA6zkbfM6nQ9j1wADZ-w4iW12aiiZ42s_52TVOBZu0Epf64VbAyW9RIoGxJOjuwjfVNhQC4cGquZ7bUPLr9QJrPFYogTt-CcHwZkowfMfA-nwFEnPTMD6T9RmBia5WLli1oEv_jW7kJRsD0kHV9sV9huJd4HBmFInqPIURcBAM54QPKA-2P1uv4ak-z6YbUDiwG22m0BFesADwntFu1J5YmTE8Y3mI8TvtK7GENq2ydE3_RCn_Xs30trK45wNC9wIF4xBrkIe7ujjAU6ttETIbF7wTEJk02Hue3pAEXjRavCFcuz_cS3FY3MSmML0pofaPMemcOW-KCXnlZBvzIqz_sQvMIx1Y_S7isydCA52lH2RIGA8H5jTnNNiqIBle-o2jk08Q0idhIJ-B2oN9fo0L4Rs-lwD154cSx_GV0Ofwe5SXTfNo2C2gS8C-OeFq-mrmiOasPqlo4VFNayu9Hd6grZdK3d2RKYXJ2iFWd1ECnkwysx2Wzx1nqLMARMMsVU46m6v0kp-42hOfXxEsLnng5TExJzTOCa2AIrbLPLb8s8i_TWQx8n3JtfIbBky04sbQgZqEyoXhro0Zo6_xML-mEM06cqd4trLiPEWzTCxDzTNjxSdDxtStLt-UmBs4PbLA93dmaozUk2o08wdMz6Sg8u_sNbLcvUhrgOqpqO5D9EXKR7ViLIHT817ruuNDEEPernuuQBqau8mM0QkTM9j_y51ZSmRvQzlz09xX-keXirF11HO-FVqWk4EF2togmj1NL1VcKTXjXywO66CQX64XSS6WBUk2pYcOyugP8gUxbYqT3hpUjm0SypMqMPM2DmtPm2y1L_E5ksM76qZOS1NWjHo-lktjX9PbBY_0fuP_rN8E9lTfvQ2pUux1n1RX3cRKd8rtE6llvKOarvNCpVF0-OQ0pYQZyV7eez2x7gYWB24Xxz9M-ymljl_oKDFV_byifXAJTs2CNmg_0G00"><p>Note:</p>
+<ul>
+<li>Only HINT instructions of RVC are generated, which are specified in constraint <code>hint_instr_c</code>.</li>
+<li>Illegal isntruction is generated by excluding legal related fields or using reserved encodings.</li>
+<li>Generation of illgegal instructions of Extension B and AMO are not supported so far.</li>
+</ul>
+<h2 id="generation-main-body">Generation main body</h2>
+<p>The main body of the generated assmembly file consists of a main function and a few sub functions. The figure below demonstrates the tree structure of the calling graph of these functions.</p>
+<p><img src="riscv_dv_callgraph.png" alt="callgraph" title="Call Graph Tree"></p>
+<h3 id="overview-of-the-procedures">Overview of the procedures</h3>
+<p>The procedures to generate main body of test program with main and sub functions are listed as below.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/vLGzJyCm4DtpAqvYWGcwKY4LTO0kdTYHQn_1O9-ZyuMFVy_5RffI8I4wWSWGnRxtxhrddxB8ObZw69hoqUGkU6b0dyiben44JreXY_2G64eb6a_GSMhPn7d5tY0X3sZd6QsWApJkhVX4bQLBD15EewTxIt8rEplaiY6NOaNlqojpNhs1QLN-6uUvtum6uMHslCUB7tiiw6ldTCFOPq0Iv7DyKz-SUl641M44v3LfrUMZOwr_UQpXFGtJJicQ44gJoY07Hji-zR7R5wv5QnCxJsrudtyQp1GtAZa57hgKqZP6TPr7spdxba37kqN9qsbk56qVzrL7neeoie0F0LiJXlPb_tQrlWEVwH2-JFGouBV7x4dIUEngVX2CHhwwvx-PevhfEhrWO9IUQHo2_v5nDzXPKjSiT3dyFZy0"><p>Here is the pseudo code to generate the main body following the procedures.</p>
+<pre><code class="language-sv"><span class="hljs-comment">// Similar snippets in src/riscv_asm_program_gen.sv</span>
+<span class="hljs-comment">//===== Create instance of main/sub program (riscv_instr_sequence) =====//</span>
+<span class="hljs-keyword">program</span>[hart] = riscv_instr_sequence::type_id::create(get_label(<span class="hljs-string">&quot;main/sub&quot;</span>, hart));
+
+<span class="hljs-comment">//===== Initialize fields of the program =====//</span>
+<span class="hljs-keyword">program</span>[hart]<span class="hljs-variable">.instr_cnt</span> = cfg<span class="hljs-variable">.main</span>/sub_program_instr_cnt;
+<span class="hljs-keyword">program</span>[hart]<span class="hljs-variable">.is_debug_program</span> = <span class="hljs-number">0</span>;
+<span class="hljs-keyword">program</span>[hart]<span class="hljs-variable">.label_name</span> = main/sub_program[hart]<span class="hljs-variable">.get_name</span>();
+
+<span class="hljs-comment">// Generate directed instruction stream, i.e., initialize riscv_instr_sequence.directed_instr</span>
+generate_directed_instr_stream(<span class="hljs-variable">.hart</span>(hart),
+                               <span class="hljs-variable">.label</span>(main_program[hart]<span class="hljs-variable">.label_name</span>),
+                               <span class="hljs-variable">.original_instr_cnt</span>(main_program[hart]<span class="hljs-variable">.instr_cnt</span>),
+                               <span class="hljs-variable">.min_insert_cnt</span>(<span class="hljs-number">1</span>/<span class="hljs-number">0</span>),
+                               <span class="hljs-variable">.instr_stream</span>(main_program[hart]<span class="hljs-variable">.directed_instr</span>));
+<span class="hljs-comment">// The cfg field is retrieved from that in uvm_test_top, and assigned to internal instruction stream&#x27;s and directed stream&#x27;s cfgs.</span>
+<span class="hljs-keyword">program</span>[hart]<span class="hljs-variable">.cfg</span> = cfg;
+
+<span class="hljs-comment">//===== Solve random variables recursively =====//</span>
+`DV_CHECK_RANDOMIZE_FATAL(<span class="hljs-keyword">program</span>[hart])
+
+<span class="hljs-comment">//===== Genenerate random instruction stream =====//</span>
+main_program[hart]<span class="hljs-variable">.gen_instr</span>(<span class="hljs-variable">.is_main_program</span>(<span class="hljs-number">1</span>/<span class="hljs-number">0</span>), <span class="hljs-variable">.no_branch</span>(cfg<span class="hljs-variable">.no_branch_jump</span>));
+
+<span class="hljs-comment">//===== Something here to set up callstack =====//</span>
+gen_callstack(main_program[hart], sub_program[hart], sub_program_name,
+              cfg<span class="hljs-variable">.num_of_sub_program</span>);
+
+<span class="hljs-comment">//===== assign forward targets for branch instructions =====//</span>
+<span class="hljs-comment">// Insert directed instructions at first</span>
+<span class="hljs-keyword">program</span>[hart]<span class="hljs-variable">.post_process_instr</span>();
+
+<span class="hljs-comment">//===== Convert instruction stream into string format =====//</span>
+<span class="hljs-keyword">program</span>[hart]<span class="hljs-variable">.generate_instr_stream</span>();
+</code></pre>
+<h3 id="initial-construction-of-function-body">Initial construction of function body</h3>
+<p>Each bubble in the calling graph represent the instructions of a single function. In RISCV-DV, it is modeled as a class <code>riscv_instr_sequence</code>.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/bLLBRzGm4BxxL_Y0U8Xkk5SSYZX0Bo0XRbKLEVOaSN7iuCUMglI_CvCusMGthTWzx6Rd-VcRRvoh48MFgJDC6X42zph8VQbjYBuCy3k1bV38E7xUSntAJcXRzjurNdJyabSw7dmAgjHiEesem9HMT81chAnjCtYAWajdQzqaBw9s5WqvGzODXYx1D63BCNXA7Un93edu1DXqpXzpf8rOHUDtia4t5jJAFI8fZGxnvjNj6jeY1eRJZ5YyiAfSUdAmqXvaXEoxkJq2luX5u4Yv_CLhJtpCY3DlvU0i3TWH-H4Oye6DuES6VGfjTWn1Mmb_T3p4k_uadCWq1XfX-6lU4by78aTxFaSlunhMqdiuyzAQ8wdgPf7TRlXvx22sJZtbS0ltRz_bvxr6WI8qKi1GOVQGPS79yruauCWv5UrTYAHP2I4SXU0_yB6yIrt_J39s05GkhAQSemgay8anwo8WBKqRkQitj-loyh0URDgUuGzOHUd_LGCNXlq0r2_iWSSMXWrorHsgaWU8d6axc2E4-2RmAccZUD-AS5wRhSLXoqKa6pANLudNpdSYhbiOg5_eW9DdVZe87G9ByBJlIa9UHjSpYInZ6KeKc1Aerd805voThCi7ai35Mg_de9grnxxacMzTFzK3qp7m3heADtI9gPWB5EmQuI97WGiUKfKdVi65KlCrmiOhuW1zsIqKvo0_5JYx7eGzDpkg_IdGLSdnjT2WReZz2cyzsHw5VRVcWRptmgiSGGF7Oq7N6_S0wYoO9yiseIJHadNLdbSeNCNSg6afZ1alrU8iCM-kB_lix7vgl37Zw1XvLlhc-5P0Y_EKGOcirc3Kvci6vv-lMahwUltjv_famWCRoS39j80bXPJEA-eM7UronCVmeeoyInY4vuUOlALNshPyQAqcElZ7lxlT9b7i2kExPDW_"><p>Note for method <code>post_process_instr()</code>:</p>
+<ul>
+<li>First it inserts directed instructions, which randomly mixed with randomly generated ones.</li>
+<li>Then for each instruction in the stream that is &quot;has_label&quot; and isn't &quot;atomic&quot;, randomly set the flags <code>is_illegal_instr</code> and <code>is_hint_instr</code> according to fileds <code>illegal_instr_pct</code> and <code>hint_instr_pct</code> respectively. (Note: the two flags here are not used in current project.)</li>
+<li>In the same loop above, it sets the <code>label</code> and <code>is_local_numeric_label</code> of the &quot;has_label&quot; and non &quot;atomic&quot; instruction. <strong>WARNING: Atomic stream does not have a label as the same format as others. Will this cause problem when an atomic stream is selected as the branch target?</strong></li>
+<li>Only forward branching is employed, since it may be too complex for chosing the exit condition for a backward braching to avoid inifite loop. Backward branching is implemented as directed stream.</li>
+<li>Next, randomly generate a list of 30 targets <code>branch_idx</code> that in [1:cfg.max_branch_step], which means how many steps forward from the branch instruction</li>
+<li>For each unassigned branch instrution, select a valid target step. It picks one from the <code>branch_idx</code> successivley. If all 30 steps are used, shuffle them and pick from the first one again. If the selected step is out of range (&gt;= label_idx), choose the last valid instruction.</li>
+<li>Assign branch target according to selected branch steps by setting <code>imm_str</code>, <code>imm</code> and <code>branch_assigned</code>. Update the associative array <code>branch_target</code> for bookkeeping the idx that as a target.</li>
+<li>Remove the local label which is not used as branch target.</li>
+</ul>
+<p>Note for method <code>generate_instr_stream()</code>:</p>
+<ul>
+<li>format each string-format instruction in <code>instr_stream.instr_list</code> with consistent indentation, and append it to field <code>instr_string_list[$]</code>.</li>
+<li>insert illegal/HINT instruction with the proportion specified by <code>cfg.illegal_instr_ratio</code> and <code>cfg.hint_instr_ratio</code> respectively. These instructions are in hexadecimal number of 4 bytes in string format and inserted to random positions within <code>instr_string_list[$]</code>.</li>
+<li>For subprograms, it adds return routines at the end of <code>instr_string_list[$]</code>. This is implemented as randomly set the LSB of <code>cfg.ra</code> to one (JALR will zero it out), and jump to that address.</li>
+</ul>
+<p>In the one of the main top-level mehtod <code>riscv_asm_program_gen::gen_program()</code> and <code>riscv_asm_program_gen::gen_sub_program()</code>, the objects of above <code>riscv_instr_sequence</code> are created by factory. Then its methods are called from the caller <code>gen_program()</code> and <code>gen_sub_program</code> to construct instruction streams respectively.</p>
+<h3 id="setting-up-callstack-among-main-and-sub-programs">Setting up callstack among main and sub programs</h3>
+<p>To avoid infinite call loop, the call graph between programs are tree-like data structure that is loop free.</p>
+<blockquote>
+<p>Constraints of callstack generation:</p>
+<ul>
+<li>A program can only call the program in the next level.</li>
+<li>A program can be called many times by other upper level programs.</li>
+<li>A program can call the same lower level programs multiple times.</li>
+</ul>
+</blockquote>
+<p>The callstack is modeled by the class <code>riscv_callstack_gen</code>.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/ZPFFReCm3CRlUGeVjrLKi2DRfLxt31L28PWsMaYw9B1fLTzz9lmfT6WQ1v0-spyxpiVUUMvzKoic57SEh7IYpGLNYWBYFJ-YlZ2WPxi5r48P9_KHpjOSBQyTgI6u6PLSQ0yfIEtlzDCX8xsd3zg83Osef38tNCs_ydu0XIsg1NAc1sWX_I69qpWRWS9evosdYcd0UKsSmMu7yKi89F2wMqHbb6I_j6mrQzDNpuyU9O4QHU5pgT6VJ7aT1fTQ-eV7SJ76-TnoNPfQVkDDjZHss7z_VWfScJOUGM7bmLHhDvIc7PgzqKjoHRXn9cf9ILgWOmLMnYAC7RcNHZFKPSV-HuFbkAnef2gXom6BAi3SIPw1slXFH0sbh2gqI9SsUOKBOMpPsSSRO4H5opqEbD1gccVknQ7-ScSeMNP-ee5cIZvQvBQ_oJyXbNOBZNRogB4StTGK-OtGktILkcwiQT44TyIM7mr2LyzRGvf3LKNTD7JiFvn1u1QjVoOw9OOxNxa5U8gMEm6sfurrF-yF"><p>Note on <code>riscv_callstack_gen::post_randomize()</code>:</p>
+<ul>
+<li>Assign the <code>stack_level</code> field of each program by the value of generated <code>stack_level[program_cnt]</code> with the same index</li>
+<li>Build the call relationship in a top-down way. Starting from level 0, use <code>program_list[$]</code> and <code>next_program_list[$]</code> collects program ids in two back-to-back levels respectively.</li>
+<li>Next, build <code>sub_program_id_pool[]</code> with the ids in <code>next_program_list[$]</code>, and shuffle them. (May duplicate one id in <code>next_program_list[$]</code> to make it possible to call the same sub program in one program multiple times.)</li>
+<li>Randomly assign the number of sub programs for each program, making their sum equal to the size of <code>sub_program_id_pool[]</code></li>
+<li>Initialize the <code>sub_program_id</code> fields of the programs in <code>program_list[$]</code> by the values in <code>sub_program_id_pool[]</code> wit the same index</li>
+</ul>
+<p>When generating assembly test file, <code>riscv_asm_program_gen::gen_callstack</code> creates an instance of <code>riscv_callstack_gen</code>. Initialize it with the total number of main and sub programs before randomization.
+Then the method <code>riscv_asm_program_gen::gen_callstack</code> inserts jump instructions based on the generated callstack.</p>
+<h3 id="generating-random-instruction-stream">Generating random instruction stream</h3>
+<ul>
+<li>Load/Store instructions are not generated here. They are generated as directed instruction stream.</li>
+<li>Branch instructions is turned on/off by <code>cfg.no_branch_jump</code>.</li>
+</ul>
+<p><code>riscv_instr_sequence::gen_instr()</code> is called to generate the random instruction streamin <code>riscv_asm_program_gen</code> when creating main and sub programs. It in turn calls <code>instr_stream.gen_instr()</code> (of class <code>riscv_rand_instr_stream</code>) that generates each instruction one by one with a separate randomization call.</p>
+<blockquote>
+<p>This not done by a single randomization call for the entire instruction stream because this solution won't scale if we have hundreds of thousands of instructions to generate. The constraint solver slows down considerably as the instruction stream becomes longer. The downside is we cannot specify constraints between instructions. The way to solve it is to have a dedicated directed instruction stream for such scenarios, like hazard sequence.</p>
+</blockquote>
+<p><code>riscv_rand_instr_stream::gen_instr()</code> sets up the <code>include_instr[$]</code> and <code>exclude_instr[$]</code>, then further in turn pass them to static function <code>riscv_instr::get_rand_instr()</code> to randomly select one instruction that is in <code>include_instr[$]</code> but not in <code>exclude_instr[$]</code>.</p>
+<p>Note variable name inconsistency here:</p>
+<ul>
+<li>Distinguish <code>allowed_instr[$]</code> in <code>riscv_rand_instr_stream</code> and <code>riscv_instr::get_rand_instr()</code>. For the former, it is mostly from <code>riscv_instr::basic_instr</code> that consists of arithmetic, shift, logic, compare instructions etc. And it becomes <code>include_instr[$]</code> in the latter when calling from the former to the latter. For the latter, <code>allowed_instr[$]</code> is a local variable setting up according to <code>include_category[$]</code> and <code>include_category[$]</code> and used when <code>include_instr[$]</code> is empty.</li>
+</ul>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/ZLJBRiCW4Bpp5HmgrROigbpJjCf_H1N2i76GCBWO-bJ_lVYLWFDeELY6tV7CpY1lEyUiQwGM3MjHiSP5OMN7twZKdREqWrSFciDwNOCUpxAyAD266m7FY122faPdWJNar8LmM4GRMbcc-I4xlkKbFjQKOI90ZOLiTL-jydAio8uAg7nDMsjgovfiUP3d0_NcOPJnY8f8UM0HD5PrGtm7phUKAMNUOGATb9OuaJXoxiCR2_EC14fsRYTVSbn1BVMWFYdW9npPsGjnaRxHf4kBICsL5p3r9G8dbox2u2E69RjRi9cjjiQtMR8BLfzDHHhAztMOBJo7QZ-IQUHNmBHsOGq2BSxIMbwqCsVwdEQWmXLrakEzrzn9esD7yIL3u_gevH2qQgzKkQnJpHgW3YTsx-xwtBv_hdOdlbxlvin1RUndzFtvw5-WcUPlq91KH3Fi_swV2P9sb4T9RKDuyy_X5m00"><p>Let's detour a little bit to cover class <code>riscv_instr_stream</code> and <code>riscv_rand_instr_stream</code>, which is the main data strutcture for instruction streams which are random or directed.</p>
+<p><code>riscv_instr_stream</code> is the base class of instruction stream, which is a queue of RISC-V base instructions <code>riscv_instr</code>. This class also provides some functions to manipulate the instruction stream, like insert a new instruction, mix two instruction streams etc.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/dLTRRzis57xdhpWF0xPXiOlrqTr3itR32hGhq0x1W22G6F589YgH6acvIRlyzvqZohhOTEOqG2u-Dtxdzf5vwODqeMjgKTJIUt3Q5xjC6nzSHjyecwy2w6kzXbu8_tJO8NtifJz5OLPh7ww_ku7Dt7zXKPX0Maq_E-DrPL3jmygTrBMyhH4SLdwAtCipbbtVK5nfr12SH5aOZ1nwT3jKcLFNq_6J1SMtOOjk5fVEmffC2PKsrI3SKX4YlbwmMlM_lZOOjbOzZ9dee6Mjls0sfVt3ZuEse6A5lOP_IbFWg2K1kX2rIU5GxL7NwBkqeh1cHrxF8tuIFmXZ0rLFLzi0jaoqSBEPYYb-vav2p0nohgjjEAMg9M2vW6211e5QnFsW1BbufNLWMsHZlnRFr_0x2RRoYtJg0ZgF8C4tigx1KoJ1rjus29yqsJEasahrp0Vh49HsM0HgVuH6uT0eJk2CB98D46z6AL2huxnrHT3MG7Hy8Gh6bYSxb7F2Ks21ijW2rjYWGPg6yy4beuieXJxg7Dbei3YWnlAHvATXePpv0qYp24gPS0K4tb5TQ3WIjG0PGB1HfNV8tWhlWFf5OWbn6AXRXMINRyCs21-7k4SeqWWF0Avxn9RAhusi5_46umY0IQMrNlUQWaw-PL9fQrcW0bs2zgClglNvwHtkedYdxuPZsouagYm-wx25Kw0lOWVcRjOfT8oltJFQ16_1pDoY13qJBPJLadwp2ar6P57gFSbzGcUmpXgha4nlzPv4QJdiPnp27j5uPcI38-7IP61btNsccFBdPgCctAIO_ly8qcFescm1PTHD93Nns87Zh9Wzj57DLJWLxPIyfyBHd-TQ1nOUE4Ybecf7Z6RTmk8XDLL7pJl56gzrMQ8Z_kd9ANYubKIo-V5ivXT2qm6clfznc1_uY_tkmNJ4VJoFjWkHZaPcuBFyetkGG9neb5Z1HwH-jv0Vpb8EL2n2aVU2pOOIqKNKvY_8xr8fUFl-ylMpZt-z__0RiGLFowyVBlzyzSTyGNo_lhFTNS6hdjFJtVz-pmkKsgCKdiWlDMnY5AOor2KtWPQNJW1isd2_VkgXwJJcLrj-rkRbJpruN0z1Vz45pqxn5aYmsZTNSZybt3EYOfw7sLxo5KnTZ-OqoSETQSs28yUM7pvPfXSB1-4t90dshvKd3lVnjWj7hN5qqS3RDmStcPXMZXz0BHQwrCNuR7hYqIVPP49mzUvgVVNtUIXYb6Cmnnm2l_oxMft29LwI8_zxy1y0"><p>Note:</p>
+<ul>
+<li><code>category_dist[riscv_instr_category_t]</code> is not used when generate random instructions. Now it is randomly picked from available ones.</li>
+<li>Compared to its base <code>riscv_instr_stream</code>, <code>create_instr_instance()</code> of <code>riscv_rand_instr_stream</code> only initializes elements by null without creating instrances. <strong>Thus, for an instance of <code>riscv_rand_instr_stream</code>, calling <code>initialize_instr_list()</code> will not creat instance for the elements of <code>instr_list[$]</code>.</strong></li>
+<li><code>avail_regs[$]</code> should be specified its size before randomizing by <code>randomize_avail_regs()</code></li>
+</ul>
+<h3 id="generating-directed-instruction-stream">Generating directed instruction stream</h3>
+<p>A directed instruction stream is a subclass of <code>riscv_rand_instr_stream</code>, since some random instructions are mixed into directed ones (by <code>gen_instr()</code> and <code>mix_instr_stream()</code>) and methods thereof are used for register randomization.</p>
+<p>Directed instrution streams are inserted into programs in two ways:</p>
+<ul>
+<li>inject according to command line options</li>
+<li>inject for specific functionality, e.g. enter/exit stack, function call and return</li>
+</ul>
+<p>For injecting according to command line options, there are two syntax:</p>
+<pre><code class="language-sv"><span class="hljs-comment">//+directed_instr_n=instr_stream_name,frequency(number of insertions per 1000 instructions)</span>
++directed_instr_5=riscv_multi_page_load_store_instr_stream,<span class="hljs-number">4</span>
+
+<span class="hljs-comment">// An alternative command line options for directed instruction stream</span>
++stream_name_0=riscv_multi_page_load_store_instr_stream
++stream_freq_0=<span class="hljs-number">4</span>
+</code></pre>
+<p>In the run_phase() of the base test, it calls <code>riscv_asm_program_gen::get_directed_instr_stream()</code> to parse the plusargs and initialize <code>riscv_asm_program_gen::directed_instr_stream_ratio[string]</code> accordingly.</p>
+<p>Then when generating main/sub programs in <code>riscv_asm_program_gen</code>, method <code>generate_directed_instr_stream</code> is invoked to generate commandline specified directed streams which are handled by the corresponding program's (aka. <code>riscv_instr_sequence</code>) <code>directed_instr[]</code>.</p>
+<p>The minimum insertion count of these directed streams are 1 for main program and 0 for sub sub programs, which makes sure they are at least inserted in the main program.</p>
+<p>Class <code>riscv_directed_instr_stream</code> is the base class for directed instruction stream.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/VP0x3eCm341tdy8RhIg6hgW3FKcK9Yv48aaL6uP-xbxpMLY8vC6_vwUqBBR860TmWsN64jXDneT2JiYRa5YAqI0RFu3wBZZO1mtOe5P3whRYAxEOOfFFCRpfT8OVf2oalAuNpCyZSDFijw569i7AYgQkmaTO26HTZylUw2Jaf6DtxpSToNXbMTke85IlGZ5Fj0xmJCZIKs6Wv6StWDLflhlpmTkthe-4eLN4_6T_"><p>Here is the inheritance diagram of the classes of directed streams. The classes with grey background are all directed streams of RISCV-DV.</p>
+<p>Note that some of them are inheirted from <code>riscv_rand_instr_stream</code> directly, rather than from <code>riscv_directed_instr_stream</code>, such as <code>riscv_jal_instr</code>, <code>riscv_loop_instr</code>, <code>riscv_push_stack_instr</code> and <code>riscv_pop_stack_instr</code>. For them, fields <code>atomic</code>, <code>has_label</code> etc., are changed by methods thereof.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/hPLDRiGW38Ntd29IrtE3BkOco0KhOSgVR9X5rSENQ1g9fYGaerba0tvVx6S3Lqv0AJihb0NcWGohkoJmMXhFYMJv4Dpm5i7YI8Z-Jw0sX2hXEZWKm8X2RD7Ulo-NFOBOerTYXqw2KiXyKdZBBZusZ-Hu0tiyE6QUoZAepnEQ41kIRXN69-cpGp9Aga0UL_xj_jE6i5WWDjoimy45-G6ChJxj2cq0NPO3uNDwbsqoCiA8DUeivLwS3BH94FrSQze4Nq3DaJrAgEB-TUaaYeqVRS-SP_C2hUb5l7cpzEOri5O7n95MDuPY7kqMg3zvm_eo8XnDy4kf2JajiERvMH-mXZTTdIsBgZVD3U-tkZG1bIjdBkQNTaMlvmVY1m00"><h4 id="loadstore-streams">Load/Store streams</h4>
+<p>Why it would be better handle load/store instructions by directed streams?</p>
+<ul>
+<li>Requirement of density to make the test with some kind of stress, as well as the locality of instructions with data hazard</li>
+<li>Since load/store instructions are related to specified data pages, it is not efficient to get <code>rs1</code> restored every time before a load/store.</li>
+<li>If load from unpreloaded page, use store to initialze first</li>
+</ul>
+<p>The load-store directed streams stem from <code>riscv_mem_access_stream</code> or <code>riscv_load_store_base_instr_stream</code>. Here are the features of these two base classes.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/fLRVJzim47xtNt7I9W6YxSPhjGSOcYOa7j0wQGyLYatijDOIkxCTe1lxttTd9sbIsef1fQhf-Nm_l_ikvpu85-ggP7afl0UdVNwVLQhAH9uhxpCVd1BL7mRuEOLAF6PI196jn49bMi8Kj0dDOMc5H7thLEQNmYb9TgnRezATRfMws_FtjtX0dfnQQ6koLcE5zvqmqbRwjpe-QQH2oipviqmR7R9Iu2z6DZYjz2EwREL_cR51OJwBPG1Rx4jiEjrEYNtvLOlIGrWgy1W1NVQgL7bGaiA552vJHfA7bxhPLnnsHUR326glG82lH5b2lgpDJmWMYvlZTQyOHPClXSbZF6GCi4GG3SPGySkyg1ILmg7ZONobAWw7DoWwky8YQr5IzhpVCCx8ATyk6VzFPpjxoIuavWH7rnT740Lr7h3EL0MsgWFS2TybHw2pW2PUuRW74_PL6UL4eC8Nwe5SwBpltCTyyGQLjqfUmr9xI0OxxycXr2wY91bldCAdf_5uNqHiZxn_gGSSAi70E1jCxI7DDC2J2UIsgh2g2BcWpSAZg1aXKrSz2pYQ10TA6MhZzS8esLFi5V60vXPJa5gsGutWr8lT5WL6rpFRqKkEa0phzgJzdwb60ISeywjCU09NgxLX7a8Spcvxa6g6Wevu8iAst6B5KfP-fN9T83owWgKuvxS33YI0RebwgKLJYVYI-mJ3hZNqJ-3DhYqJ5CU7yRZDeXtIfauT1UwcpPNruPaOhUxXnqCGcau7DAcDr3dDJYJAbY3f55ZXRFLIhZpiSYSsUlma8OxaXghfcOAOi3iRbi399ezSoQat78uRqIdmP8sVCB-qTKbDzregc7-anRJByVZizX3Z74wbnIl3TYnYh4qshxOu03pJ1K4Sa9rcDoEmfbp3vMH-_JIx_J6xORXoQ43av0tDs4OokxJLYdOPDO4dtLBxG9jYb8XI-xYw5WtHoZWD7nB538ZsGGTiGY2XSgIOoDWQvIUlhz3sjB1lhQ0flXz5R32zsNW44q0wjauYGvRhDnHik5M_rywGssw6HLnmjc1yq4aEsChP3TKEbvrozyYKRuXXm01i33czOV3dFCBn37F7eqIKdBhQ1f0vYSVf4W8B-_ciaytrk1e64dvzmHiMBQpRBF9XKi6kNfOIlBDnWjXdCfGM8Dcbj7QZQtjTd-C3lVB-0m00"><p>Most integer load/store streams are subclasses as shown in the diagram, which are used for different purposes with corrensponding constraints.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/hLRRJjj047tVhnZHbrxYGEWRHIr9aQgAIwk8YWU4xCrwagngUzFTTIXG_hqpQp0EkO9uoSLxvdBcpCpwm7bfVPbdGcNIER3QgMcSOnvBfT2vs7cBCfyvpOnCwRcn60-amrWN17e0YebKl-K8OIj5gwUOGdNWjk1MY2NkOVzV56taVJscwSlfOfHX4pxZhJ0UOM2yDpcOuKOsyCPOMOnGTA420WEt0n02i5HUcq9WaRBxvsRSmF4XLMXzngjjwenx90nu0mF-NforQubJ1ZYjcez1EyZrNz9I5zwqLt1R57y9kx6qc8PMs9JRKukQsI-7u7APPP1ABs72xJSqja5I4EzW3p9DEKLqhw0GHK-Vfy-SHSsXJoTarD35uPyI2uLj-6hOGbBntPxOLoR5pw8eyuPZLakd2BSNdPszZpkNTvy288XMnLk0sD-kNBsm46Dv8-qc_1S0PwIJz-8vz6pqxMUVsrGHZfAQIgjDwU2yUzw2Fd-ST_jGkGIdiE3pzYk8kJ6TrJOrCpT1fOVNn2wvXrd9mvIqu6girPY6IlWnmiIQWHpeJFjhZk6lgWcDl8duMpGwegHYiOcJUTt8JvcltArvcNaTytmitOcBEQyth7cJT1wThqRnxBW7xafxealz3HOdcLIOO-7RuYHibE1vabLhI5AxEuwQRB9P4a6Unv3guH0jkMnClquTzT08gLfshaBhkJHBHlMqE2BX7b9WTakgj13xU6K4MOA2ZpbdHeMs2BHhSJaxgf2y7X2sd6IQGBYWAdFDdNnvhRt6_VM2vJPdLjEFOFcEuu4VbhG3xhiQWabR09oDSVOXNqQK2SqDiYDgeQeBM7l2S-LSAupAtFN6KNIXlPQPlg4hGbj7VHZ1ZobQoyineKYnTPsOKN4cAo99vIuv_fw4BawwXuS9XU8hHi9GMdx5ONCgoiKfl8VEIGyYs3tgjO3_Ve2tkqTHvrtlijRcJXpGJtxj-Wy0">
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/lLPBRzim3BxhL_2mmuOswUEOzT01AOPUUcWxO41Ho8f5km9iAP1ahzdM_pxgaSH97-XcOBd48J-H7wcFTCwT5zPtRSFAHZW7LhcovpsMtbZU626veoVaIZjlwTcYQ7yneCy1wAxbhNf4cRmm0okq1AKzTDgfMgECoEaK4i1Y8pnACkG8-mb2Y261QCnOn1_h30lbuUxaU7PydttMdN2BzTgVOf21-mtWz6r0lmKa0bidqHTIli1U2Y_uKjH4NhvQ_44yZCxnraXSmuOsZXb8jIhwkLXvvAQg7FeteYejyP57Og-35iA5bEJ9XbOy3cyr7r_xgTBIX9OBihXreTFyFPda84lZF0yfJQj-uiTF6zGJqyOZTR1-y62gTubfDjjti1kbwmOXdJiAReXkXbg61F-KXUJ373Q4WigQ5bXHLlKqdmgF3TQYuGGhTlCqMFr56b8Y2rqV5-EK9IrGtRWS4ufapKWfgaGtgdj3lJA_MgB42f0M0AHbyEtgyfRVt5vVpY_cXn1Dkxykh-ONto_cyVbfJ4NFXuGbAURn0Mz8pyehqP0uMP4dlu0m8gLfbnsbB5wOWr7Nlft6DPjesIVJ_nSoByHZ_W73y4DFJDBw2Tn4RvHafJMq-HUcqrBOLSWJq66nVMQTs-ie547UnIWrnG79VOehwjcTnNK-Bidkbc8J-28bR4B76zYAWmWK972qFRtDh2m8VYtIIIX4BrGJSExkmtrmVKMDbju58A1lyAYd2jBc6hXoURbR4EkKO3I56ynIuX5Q3Iwn92_4bseueSeKk2kzeiMStKFJNkjWM-4Xx6f_8xv0PfM94UZvG4Ly2BLLTK5lFxUSRYuaNK6BBHTb6Of9NOUptvF9k-w7dLEeyBVZ3m00"><p>Note of the limitation of <code>riscv_vector_load_store_instr_stream</code>:</p>
+<ul>
+<li>Only one vector load/store is in the stream, which does not introduce hazard</li>
+<li>For indexed vector load/store, all the indices are the same.</li>
+</ul>
+<h4 id="amo-streams">AMO streams</h4>
+<p>As AMO instructions also use <code>rs1</code> for the address of memory operation. The base class of AMO stream <code>riscv_amo_base_instr_stream</code> inherits from <code>riscv_mem_access_stream</code>.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/dLLDZzCm4BtxLymHH5FejUAmQ0ze9H0I75UhUDQU91QENTbEsVBntnaxAKrMfOXMgbgFP-OzltbERcB2a8RU2cKnHWWcgdsDlQyVCL9jN4oXvYzX_qC0VzPhCD6b084i9j8SAF5Nu8O-5y8M0ZeDnYKON3Ij8ptBwCqJwR7lXKpSex5re3RUFnpJHceSgzEids_g43SvF6itxKyRVs_1Xq6jpvn5Oy9wXoqheBdu3CCUdnYxYPJExuzx1Nf9Yp6LpyT7ZiGZv7hwhQgfVXUepdM-Dz_fnSjZrCTq9joIApChiaxHtF6NS3uH7xlj4ZEwDDtjzgIvqCFE6eN9U9VBKaVG6Ci2yI9N2ZbscZUGWfpESF-3kPoWqDJWO1DieF41Fdn-_ULsBRvrHdMizrUA8ATC2LbI8KUL9KJZMal9k_KrB4wp57TkeNoHO0NZqXw4whoF10ZP6qTfUkhPGQt9w7Sk6RGy6mt9bzt82yuK-N-sLIczYkP4yJqv2fYh2gl9QUolQ3I9-pUpurIR1xwjeyUPLROdKqmvDiIHed5cOYnEuXfNd0OB6PvnjjJyc_B2nIpE4GladnicLq9cnlCh9rUpXB8MUTxoT39v3Pd5vH5LlZQZaky-VeAIoq4M2nPAo42HmfwVMa7BAQ4ynV9LC6eiZBoXq5g8muu2Mo9rlkYRHoCnCQIIG4bTe-BYUejRXidW1v3F7mUINOPblDJlqc6L2Joo-_OK0fj3dy17F7PkZKfHZ1CMlFrPLPV8Y1lka5yNlm40"><p>Based on it, LR/SC instruction sequence are defined as below. A pair the LR/SC is generated and only instrucions of extension I or integer arithmetic of extension C are inserted in-between.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/XP8zJyCm48Pt_ueR640q4HzRnL29gMkHM2eK6_kQMl87-DmA1FntpavIgHKLMPoxrtxUzvmiAAkKTzu9xHGH94jwtxdKaUvieCmlEQ7oNmBukGPMQXlcuzPQZU9qvW-nRK77KYaRCd4vTeUrQKP2Zw5JFWu7Bw_6hZAcy_O3pQ7_8qBCo2xzDaFSd8qzdnyHHGCh5KpqxhDOOL8CsIjd3KnHDp61dAQKmBj1Jb3PCa0ckfLW2GWpv5ZhBc6_ldcHV5ucKzLqwcDcm7BXSNJ8MmHI7a7HG6JoCX2cAdcEKz33ACvINbym7OCfOm-pEzpyC_h9jOad6pH231ogjja4Li_tTyjPNHvdGcaTax6XXuJlEvlGO_bQx5Bplg5k3o46ttArhuhmo1eUlflcR32nO4Jvutu1"><p>Similarly, RMW instructions of AMO are also defined by derived class <code>riscv_amo_instr_stream</code> of <code>riscv_amo_base_instr_stream</code>.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/TL2z2eCm4Dxp53Us50LNwM0Ve7JeA1BJvBI29d2N2gNqtPjOqJeqaE7xpKSAzehyO-Y5xXKpKCTwb6fmihFiIOQBQdW92ES02rzMaC_U2Kzwce9s4QdEUWvmPjCvtQ9TctTxyHRMUGmrxTs3Q_wydUURd4XY3v8AoObWQCWDS3fVG0UoTVGCdYlsg3tKPEglNXCoqeX6aYch-jV2sUBXJ1AsKKThuZgnZhefniqoE2R9dz6Y2Fdugny0"><p>In the file src/riscv_amo_instr_lib.sv, class <code>riscv_vector_amo_instr_stream</code> is define for Zvamo, which is an incomplete version. Its method <code>add_element_vec_load_stores</code> has not been used as <code>allowed_instr[$]</code> when generate instructions.</p>
+<h4 id="loop-streams">Loop streams</h4>
+<p>The stream is an random loop code snippet by backward branching. It is a single loop or two nested loops by randomization. The generated code looks like (the case of two nested loops):</p>
+<pre><code class="language-asm">## Outer loop
+## Loop init
+addi x11, zero, loop_init_val[1] # init loop cnt
+addi x12, zero, loop_limit_val[1] # init loop limit
+sub_1_1_t:
+mul x20, x11, x12 # branch target, any ARITHMETIC/LOGIC/COMPARE instr, excluding c.addi16sp
+addi x11, x11, loop_step_val[0] # update loop cnt
+    ## Inner loop
+    ## Loop init
+    addi x13, zero, loop_init_val[0] # init loop cnt of outer loop
+    addi x14, zero, loop_limit_val[0] # init loop limit of outer loop
+    sub_1_0_t:
+    xor x20, zero, x11 # branch target, any ARITHMETIC/LOGIC/COMPARE instr, excluding c.addi16sp
+    addi x13, x13, loop_step_val[0] # update loop cnt
+    beq sub_1_0_t, x13, x14
+beq sub_1_1_t, x11, x12
+</code></pre>
+<p>Generated basic instructions are randomly inserted in above sequence in a &quot;contained&quot; manner.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/bLKzZzim3DtzApXqk4FheBqnw727JXqwTGm2MxQPc80i6HAT-sZxtql9Ic8dECGN80b2FJwAZu_EesVbUEXqLclbFJZozQ7GrlO56S_kJmRoMgqWXC0ZCvczbq2CVmOpT8NT5GOzOnFpO0rEcGOgOjWyhBzkvyZ8AfypB1aEe8ICrMl3XSFzPdl4Z3UJKC5JdAQERY8hYTTjmQyzNiB6-nZLOK8VUuq7vqQJ958h7emqPuOfQkWRnNWRbswr52U3skE2yky3fBNQXbzA13yDSPM-yponzDQBeYAHxUWDx-vFg7-PiOn2ksyPxExABElrjHrYyZUm3XxWRepVPsYQmBIKRkQPI2W75RgGL2bFzJWi3soXGkZe1OEd5fUP6YxIpnn8MzZ9zRb5e9pRUFWnwfD7p-HdszwcrxXxXttYwqXzK9gQvFQZ9eCNCPI7aaojXoRviepuK7WSjAosnfh9cgMrBnOYyl6pZPmXJ7ANDmHHCHw5ZOjDWqFVhpvOvLZWX-rwvQGXcNGvsaAJvysdRVb592GFvCURY9nxDEXa4njnXA5kw2QBFSHUH-mpSMi73WVe0dpqb1MthXOFUhuqMGvFJGFbr4XbrA2SZx-CdOWaw0woCI4YkJ_DKRwB9g5wFGviQloOGfnI9a-1a1BQYtg4UEvGHqbEYR_ePQAB3tkJmszaA1LBBtMwTgjyeLM5keGTeMxyIPdqk1LKMbHve-hW-zyyln8gUvIqy7Vp7m00"><p>Note:</p>
+<ul>
+<li>Nested loops are constructed from innermost to outermost</li>
+<li>Constraints should make sure branch condition will fail eventally
+<ul>
+<li>loop counter will equal to limit for <code>BEQ</code>, <code>BNE</code> etc.</li>
+<li>the sign of step of loop counter is consistent with condition, such as step &lt; 0 for <code>BGE</code>.</li>
+</ul>
+</li>
+</ul>
+<h4 id="stack-push-and-pop-streams">Stack push and pop streams</h4>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/lLJRJiCm37tFL_WHXBOFc7ZOD_2AK9OsRXkH9bFY3d7xTvobHSjQq029lbJniSyviTrk8wb0Gsz5RLMC44oi3t8_n4uoKZzAuoA5Lm7yt40EMNIm0UDeZBgXbxwH0Lj9NaPrm6LO3revoen5nhdS_GF3sSdnFAapiquoSJ5XlGOAvc2KXIeeLtSS6IlHgSgY7CDSgfo6oapwEVvfRAuy6GmahQhGSXA3nhL7VBKQqumpT7Kz7bfqipuo-2xAJllzVpQwLFjTdx-vRacVR-iy8NEq7O5lljYlpMP-DH7D2wQItQcVdK2d4-M5lCNanHtFtVVscQr730GAEbIQvpXjp9EX3dZEBP8W3zGXD2P4WjpBv6Q-h3_rjBGPuYWrk9gCTy3IjR8slGLdOr3Cgqt0cb2drKFLbw8McrFDSX2ZP1dyWs8MIHzHff8PXzktrMhPmKKbvotPibxwCtq0"><p>Note on pushing to stack:</p>
+<ul>
+<li>default to save <code>cfg.ra</code>, also add it to <code>reserved_rd</code></li>
+<li>(<code>num_of_reg_to_save</code> + 1) instructions in <code>push_stack_instr[]</code>. The first one is <code>ADDI</code> to creat a frame, and followed by <code>num_of_reg_to_save</code> store instructions to save regs</li>
+<li>If <code>enable_branch</code> set, randomly put a branch instruction with the start of &quot;pushing&quot; instrs. The purpose here is to cover branch -&gt; jump scenario.</li>
+</ul>
+<p>Note on poping from stack:</p>
+<ul>
+<li>When calling <code>gen_pop_stack_instr()</code>, the <code>saved_regs[]</code> and <code>num_of_reg_to_save</code> are usually initialized by the <code>saved_regs[]</code> of an instance of <code>riscv_push_stack_instr</code>.</li>
+<li>
+<ul>
+<li>(<code>num_of_reg_to_save</code> + 1) instructions in <code>pop_stack_instr[]</code>. The first <code>num_of_reg_to_save</code> ones are load instructions to restore regs, and followed by <code>ADDI</code> to remove the frame.</li>
+</ul>
+</li>
+</ul>
+<h4 id="jump-streams">Jump streams</h4>
+<h5 id="stream-of-single-jump-instruction">Stream of single jump instruction</h5>
+<p>The stream consists of the following instructions. When used, an instance of class <code>riscv_jump_instr</code> is created and assign field <code>target_program_label</code> by the label of jump target.</p>
+<pre><code class="language-asm">la rd0, jump_tagert_label
+addi rd1, offset, rd0
+jalr rd, offset, rd1
+## For JAL, restore the stack before doing the jump
+</code></pre>
+<p>Note:</p>
+<ul>
+<li>If this jump stream is used for a subprogram to call a subroutine (e.g. riscv_instr_sequence::insert_jump_instr()), also assign <code>stack_exit_instr[]</code> by instructions popping from the stack. The reason is that in case rd == x0 or c.jr is selected, we need to remove current frame since no ra is saved.</li>
+<li>If enable_branch is set, a branch is added right before the jump instruction that is also the branch target. The purpose here is to cover branch -&gt; jump scenario.</li>
+</ul>
+<p>Here is the definition of class <code>riscv_jump_instr</code>.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/ZLLDRzim3BthLn2zf4NY0Bi6ExH0BmLst4x3uCWsxQYJ9K-KqtGV_ttKX-CaxR3uP5DFJu-F57rFNZe_zbhKMXA1KrJlo-Un7qfboBjV0lXPGgyEsAHGMHiF6t3IDA2Cpm3cgR-NU50-eRv-2vZ85hyZRBs6-47yblTfUSGDX6DZJ-1Ba4sZtk5PGb1ulW379qD6ml9PQiUmIldfV4wtGy_7LgYXGpChIIlbu6pdP5ycn8OJSyfq6QEQ0uUch9akwc2L3XngwR6P-Rh1JJObcGwxSh9BzVsbXq6SKtibDLIyKEzcAZIoqbZcSDut9RM4ENxXKr5aXC6NsxlyFZWi0u7jrK-SevRyMVYFCDOZKtOx3xPzqncRpMIm-488qMb9u7UOJ4agq3I1vhzSRApuRA6rheyKoNs6pbnhyUH14Hz2gZFiTFKAOfjJ9iEDIVXZH5CZqnb2vqzEkBtRhWGBRi1RjdFiqN6re1rDxPKrK4kjQNsrNAwj238TVGX9Lv8T25s0HDUdtFUYYCaQxAHNUuIzr2C6j6rRGd-PVm6jSkJ3IVEHmORjm-FZqnPUbD_1aTQ46t2oFordvfk2SJVdMZMs_v3AxIDgXvAFDf6C-otgJ5Ssysy_FR39fCAQYgLYMhuNdIAF3fiLXBQjfGbXKM6uVh4C3N3Nm_QaUzbXzCVAhQ_LUTRQMV4aboOtLt6g937fvbnDVtP7sEKf0KZ1C2jG1llJjtwT4N4C85dDPHPsm828aj90v3rnn4AZ7DR1aZmeOz4olJKOWA5-hPOTmK9wbb8l8ljY9obDhSKnePJ3n9ddTr897tyNnPianJrl3R-3lm00"><h5 id="stress-back-to-back-jump-instructions">Stress back to back jump instructions</h5>
+<p>The stream consists of a sequence of back-to-back jump instructions. Each jump instruction except the first and last one has an index, and it jumps to next one with next index.</p>
+<p>Note:</p>
+<ul>
+<li>The field <code>imm_str</code> of <code>jump_end</code> should be specified by the target of the last jump instruction.</li>
+</ul>
+<p>Class <code>riscv_jal_instr</code> defines the back-to-back jump instruction stream.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/XLFBReCm4BpxA_RGGwkMAhb6FQIdVa1xGyWui80ZOwUsIT__thKX2O5KHK82PdPsPXUldHVMTwrYXHBEWPMksFEjK5ngv-qN0xfkOTkrkpI3rO17R0JngF8tZBgy2EgkvQRYaHE_1vOWijGUEkrahR4y20cLNaqiS2rQv3uoacGWxeppFAYOLdxYzGtxOTfu18ML1rDD8wvMCnVifS7WROCs50G0UW3V2znvy8HNqZeFmImDpjypoXZQ_DEB7jdZNaWbDWh7ojx01g6thJx0eSB2OpdHjR9kBWkVfsO9FA56AwZ6s99oE7pjK1S8DANAcXOMG2tpMVOyMLBnCr98OMkCpVBJZdEg8eKmW7vX1pZDSdYJlkdRfOlie49C2elg94I91XaIaBg6ojWsmdCt8vNUZml4YBbZuxipHoCNCxracH4tlBiO_-Xdw5D9L2K92qzZBFAuthmHZiS8-N4P_VZ3k8SVaMuKBJny9ybqDsnDLU64_G80"><h4 id="numeric-corner-streams">Numeric corner streams</h4>
+<p>This stream is of integer arithmetic instructions with corner-case numerical operands. It first initializes ten regs with corner-case values, then randomly generates a few integer arithmetic instructions whose operands are these regs.</p>
+<p>The relevant class is <code>riscv_int_numeric_corner_stream</code> defined as below.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/fLGzRzim4DtvAsvCaCX8LxT3F6GmaBXRKSGmI4OwIGGeKY0fEMcR_zwZgDYMZTGfea4VftUFxzuTUUk3TA5hDCkrz1wSyddFbGdST0qwbVFSEeEE--1GDhyPq3MRWSEAmAXbm8A-X_0LK0wt9PUzL9eFa3aG5tJ6gyfWCSAKKO7tKgytzDz9Ky2J2h3-UN-tohxCRpP7C1vUMjnZ3yNX8LGP4fbmGnMjnwwmARpJFJ9WXGwaKw5kC0ygXm7bJqePmWShJql9iX7TEkGHOXlr2oyktwBMXqdubHaRaEHLTG1RddDxFZynb8KQmHDRJ1Vx-7eZha5wsABMz6HYxx60g5qSkIbc34qHvVolfWaHYxS2Iq12GngFbNMDr3-axl1w23oYi-bjeVLtCqPNMCcWUdoGp_JzEkthrq-fIoslKHRAL23kb-Ajly4EiwAa9WyPQcpG17zg9cnfD21nPooN7g6F1NbAXqDpfperbX-JEHaOjl1ngE3ztaRTucGOZdluyTKdWyaoMEuyWNEUKAz6M_xXoemu5srBwY0jSxpdTbkkezrdZO-qszeIeMqnfdX2aXka9ez7JEc8OofdNtogjr1kmARkZxN2jpzPTiuGTajCyGpy2m00"><h2 id="page-tables">Page tables</h2>
+<p>Let's walk through the code of page tables in a bottom-up way.</p>
+<h3 id="page-table-entry-and-page-table">Page table entry and page table</h3>
+<p>A page table entry (pte) is defined as an instance of class <code>riscv_page_table_entry</code>, which is parameterized by a parameter <code>MODE</code> indicating the field of satp register.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/dLPfRzD04Fs-ls8a96ZLfCH9EUfo5QK292XHKnKaXEorFMvCRQ-rktPRZl_Ex2QndJW5Ghx4VljsZZU7_4ffBdMPfInCkL8W4nLMNi4lqTCyID73NClR7mper-_3X4kUeKQfwCs27pwEJy05nNNXPIAYQnQUJ4u7tgTtu_EtT9ZaDUXi0eURm547F9jUZ3lWnUIqYnsFnsVUT79yTj91rxcBDFRt8KumZHGzMM0FWaGh8agUH-OPldn-VtBQTzp1rmMXQfqke9jhkGGBZLw1CakKIaJkBHbbzz9b5-9TAEf2Kbsl1DYAhIZomSfPKv3-AirPfpaRQSDrsd0ZRRHE6tLfKbNH2gqfR4EZWl0eabIdM3GriTsQv9VKeMHXOrLgIdK7PNzXZJo48bTQSkg5kkuF7pOe-Do7--17FcW1plBSn2tq3EMoPUXmq6wcFT2bp3qHnrw4CIzJxJMUTdQNQl7mQZvU3IIKzemk8ak-Omr7WkuN3OsCLIZra2nIeZMiK7jK0dh_nNAX4LACDOZuZg5sNJExJDyMI542vcKsbsj4Ii5yv5-R4NeE1m-20Vrw5fjUZ8OrvjJOuHnpMho3fpLMynuzMM9EpNjyK6D6v5_jRNB4C8zCDlEKP78v-sDEJSlTdTafMNB1WGnvhe3i0juaIlUOIh8avT8Kr6zQtEynKtA_QLD_ow2Qc-nyXa3n1DGzTC7k614pYGfbXH7Ca4TKKtl00eo5HBCCrVwgnxzLjhK1sRJWPCHwefQ-E7QPcGVemxsbUmAFs0386Oa1gkR_bzDvcjDgD7HXv1m1FHtIqzCZ890wWfpOuL4kqDlEYPH2ldovkwMYhKLW9RNlva8XQCP8I7EbnwvdIJWpYMK41RURfFntLnLdK_fFaHedWt1MvbUmipm5hi4FkAAbp_rTPhHKPHWYRVyAIM3elu39CMIyA8ZTWtbajWDPUsKzNzbnVLYOtAuIpMenWMGK65NJDm9W7gP2cNZdksjBkolxYNqhbOQGfoduxMMsxNGizXPxGqhbZOZcoaBeyCgCP81MFenwh4UXLfWQ2lMIBRPToqaUuOrj0t9CtHwMKf8NPjak8q-s1IpNRmdjho6LGS9GI3ECwMsTK5bbdWY-OQZXsK_w7jgS4dj5VFDDzHi0"><p>Then PTE class is used as the member to define the class of page table. Similar to PTE, it is a parameterized class by <code>MODE</code> of register satp.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/ZL8xJyCm4DxzAqvYAQAHG6AA63hGeH9G1WQagagSv98Q7BkoBvLAwN_dyb937u8iZdoVxtlSJJn9HrMfHQgbz-2KJpVHMXOOaKmqxWJmTmEcAYERHsj2244PWifuLHZCklekLwYpFJ1WiMI8aoOxQHQX8RUz6ZtF7wVNtKD-42NAIBTjtYMAOF7-D7q9xiBRPOVHk47T5mVtRLELdPCK11r86KK33QEUk40pbEOn9MNDfN8haQjxOIo7u5In8h3vYSSmF3WIxG6vTQLiqBH2U7qJgJKRT8GPvCwM43UfnP1iHNo1DnPeifhvJ_e-537B3eoSGlDN0zlOG2jFOrPI6LAcQ8NKa1MtHazjwBzPDUONI8z25ZDkIafgzOKG7tOd7lTUHRqVyN3uR5zwJiIsIgKh15FL2zTe_BV_ytCLyuhM5O64xgBFPf08P-J9DM4q0nF9zaZY6DXIlM905ku_8M5bMJteNborOQl91rF0mtSGdCWJ4qQMbHO_"><h3 id="page-table-lists-construction-and-exception-handling">Page table lists: construction and exception handling</h3>
+<p>The data structure of all page tables are modeled by the class <code>riscv_page_table_list</code> that is also parameterized by <code>MODE</code> of register satp. In <code>riscv_asm_program_gen</code>, there is a member <code>page_table_list</code> of this class to represent the page tables.</p>
+<blockquote>
+<p>This class is used to generate all the page tables and link them together.
+Below features are supported:</p>
+<ul>
+<li>Multiple PTEs for each page table</li>
+<li>Multiple tables at each level(except for root table)</li>
+<li>Mixed leaf entry and non-leaf entry at any level</li>
+<li>Allow injecting page table exceptions for any PTE</li>
+</ul>
+</blockquote>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/fLTjYziu4FwkNo7eXswv99k3usX3FnJkbbBOzWAx7mgbs8ezTdGhIqQIqswl_U-TaL-YUDrqtGk49AFHl3xpZFFAUM5zKocMAU4Sjz9bXwGM9IHUx1GaIZh_7-FuMYvvBQoem8Dr-2i8jnvkv1VW6owrxoL_QHyBqDWr7415ickfxr1n2_QMl4GdDqqDzXf4CNsCGHGIL3u4i5hnpEX2beqLNXgDWY3_ZLScfvjE-3gXxudl3ceh3r912NdIwOmaWsOe3bO3LNRIym_lhw_UBN_Vh3zsvrbHub5RCwcTjqa9EcdZwQC3dIdZf2xvzjOTezDDbPWYglI7ZssQlD5EbXhoFjfJZN63dboy_UVlgsUzjuDGCaTFLv6h84iKrZIfFKpOI41xUnzR6YvXdsPSaWgBADIZRr1vFcTGXyPPKC93VemRT7jhq0XTw0zxQH8t8NOMAtIN5C4miH0k29rtjr0mjBmGZVB9GUIvFQ-8EIQFqpghuAlwl48btDrFDEgp9je9GN0AHDS0YylB4obMr-y1Ur0wBdRc0DsqzMY5JnTzapCBsASnHuoFM_nW-iE1rFz2vYTRDEXG0gP2GedKXiFQcWoScpgYiGlYjdrxD8FGBHDh6YyrwNrZsY0g5HIUcsAQvpQRZiuO3VhbSmOwfrkFlOgyn_vOl_ZpCktifFCiT4J9Laz8At2cuxDCZ7YriqHJt782SYj-cMTpYf5xmoYD3JE_5vwZKOuVBUUlP_dg2PVT8XZ33rAkeEBPli4a2cEvK8eXbIuGKD9BXDaN90rl-DFzy_LwdU1xvDFASd_EwIa_aci7N5Y8oHHlvx8em2A7yJkfSySe5hOyHj5IFEhATfQyK3jC65sWLanp6OwNlPyNuuDrmL2omwAR8kmLh3U8RDyotAoI3vmO9Hve04kAyJSEgoireuoEIVG3nhi1cvaCV69lXkRnS1GAnNVtF8Smmzo1Hykbss3r8kLqOd6cd7WlFH4XCOWiCpQdA36LT7WCIHSy7Sr9q2OJKrXFCO2Mr3ZjUA6HX2Yvz6J3f0kqaPv2YJoTxj6W5Jn5gpATLxrf_eqBcZuiJW07JdvOmRFmCURpsD5EE9a5q6_OOt9_aFbgLYXdDWXx3HeizGYiDHfCuoYk8mOOOc3OBlcuUQjvBPXQKuYI6y2djpeCFoxM9lCDpb8xe8ie4lx_yVY6u3TwF4gvT3Gr2vuHHI8QpzGhfHWgSKTxtfcg2pEG5uQ97EMxVBRRTswWUhBavfNguT9cb2mk2RqacnS4ZsUjRmmfE7UrqQ5ITAcbXy1m6ZxxNs2udpmS7A4JtBNiyqE2Qmv8FpkgAt_v5V-DJFfahr2T_bHz1m00"><p>Usage in top-level:</p>
+<ul>
+<li>In <code>riscv_asm_program_gen::gen_program()</code>, before init sections, if <code>cfg.bare_program_mode</code> is not set, it calls <code>create_page_table()</code> to creat page tables, for the purpose that relevant instrs are added there at the beginning of the program.
+<code>riscv_page_table_list::create_page_table_list()</code> and <code>riscv_page_table_list::randomize_page_table()</code> are used in <code>create_page_table()</code> to creat page tables.</li>
+<li>After that, <code>gen_program()</code> sets up privileged mode registers and enter target privileged mode by calling <code>pre_enter_privileged_mode()</code>. <code>riscv_page_table_list::process_page_table()</code> is employed there to link non-leaf PTEs with the PTs they should point to.</li>
+<li>The <code>gen_page_fault_handling_routine()</code> is called when generating the kernel stack sections at end of <code>riscv_asm_program_gen::gen_program()</code>. The call stack is:</li>
+</ul>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/VSyx3eD030JGdbEa91o1YfjO1fp5Yl6kR9DSdtzBus8qJnft7cZnxxrgNiO-_01zXc8v6SwGIDjsEtTGlwlciVSbKn9m6eAp-j5_12W2OLXWGXs5x1GtAPW80diX4FQujkpX1nU94x4ciBm4Assw8nttTrO0"><p>The page table list is built by <code>randomize_page_table()' using parameters like </code>PageLevel<code>, </code>LinkPtePerTable<code>and</code>SuperLeafPtePerTable<code>. Thus, all the tables are deterministic, only page exceptions are injected in a random way. Assume  </code>PageLevel<code>== 3 (Sv39), both</code>LinkPtePerTable<code>and</code>SuperLeafPtePerTable<code>are equal to 2, the following diagram illustrates the structure of the page tables. For &quot;PTE#x.y&quot; labeled on each PTE, x means it is on Level x, and y is the</code>pte_idx<code>is the pte index in the level, passed to</code>riscv_page_table_entry::set_ppn()` to calculate PPNs.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/hPM_3e8m4CRtFWM1HGUGqXuW4uk3cuClq0H4mfyO8IQ-lI2A50IvI1EMxtwzuxvUKxyenRMyYombsZcEpcdrbOfwEEuqop1NQPmdQrNv4gCJiNRVfb7ePAOXJUVKRMcEek6b429LzuXIBUbd6-ajctMkK9mwShrqdkWN4OKzraAm3C5o10kpMCCm9WZfFFg60CMq2PIXQ5Ih552qlPWr0mTq9GiZqQFO3sgVtqGQ1pLTUDtwH1hZxf3oaI4rBOnn5GuutCRX3Wvt5piO6F476Ae3O0uETt7u5eLpSp5_x5c3w_mvkDBrwEnjecma6d-oUgHEveTvy7oZ7W00"><p>How <code>riscv_page_table_list::process_page_table()</code> works:</p>
+<ul>
+<li>For each non-leaf link PTE <code>page_table[i][j]</code> such that <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">i &gt; 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6986em;vertical-align:-0.0391em;"></span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span> and <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>≤</mo><mi>j</mi><mo>&lt;</mo></mrow><annotation encoding="application/x-tex">0\leq j &lt;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7804em;vertical-align:-0.136em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.854em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">&lt;</span></span></span></span> <code>SuperLeafPtePerTable</code>, generate the following code to link it to corresponding page table:</li>
+</ul>
+<pre><code class="language-c"><span class="hljs-comment">// Set base addr to the middle of a page, so imm11 of load/store can reach everywhere in the page</span>
+la cfg.gpr[<span class="hljs-number">1</span>], page_table_i+<span class="hljs-number">2048</span> # Process PT_i
+lw/ld cfg.gpr[<span class="hljs-number">2</span>], %(pte_addr_offset)(cfg.gpr[<span class="hljs-number">1</span>]) <span class="hljs-comment">// pte_addr_offset = (j * PteSize) - 2048</span>
+la cfg.gpr[<span class="hljs-number">0</span>], page_table_%(get_child_table_id(i, j)) # Link PT_i_PTE_j -&gt; PT_%(get_child_table_id(i, j) <span class="hljs-comment">// get_child_table_id(i, j) = i * LinkPtePerTable + j + 1</span>
+
+<span class="hljs-comment">// Right shift the address for 2 bits to the correct PPN position in PTE: </span>
+<span class="hljs-comment">// the LSB of PPNs in the actual PA of a page&#x27;s start at bits[12], while LSB of PPNs in a PTE starts at bits[10]</span>
+srli cfg.gpr[<span class="hljs-number">0</span>], cfg.gpr[<span class="hljs-number">0</span>], <span class="hljs-number">2</span>
+or cfg.gpr[<span class="hljs-number">2</span>], cfg.gpr[<span class="hljs-number">0</span>], cfg.gpr[<span class="hljs-number">2</span>] <span class="hljs-comment">// Assign PPN</span>
+sw/sd cfg.gpr[<span class="hljs-number">2</span>], %(pte_addr_offset)(cfg.gpr[<span class="hljs-number">1</span>])
+</code></pre>
+<ul>
+<li>if <code>cfg.support_supervisor_mode</code> is set, use the following code to set the kernel page u bit to 0 for supervisor mode instruction/data pages.</li>
+</ul>
+<pre><code class="language-c"><span class="hljs-comment">//== Process kernel instruction pages ==//</span>
+    la cfg.gpr[<span class="hljs-number">0</span>], kernel_instr_start
+    la cfg.gpr[<span class="hljs-number">1</span>], kernel_instr_end
+
+    <span class="hljs-comment">// Get the VPN of the physical address</span>
+    slli cfg.gpr[<span class="hljs-number">0</span>], cfg.gpr[<span class="hljs-number">0</span>], %(XLEN - MAX_USED_VADDR_BITS) <span class="hljs-comment">//   MAX_USED_VADDR_BITS = 30, which implies 1GB mem space. Zero out   heading unused bits</span>
+    srli cfg.gpr[<span class="hljs-number">0</span>], cfg.gpr[<span class="hljs-number">0</span>], %(XLEN - MAX_USED_VADDR_BITS + <span class="hljs-number">12</span>)
+    <span class="hljs-comment">// Get the addr_offset of PTE in the PT</span>
+    slli cfg.gpr[<span class="hljs-number">0</span>], cfg.gpr[<span class="hljs-number">0</span>], $clog2(XLEN)
+
+    slli cfg.gpr[<span class="hljs-number">1</span>], cfg.gpr[<span class="hljs-number">1</span>], %(XLEN - MAX_USED_VADDR_BITS)
+    srli cfg.gpr[<span class="hljs-number">1</span>], cfg.gpr[<span class="hljs-number">1</span>], %(XLEN - MAX_USED_VADDR_BITS + <span class="hljs-number">12</span>)
+    slli cfg.gpr[<span class="hljs-number">1</span>], cfg.gpr[<span class="hljs-number">1</span>], $clog2(XLEN)
+
+    <span class="hljs-comment">// Starting from the first 4KB leaf page table</span>
+    la cfg.gpr[<span class="hljs-number">2</span>], page_table_%(get_1st_4k_table_id())
+    add cfg.gpr[<span class="hljs-number">0</span>], cfg.gpr[<span class="hljs-number">2</span>], cfg.gpr[<span class="hljs-number">0</span>]
+    add cfg.gpr[<span class="hljs-number">1</span>], cfg.gpr[<span class="hljs-number">2</span>], cfg.gpr[<span class="hljs-number">1</span>]
+    li cfg.gpr[<span class="hljs-number">2</span>], ubit_mask <span class="hljs-comment">// ubit_mask: bit 4 (U bit of PTE) is zero. All other bits are ones.</span>
+<span class="hljs-number">1</span>:
+    lw/ld cfg.gpr[<span class="hljs-number">3</span>], <span class="hljs-number">0</span>(cfg.gpr[<span class="hljs-number">0</span>])
+    and cfg.gpr[<span class="hljs-number">3</span>], cfg.gpr[<span class="hljs-number">3</span>], cfg.gpr[<span class="hljs-number">2</span>]
+    sw/sd cfg.gpr[<span class="hljs-number">3</span>], <span class="hljs-number">0</span>(cfg.gpr[<span class="hljs-number">0</span>])
+    addi cfg.gpr[<span class="hljs-number">0</span>], cfg.gpr[<span class="hljs-number">0</span>], XLEN/<span class="hljs-number">8</span> <span class="hljs-comment">// Move to the next PTE</span>
+    ble cfg.gpr[<span class="hljs-number">0</span>], cfg.gpr[<span class="hljs-number">1</span>], <span class="hljs-number">1b</span> <span class="hljs-comment">// If not the end of the kernel space, process the next PTE</span>
+
+<span class="hljs-comment">//== Process kernel data pages ==//</span>
+    la cfg.gpr[<span class="hljs-number">0</span>], kernel_data_start
+    slli cfg.gpr[<span class="hljs-number">0</span>], cfg.gpr[<span class="hljs-number">0</span>], %(XLEN - MAX_USED_VADDR_BITS)
+    srli cfg.gpr[<span class="hljs-number">0</span>], cfg.gpr[<span class="hljs-number">0</span>], %(XLEN - MAX_USED_VADDR_BITS + <span class="hljs-number">12</span>)
+    slli cfg.gpr[<span class="hljs-number">0</span>], cfg.gpr[<span class="hljs-number">0</span>], $clog2(XLEN)
+    la cfg.gpr[<span class="hljs-number">2</span>], page_table_%(get_1st_4k_table_id())
+    add cfg.gpr[<span class="hljs-number">0</span>], cfg.gpr[<span class="hljs-number">2</span>], cfg.gpr[<span class="hljs-number">0</span>]
+    li cfg.gpr[<span class="hljs-number">2</span>], ubit_mask
+    addi cfg.gpr[<span class="hljs-number">1</span>], cfg.gpr[<span class="hljs-number">1</span>], <span class="hljs-number">20</span> * XLEN/<span class="hljs-number">8</span> <span class="hljs-comment">// Assume 20 PTEs for kernel data pages</span>
+<span class="hljs-number">2</span>:
+    lw/ld cfg.gpr[<span class="hljs-number">3</span>], <span class="hljs-number">0</span>(cfg.gpr[<span class="hljs-number">0</span>])
+    and cfg.gpr[<span class="hljs-number">3</span>], cfg.gpr[<span class="hljs-number">3</span>], cfg.gpr[<span class="hljs-number">2</span>]
+    sw/sd cfg.gpr[<span class="hljs-number">3</span>], <span class="hljs-number">0</span>(cfg.gpr[<span class="hljs-number">0</span>])
+    addi cfg.gpr[<span class="hljs-number">0</span>], cfg.gpr[<span class="hljs-number">0</span>], XLEN/<span class="hljs-number">8</span>
+    ble cfg.gpr[<span class="hljs-number">0</span>], cfg.gpr[<span class="hljs-number">1</span>], <span class="hljs-number">2b</span>
+
+    sfence.vma
+</code></pre>
+<h3 id="exceptions-and-handling">Exceptions and handling</h3>
+<p>The kinds of page-table related exceptions are defined by class <code>riscv_page_table_exception_cfg</code>, which is a member <code>exception_cfg</code> of the page table list class <code>riscv_page_table_list</code>.
+In the class, field <code>enable_exception</code> is equal to <code>cfg.enable_page_table_exception</code>, which turns on/off of injecting page table exceptions.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/ZPFBReCm44NtV8MNhIgIVTL5f7w8DTWJEkrWex4XIH__NlD885a0hApnlUFnkUOG8aXiAiuCGmXAA9XMrr2YZb0mQZmRh2Dvfysn_CbK-dOxTQigSfOCH2yXrVlj5mNC_ZGq0MCm16syY-9vwgPUbO2pgg1uPmfDZT8xAmh0L3gqwov6E6eczpKSkgedrwRUTgEw5cg9iKoJLDvkC7oZ-ElDqzv6WoM9bsNz0_bFDFsg5bz0GKoHS1R3F80ZD1orGDAdfkIYQbpewOxY6UufWmNz0_85vHti1Ls7cGV2gzFE2MyJ3tHNj8blUgaX2b2yWTplrVjOT0h1V4nllWj65PTa4i5G-rHtvTKqfNBfIta-pkFmzFIS_MLDMsbVT26gjzyyN_dtiWCwMpMS_GC0"><p>In <code>riscv_page_table_list::inject_page_table_exception()</code>, first randomize the member <code>exception_cfg</code>. If a indicator bit is set, make the PTE incorrect in the corresponding kind. These erroneous kinds relate wrong lower 10 status bits except <code>allow_superpage_misaligned_exception</code> that has fault PPNs.</p>
+<p>To handle the exeptions, <code>riscv_page_table_list::gen_page_fault_handling_routine()</code> generate assembly code that walks through the page tables with fault addr, and replace the PTEs with correct lower 10 bits.
+<strong>WARNING: Since no PPN is corrected, so exceptions by <code>allow_superpage_misaligned_exception</code> cannot be recovered so far.</strong></p>
+<p>How <code>riscv_page_table_list::gen_page_fault_handling_routine()</code> works:</p>
+<ul>
+<li>If MPP != Machine_mode and MSTATUS.MPRV = 1, load/store address translation is the same as the mode indicated by MPP. So if <code>cfg.mstatus_mprv</code> is set, add following code:</li>
+</ul>
+<pre><code class="language-c"><span class="hljs-comment">// First check mstatus.mpp and mstatus.mprv to make sure the routine is executed in Bare mode</span>
+csrr mpp_reg, MSTATUS
+srli mpp_reg, mpp_reg, <span class="hljs-number">11</span>
+andi mpp_reg, mpp_reg, <span class="hljs-number">0x3</span>
+xori mpp_reg, mpp_reg, <span class="hljs-number">0x3</span>
+<span class="hljs-comment">// WARNING: Need to send error message if MPP is not Machine mode, e.g. bne mpp_reg, ERROR_MESSAGE</span>
+</code></pre>
+<ul>
+<li>Start from root level, walk through top-down to fix all related PTEs:</li>
+</ul>
+<pre><code class="language-c">    sfence.vma x0, x0
+
+    li level_reg, %level <span class="hljs-comment">// %level is set according MODE of satg</span>
+    li mask_reg, %bit_mask <span class="hljs-comment">// %bit_mask: the first VPN_WIDTH bits are zeros, and other bits are ones</span>
+    csrr fault_vaddr_reg, MTVAL # MTVAL <span class="hljs-comment">// get fault vaddr from mtval</span>
+    srli fault_vaddr_reg, fault_vaddr_reg, <span class="hljs-number">12</span>
+    slli fault_vaddr_reg, fault_vaddr_reg, %VADDR_SPARE+<span class="hljs-number">12</span> <span class="hljs-comment">// %VADDR_SPARE is the number of heading unused bits: XLEN - VADDR_WIDTH. Now VPNs starts from MSB.</span>
+
+    la pte_addr_reg, page_table_0 <span class="hljs-comment">// Starting from the root table</span>
+
+fix_pte:
+    srli tmp_reg, fault_vaddr_reg, %(XLEN-VPN_WIDTH) <span class="hljs-comment">// Get the VPN of the current level, put it at LSBs</span>
+    slli tmp_reg, tmp_reg, $clog2(XLEN/<span class="hljs-number">8</span>) <span class="hljs-comment">// Shift $clog2(XLEN/8) to get the actual address offset, each PTE has XLEN/8 bytes</span>
+
+    add pte_addr_reg, pte_addr_reg, tmp_reg
+    lw/ld pte_reg, <span class="hljs-number">0</span>(pte_addr_reg) <span class="hljs-comment">// Load the PTE from the memory</span>
+    <span class="hljs-comment">// Check if the it&#x27;s a link PTE (PTE[4:1] == 0)</span>
+    slli tmp_reg, pte_reg, %(XLEN - <span class="hljs-number">4</span>)
+    srli tmp_reg, tmp_reg, %(XLEN - <span class="hljs-number">3</span>)
+    bne zero, tmp_reg, fix_leaf_pte
+
+    <span class="hljs-comment">// Loop exit condition: If level == 0, go to where leaf PTE is fixed</span>
+    beq zero, level_reg, fix_leaf_pte
+
+    <span class="hljs-comment">// Fix the link PTE</span>
+    srli pte_reg, pte_reg, <span class="hljs-number">10</span>
+    slli pte_reg, pte_reg, <span class="hljs-number">10</span>
+    li tmp_reg, %(valid_link_pte.bits) <span class="hljs-comment">// valid_link_pte.bits[XLEN-1:10] are zeros according to constraints</span>
+    or pte_reg, pte_reg, tmp_reg
+    sw/sd pte_reg, <span class="hljs-number">0</span>(pte_addr_reg)
+
+    <span class="hljs-comment">// Move to the PTE it points to, and update regs</span>
+    srli pte_addr_reg, pte_reg, <span class="hljs-number">10</span>
+    slli pte_addr_reg, pte_addr_reg, <span class="hljs-number">12</span>
+    slli fault_vaddr_reg, fault_vaddr_reg, %(VPN_WIDTH)
+    addi level_reg, level_reg, <span class="hljs-number">-1</span>
+    srli mask_reg, mask_reg, %(VPN_WIDTH)
+    j fix_pte
+
+<span class="hljs-comment">//== Fix_leaf_pte: Override the low 10 bits with the correct leaf PTE setting ==//</span>
+fix_leaf_pte:
+    not mask_reg, mask_reg
+    and pte_reg, pte_reg, mask_reg <span class="hljs-comment">// zero out lower 10 bits</span>
+    li tmp_reg, %(valid_leaf_pte.bits)
+    or pte_reg, pte_reg, tmp_reg
+    sw/sd pte_reg, <span class="hljs-number">0</span>(pte_addr_reg)
+    j fix_kernel_leaf_pte
+
+fix_kernel_leaf_pte:
+    la tmp_reg, kernel_instr_start
+    slli tmp_reg, tmp_reg, %(XLEN - MAX_USED_VADDR_BITS) <span class="hljs-comment">// MAX_USED_VADDR_BITS = 30, which implies 1GB mem space. Zero out heading unused bits</span>
+    srli tmp_reg, tmp_reg, %(XLEN - MAX_USED_VADDR_BITS)
+    csrr fault_vaddr_reg, MTVAL # MTVAL
+    <span class="hljs-comment">// Check if the fault virtual address is in the kernel space</span>
+    bgeu tmp_reg, fault_vaddr_reg, fix_pte_done
+    <span class="hljs-comment">// Set the PTE.u (pte[4]) bit to 0 for kernel space PTE</span>
+    li tmp_reg, <span class="hljs-number">0x10</span>
+    not tmp_reg, tmp_reg
+    and pte_reg, tmp_reg, pte_reg
+    sw/sd pte_reg, <span class="hljs-number">0</span>(pte_addr_reg)
+
+<span class="hljs-comment">//== End of page table fault handling ==//</span>
+fix_pte_done:
+    sfence.vma
+    <span class="hljs-comment">// Randomly decide if run some kernel program before exiting from exception handling. Use the low 2 bits of x30 to determine whether to skip it or not.</span>
+    slli x30, x30, %(XLEN - <span class="hljs-number">2</span>)
+    beqz x30, fix_pte_ret
+
+    <span class="hljs-comment">// Randomly decide if set MPRV to 1</span>
+    slli x31, x31, %(XLEN - <span class="hljs-number">2</span>)
+    beqz x30, check_mprv <span class="hljs-comment">// ERROR: should be x31</span>
+    csrr tmp_reg, MSTATUS
+    li mask_reg, MPRV_BIT_MASK
+    not mask_reg, mask_reg
+    or tmp_reg, tmp_reg, mask_reg
+    csrrw tmp_reg, MSTATUS, tmp_reg
+
+<span class="hljs-comment">// Run some kernel mode program before returning from exception handling:</span>
+<span class="hljs-comment">// If MPRV = 0, jump to regular kernel mode program</span>
+<span class="hljs-comment">// If MPRV = 1, jump to kernel program with U mode mem load/store</span>
+check_mprv:
+    li mask_reg, MPRV_BIT_MASK
+    csrr tmp_reg, MSTATUS
+    and tmp_reg, tmp_reg, mask_reg
+    beqz tmp_reg, j_smode
+    jal ra, smode_lsu_program
+    j fix_pte_ret
+j_smode: 
+    jal ra, smode_program
+
+
+fix_pte_ret:
+    <span class="hljs-comment">// Recover the user mode GPR from kernal stack</span>
+    pop_gpr_from_kernel_stack()
+    mret
+</code></pre>
+<h2 id="pmp-and-epmp">PMP and ePMP</h2>
+<p>The <a href="https://github.com/riscv/riscv-tee/blob/main/Smepmp/Smepmp.pdf">spec</a> of RISC-V Smepmp (aka. PMP enhancements for memory access and execution prevention on Machine mode) is used to prevent access from Machine mode to less-privileged mode.</p>
+<p>In <code>riscv_instr_gen_config</code>, a member <code>pmp_cfg</code> of class <code>riscv_pmp_cfg</code> enables the support of PMP and ePMP.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/pLTDRnit4BtpLyojDYhBKjj3uNuWHX8N0LhRS8sYW67iKhkp4WikkI2vKjpK_xqpt6yfSULRSmYqmqVEyCtC6_gD3zA5kjGYqz9xSCfdswGggoGhrfy4qB_v76v_kuNCcaAjQoU3ieQCSUrhOAYfoyJXckmUBi19auCoOGHOawtMqgdmH81XZNma5ReaysvYbtdkajBcI5RUttyd7M8bFIRT4gESsYgDQymvaWCOEtePoMULycDYYy9Z8DnA1NZuyzVtrt06I_fUF8wGTDx3OtVNrZ0wZYYxenLRghyRkXng6J2VqkPQ23RUHYjIQxjhRcstwBIiEby33erSwOO3_9XXnNwI3M4qkic1BN17x3VmXkqEGB4YvxSFhVIOqNKwZ-tdz7PK33uuIHdptSRpSv1RgoZrcjYLcZ3bIfdc_hQ0Gg7EVOIUdRMk3EvEJjlVn7fTSNozHHaLbDH4qCafMpg2h0y3TprwZIRUJd5a1zQ18cVheCpXleQVW3xGqhCmDY1rmteJEFX9MrnSxDMq21i4Qe8LCKzWOjP3iE0tgWZj6O8eldptxexj3alAAWIfj8V2EhY-_0vE5gSWcE_hozkRUpZv6HQdSt67nHpkvMeEtywNIpvyA5_m5MPpWIRdMFyxOFeXcbQOzhAVjxsVJWevPHJ5I3rDHuCr-gdRlge3IEqjf5oYAN3OQTCuzE4P5fjDcSA-8i0-fw8fsTY2p0yjWXltq_5d_Y-pfB7uNBmZDHHHUCxX--DlUgWP8feEsUFRYKpM7gFG8ik-D6k4RjzHFb_I7_4-BdfkBdIT18XEdPXDbfn-dt-LoucIjRMovmeurxbocB7gaY2WB46GFQf3dKMdp0FtEyG3GMOPKO5iPkR0rrLb7Uzlw_b1FSBRt-_ySTdiPvO8JnNcM90GrsKpLfONYqTefklDrHNz_nDyyzLgiPX5q_tDNMzQDYQklTQqN7Gchi36j2JBy_wa_E6eC2U3LFn1dH9RBsna8DuiLGUqJR5urNdTnFtYaM-lVZdknEbaZbtSbMqxh5SOTeWc9hsagL7MPMnIsiM_k_nnyc0hTOr-1hkDoZP2-T6KoRaWkF4-BOdJvoXhcJHqlEW4ap25ioNFjfANDKsIeHnUl0RDEl6XzmNfgDlJMQEzetTKEXFfddvrg5ucEynXvwU08PjpHLkNAxFcaXw73BPgbV-O1FIJMLnwhzQc7nGFZwtsjs-454JjsTtdV1tbQaY6-53iNnTKCueedjaeRUBBuJJHKE_9MWT1-sZohwbi79L6JRGzmIYnrk2HX4nV82Ibf1RfwFsISY5LpbBMQDs383B87Gm1K9gccdpac9mySaGbNTGhAllXKIgTaqzHubj5n0ZO5pvc0-eghh4MSszmxVc0phyoceF7bSX8S5bIeJMmnqRzupnKXSh4T0B0JeMDCasSIKpOJ6Why_Ptp6nKZyRmoX27rzr0Ynmc1CSIHm4pCyo4o1HdjwMO7p-YVV9tYZ8YgzwMYLtzHKV2Z_-SdKrZ4My8ndze_Gi0"><p>The default PMP regions are specified in <code>riscv_pmp_cfg::assign_default_addr_offset()</code> which is employed by finally up to <code>initialize()</code>: pmpaddr0 will be set to the address of the &lt;main&gt; label. It splits the whole region [&lt;main&gt;, &lt;main&gt; + <code>pmp_max_offset</code>] evenly into <code>num_regions</code> parts. The offset between &lt;main&gt; and pmpaddr of each region is stored in pmp_cfg[i].offset.</p>
+<p>The type of entries of <code>pmp_cfg[]</code> are <code>pmp_cfg_reg_t</code>. It consists of both pmpcfg info and pmpaddr info as field <code>addr</code> and <code>offset</code>.</p>
+<pre><code class="language-sv"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">struct</span>{
+    <span class="hljs-keyword">rand</span> <span class="hljs-keyword">bit</span>                   l;
+    <span class="hljs-keyword">bit</span> [<span class="hljs-number">1</span>:<span class="hljs-number">0</span>]                  zero;
+    <span class="hljs-keyword">rand</span> pmp_addr_mode_t       a;
+    <span class="hljs-keyword">rand</span> <span class="hljs-keyword">bit</span>                   x;
+    <span class="hljs-keyword">rand</span> <span class="hljs-keyword">bit</span>                   w;
+    <span class="hljs-keyword">rand</span> <span class="hljs-keyword">bit</span>                   r;
+    <span class="hljs-comment">// RV32: the pmpaddr is the top 32 bits of a 34 bit PMP address</span>
+    <span class="hljs-comment">// RV64: the pmpaddr is the top 54 bits of a 56 bit PMP address</span>
+    <span class="hljs-keyword">bit</span> [XLEN - <span class="hljs-number">1</span> : <span class="hljs-number">0</span>]    addr;
+    <span class="hljs-comment">// The offset from the address of &lt;main&gt; - automatically populated by the</span>
+    <span class="hljs-comment">// PMP generation routine.</span>
+    <span class="hljs-keyword">rand</span> <span class="hljs-keyword">bit</span> [XLEN - <span class="hljs-number">1</span> : <span class="hljs-number">0</span>]    offset;
+  } pmp_cfg_reg_t;
+</code></pre>
+<p>where the <code>offset</code> is used to generate instr stream to set pmpaddr[i] CSRs if command line options does not configure pmpaddr. Otherwise field <code>addr</code> is used instead. Refer to <code>riscv_pmp_cfg::gen_pmp_instr()</code> for this point.</p>
+<p>How PMP features are fit in RISC-V DV?</p>
+<ul>
+<li>In <code>riscv_instr_gen_config::new()</code>, it creates an instance of <code>riscv_pmp_cfg</code> and calls <code>initialize()</code> for initialization.</li>
+<li><code>pmp_cfg</code> is randomized when its enclosing top-level <code>cfg</code> is randomized.</li>
+<li>Before program enters privileged mode, in <code>riscv_asm_program_gen::pre_enter_privileged_mode()</code> invokes <code>setup_pmp()</code>, which in turn calls <code>riscv_pmp_cfg::gen_pmp_instr()</code> to create instructions that setting up pmpcfg and pmpaddr CSRs. Then, it also employs <code>riscv_pmp_cfg::gen_pmp_write_test()</code> to test writes to these CSRs.</li>
+<li>When generate handle routine for instruction fault, load fault and store fault, it calls <code>riscv_pmp_cfg::gen_pmp_exception_routine()</code> for instructions to deal with exceptions caused by PMP settings.</li>
+</ul>
+<p>Notes on method <code>gen_pmp_instr()</code>:</p>
+<blockquote>
+<p>This function parses the pmp_cfg[] array to generate the actual instructions to set up the PMP CSR registers.</p>
+<p>Since either 4 (in rv32) or 8 (in rv64) PMP configuration registers fit into one physical CSR, this function waits until it has reached this maximum to write to the physical CSR to save some extraneous instructions from being performed.</p>
+</blockquote>
+<ul>
+<li>First part is to create instructions to set up MSECCFG if support_epmp is equal to 1.</li>
+</ul>
+<pre><code class="language-c"><span class="hljs-comment">// Load the address of the &lt;main&gt; section into pmpaddr0</span>
+la scratch_reg[<span class="hljs-number">0</span>], main
+srli scratch_reg[<span class="hljs-number">0</span>], scratch_reg[<span class="hljs-number">0</span>], <span class="hljs-number">2</span>
+csrw %(base_pmp_addr), scratch_reg[<span class="hljs-number">0</span>] <span class="hljs-comment">//  %(base_pmp_addr) = PMPADDR0</span>
+
+<span class="hljs-comment">//== Set up MSECCFG if support_epmp is set ==//</span>
+<span class="hljs-comment">// 1. First set RLB to avoid cfg is locked, otherwise we may fail to set up Region 0</span>
+<span class="hljs-comment">// 2. Region 0 should be executable at least in M mode</span>
+
+
+<span class="hljs-comment">// if mseccfg.mml == 1, LXWR 1100 (Execute-only in M mode)</span>
+<span class="hljs-comment">// if mseccfg.mml == 0 and mseccfg.mmwp == 1, LXWR 0100 (Executable). PMPCFG0 must be set up to avoid being denied (due to Whitelist Rule).</span>
+
+<span class="hljs-comment">// OPTION #1: mseccfg.mml == 1 and mseccfg.mmwp == X</span>
+<span class="hljs-comment">// Set RLB</span>
+csrwi MSECCFG, %(cfg_byte) <span class="hljs-comment">// cfg_byte = {1&#x27;b1, 1&#x27;b0, 1&#x27;b0}</span>
+<span class="hljs-comment">// Set PMPCFG0</span>
+li scratch_reg[<span class="hljs-number">0</span>], %(cfg_byte) <span class="hljs-comment">// cfg_byte = {1&#x27;b1, pmp_cfg[0].zero, TOR, 1&#x27;b1, 1&#x27;b0, 1&#x27;b0}</span>
+csrw %(base_pmpcfg_addr), scratch_reg[<span class="hljs-number">0</span>] <span class="hljs-comment">// %(base_pmpcfg_addr) == PMPCFG0</span>
+<span class="hljs-comment">// Finally set MSECCFG with RLB == 1</span>
+csrwi MSECCFG, %(cfg_byte) <span class="hljs-comment">// cfg_byte = {1&#x27;b1, mseccfg.mmwp, mseccfg.mml}</span>
+
+<span class="hljs-comment">// OPTION #2: mseccfg.mml == 0 and mseccfg.mmwp == 1</span>
+<span class="hljs-comment">// Set PMPCFG0</span>
+li scratch_reg[<span class="hljs-number">0</span>], %(cfg_byte) <span class="hljs-comment">// cfg_byte = {1&#x27;b1, pmp_cfg[0].zero, TOR, 1&#x27;b1, 1&#x27;b0, 1&#x27;b0}</span>
+csrw %(base_pmpcfg_addr), scratch_reg[<span class="hljs-number">0</span>] <span class="hljs-comment">// %(base_pmpcfg_addr) == PMPCFG0</span>
+<span class="hljs-comment">// Finally set MSECCFG with RLB == 1</span>
+csrwi MSECCFG, %(cfg_byte) <span class="hljs-comment">// cfg_byte = {1&#x27;b0, mseccfg.mmwp, mseccfg.mml}</span>
+
+<span class="hljs-comment">// OPTION #3: mseccfg.mml == 0 and mseccfg.mmwp == 0</span>
+<span class="hljs-comment">// Set MSECCFG directly</span>
+csrwi MSECCFG, %(cfg_byte) <span class="hljs-comment">// cfg_byte = {1&#x27;b0, mseccfg.mmwp, mseccfg.mml}</span>
+</code></pre>
+<ul>
+<li>
+<p>Next part is to set up PMPADDR[i] and PMPCFG[i] for each region. PMPADDR is assigned before PMPCFG to avoid locking if L == 1, even it is not necessary if ePMP is enabled and RLB is set.</p>
+<ul>
+<li>PMPADDR0 is the address of lable &lt;main&gt;</li>
+<li>In the situation that no command line argument, default value of PMPCFG is {1'b1, pmp_cfg[i].zero, TOR, 1'b0, 1'b1, 1'b0} if MML == 1 (Shared executable-only); and {1'b0, pmp_cfg[i].zero, TOR, 1'b1, 1'b0, 1'b0} (Execute-only)</li>
+<li>In case an argument is give, we want to allow the test writer to change region 0 to anything they like even if it means that a trap occurs on the next instruction. If no argument is given, we should set region 0 to have a configuration with execute enabled.</li>
+</ul>
+</li>
+<li>
+<p>Unset RLB if mseccfg.rlb is not set.</p>
+</li>
+</ul>
+<p>Notes on method <code>gen_pmp_exception_routine()</code>.</p>
+<blockquote>
+<p>After returning from a PMP exception, we return to the exact same instruction that resulted in a PMP exception to begin with. The handler is to avoid inifinite loop of taking an exception allowing forward progress in the code.</p>
+<p>This function creates a special PMP exception routine that is generated within the nstr_fault, load_fault, and store_fault exception <a href="http://routines.It">routines.It</a> first finds the correct pmpcfg CSR that corresponds to the address that caused the exception in the first place, and then will enable the appropriate access bit (X for instruction faults, W for store faults, and R for load faults).</p>
+<p>Note: If a pmpcfg CSR is locked, it is unable to be written to until a full reset, so in this case we will immediately jump to the &lt;test_done&gt; label if the faulting address matches to this region, otherwise we'll keep looping through the remaining CSRs.</p>
+</blockquote>
+<pre><code class="language-c"><span class="hljs-comment">// mscratch       : loop counter</span>
+<span class="hljs-comment">// scratch_reg[0] : temporary storage</span>
+<span class="hljs-comment">// scratch_reg[1] : pmpaddr[i]</span>
+<span class="hljs-comment">// scratch_reg[2] : pmpcfg[i]</span>
+<span class="hljs-comment">// scratch_reg[3] : 8-bit configuration fields</span>
+<span class="hljs-comment">// scratch_reg[4] : 2-bit pmpcfg[i].A address matching mode</span>
+<span class="hljs-comment">// scratch_reg[5] : holds the previous pmpaddr[i] value (necessary for TOR matching)</span>
+
+    <span class="hljs-comment">// Initialize loop counter and save to mscratch</span>
+    li scratch_reg[<span class="hljs-number">0</span>], <span class="hljs-number">0</span>
+    csrw MSCRATCH, scratch_reg[<span class="hljs-number">0</span>]
+    li scratch_reg[<span class="hljs-number">5</span>], <span class="hljs-number">0</span>
+<span class="hljs-number">0</span>:
+    <span class="hljs-comment">// calculate next pmpaddr and pmpcfg CSRs to read</span>
+    csrr scratch_reg[<span class="hljs-number">0</span>], MSCRATCH
+    mv scratch_reg[<span class="hljs-number">4</span>], scratch_reg[<span class="hljs-number">0</span>]
+
+    <span class="hljs-comment">// compare the loop index to every value within [0 : pmp_num_regions] to manually check which PMP CSRs to read from</span>
+    li scratch_reg[<span class="hljs-number">4</span>], <span class="hljs-number">0</span>
+    beq scratch_reg[<span class="hljs-number">0</span>], scratch_reg[<span class="hljs-number">4</span>], <span class="hljs-number">1f</span>
+    li scratch_reg[<span class="hljs-number">4</span>], <span class="hljs-number">1</span>
+    beq scratch_reg[<span class="hljs-number">0</span>], scratch_reg[<span class="hljs-number">4</span>], <span class="hljs-number">2f</span>
+    ...
+    li scratch_reg[<span class="hljs-number">4</span>], %(pmp_num_regions<span class="hljs-number">-1</span>)
+    beq scratch_reg[<span class="hljs-number">0</span>], scratch_reg[<span class="hljs-number">4</span>], %(pmp_num_regions)f
+
+<span class="hljs-number">1</span>:
+    csrr scratch_reg[<span class="hljs-number">1</span>], PMPADDR0
+    csrr scratch_reg[<span class="hljs-number">2</span>], PMPCFG0
+    j <span class="hljs-number">17f</span> <span class="hljs-comment">// Since the max of pmp_num_regions == 16</span>
+<span class="hljs-number">2</span>:
+    csrr scratch_reg[<span class="hljs-number">1</span>], PMPADDR1
+    csrr scratch_reg[<span class="hljs-number">2</span>], PMPCFG0
+    j <span class="hljs-number">17f</span>
+<span class="hljs-number">3</span>:
+    csrr scratch_reg[<span class="hljs-number">1</span>], PMPADDR2
+    csrr scratch_reg[<span class="hljs-number">2</span>], PMPCFG0
+    j <span class="hljs-number">17f</span>
+<span class="hljs-number">4</span>:
+    csrr scratch_reg[<span class="hljs-number">1</span>], PMPADDR3
+    csrr scratch_reg[<span class="hljs-number">2</span>], PMPCFG0
+    j <span class="hljs-number">17f</span>
+<span class="hljs-number">5</span>:
+    csrr scratch_reg[<span class="hljs-number">1</span>], PMPADDR4
+    csrr scratch_reg[<span class="hljs-number">2</span>], PMPCFG1
+    j <span class="hljs-number">17f</span>
+    ...
+pmp_num_regions:
+    csrr scratch_reg[<span class="hljs-number">1</span>], PMPADDR%(pmp_num_regions)
+    csrr scratch_reg[<span class="hljs-number">2</span>], PMPCFG%(pmp_num_regions<span class="hljs-number">-1</span>/<span class="hljs-number">4</span>)
+    j <span class="hljs-number">17f</span>
+
+
+<span class="hljs-number">17</span>:
+    <span class="hljs-comment">//== Calculate 8-bit pmp?cfg stored in lower bits of scratch_reg[3] ==//</span>
+
+    li scratch_reg[<span class="hljs-number">3</span>], %(cfg_per_csr) <span class="hljs-comment">// %(cfg_per_csr) == XLEN/8</span>
+    csrr scratch_reg[<span class="hljs-number">0</span>], MSCRATCH
+    <span class="hljs-comment">// calculate (loop_counter % cfg_per_csr)</span>
+    slli scratch_reg[<span class="hljs-number">0</span>], scratch_reg[<span class="hljs-number">0</span>], %(XLEN - $clog2(cfg_per_csr))
+    srli scratch_reg[<span class="hljs-number">0</span>], scratch_reg[<span class="hljs-number">0</span>], %(XLEN - $clog2(cfg_per_csr))
+    <span class="hljs-comment">// calculate (cfg_per_csr - modded_loop_counter - 1) to determine how many 8bit slots to the left this needs to be shifted</span>
+    sub scratch_reg[<span class="hljs-number">4</span>], scratch_reg[<span class="hljs-number">3</span>], scratch_reg[<span class="hljs-number">0</span>]
+    addi scratch_reg[<span class="hljs-number">4</span>], scratch_reg[<span class="hljs-number">4</span>], <span class="hljs-number">-1</span>
+    <span class="hljs-comment">// multiply this &quot;slot offset&quot; by 8 to get the actual number of bits it should be leftshifted</span>
+    slli scratch_reg[<span class="hljs-number">4</span>], scratch_reg[<span class="hljs-number">4</span>], <span class="hljs-number">3</span>
+    <span class="hljs-comment">// perform the leftshifting</span>
+    sll scratch_reg[<span class="hljs-number">3</span>], scratch_reg[<span class="hljs-number">2</span>], scratch_reg[<span class="hljs-number">4</span>]
+    <span class="hljs-comment">// add 8*modded_loop_counter to 8*(cfg_per_csr - modded_loop_counter - 1) stored in scratch_reg[4] to get &quot;slot offset&quot; for the pending rightshift operation</span>
+    slli scratch_reg[<span class="hljs-number">0</span>], scratch_reg[<span class="hljs-number">0</span>], <span class="hljs-number">3</span>
+    add scratch_reg[<span class="hljs-number">4</span>], scratch_reg[<span class="hljs-number">4</span>], scratch_reg[<span class="hljs-number">0</span>]
+    <span class="hljs-comment">// Perform the rightshifting</span>
+    srl scratch_reg[<span class="hljs-number">3</span>], scratch_reg[<span class="hljs-number">3</span>], scratch_reg[<span class="hljs-number">4</span>]
+ 
+    <span class="hljs-comment">//== get pmpcfg[i].A field stored in lower bits of scratch_reg[3] ==//</span>
+    slli scratch_reg[<span class="hljs-number">4</span>], scratch_reg[<span class="hljs-number">3</span>], %(XLEN - <span class="hljs-number">5</span>)
+    srli scratch_reg[<span class="hljs-number">4</span>], scratch_reg[<span class="hljs-number">4</span>], %(XLEN - <span class="hljs-number">2</span>)
+
+
+    <span class="hljs-comment">//== based on address match mode, branch to appropriate &quot;handler&quot; ==//</span>
+    <span class="hljs-comment">// pmpcfg[i].A == OFF</span>
+    beqz scratch_reg[<span class="hljs-number">4</span>], <span class="hljs-number">20f</span>
+    <span class="hljs-comment">//pmpcfg[i].A == TOR, scratch_reg[5] will contain pmpaddr[i-1]</span>
+    li scratch_reg[<span class="hljs-number">0</span>], <span class="hljs-number">1</span>
+    beq scratch_reg[<span class="hljs-number">4</span>], scratch_reg[<span class="hljs-number">0</span>], <span class="hljs-number">21f</span>
+    <span class="hljs-comment">// pmpcfg[i].A == NA4</span>
+    li scratch_reg[<span class="hljs-number">0</span>], <span class="hljs-number">2</span>
+    beq scratch_reg[<span class="hljs-number">4</span>], scratch_reg[<span class="hljs-number">0</span>], <span class="hljs-number">25f</span>
+    <span class="hljs-comment">// pmpcfg[i].A == NAPOT</span>
+    li scratch_reg[<span class="hljs-number">0</span>], <span class="hljs-number">3</span>
+    beq scratch_reg[<span class="hljs-number">4</span>], scratch_reg[<span class="hljs-number">0</span>], <span class="hljs-number">27f</span>
+    <span class="hljs-comment">// Error check, if no address modes match, something has gone wrong</span>
+    la scratch_reg[<span class="hljs-number">0</span>], test_done
+    jalr x0, scratch_reg[<span class="hljs-number">0</span>], <span class="hljs-number">0</span>
+
+    <span class="hljs-comment">//== increment loop counter and branch back to beginning of loop ==//</span>
+<span class="hljs-number">18</span>:
+    csrr scratch_reg[<span class="hljs-number">0</span>], MSCRATCH
+    <span class="hljs-comment">// prepare scratch_reg[5] as pmpaddr[i-1] of next iteration</span>
+    mv scratch_reg[<span class="hljs-number">5</span>], scratch_reg[<span class="hljs-number">1</span>]
+    addi scratch_reg[<span class="hljs-number">0</span>], scratch_reg[<span class="hljs-number">0</span>], <span class="hljs-number">1</span>
+    csrw MSCRATCH, scratch_reg[<span class="hljs-number">0</span>]
+    li scratch_reg[<span class="hljs-number">1</span>], %(pmp_num_regions)
+    ble scratch_reg[<span class="hljs-number">1</span>], scratch_reg[<span class="hljs-number">0</span>], <span class="hljs-number">19f</span>
+    j <span class="hljs-number">0b</span>
+
+<span class="hljs-number">19</span>:
+    <span class="hljs-comment">// If we reach here, it means that no PMP entry has matched the request. We must immediately jump to &lt;test_done&gt; since the CPU is taking a PMP exception, but this routine is unable to find a matching PMP region for the faulting access there is a bug somewhere.</span>
+    la scratch_reg[<span class="hljs-number">0</span>], test_done
+    jalr x0, scratch_reg[<span class="hljs-number">0</span>], <span class="hljs-number">0</span>
+
+    <span class="hljs-comment">//== Sub-sections for all address matching modes ==//</span>
+    <span class="hljs-comment">// From now on, scratch_reg[4]: pmpcfg[i].A -&gt; temporary storage</span>
+
+    <span class="hljs-comment">// pmpcfg[i].A == OFF</span>
+<span class="hljs-number">20</span>:
+    <span class="hljs-comment">// If entry is OFF, simply continue looping through other PMP CSR</span>
+    j <span class="hljs-number">18b</span>
+    
+    <span class="hljs-comment">// pmpcfg[i].A == TOR</span>
+<span class="hljs-number">21</span>:
+    csrr scratch_reg[<span class="hljs-number">0</span>], MSCRATCH
+    csrr scratch_reg[<span class="hljs-number">4</span>], MTVAL
+    srli scratch_reg[<span class="hljs-number">4</span>], scratch_reg[<span class="hljs-number">4</span>], <span class="hljs-number">2</span>
+    <span class="hljs-comment">// branch if loop_counter &gt; 0</span>
+    bnez scratch_reg[<span class="hljs-number">0</span>], <span class="hljs-number">22f</span>
+    <span class="hljs-comment">// If loop_counter==0, compare fault_addr to 0</span>
+    <span class="hljs-comment">// If fault_addr &lt; 0 : continue looping</span>
+    bltz scratch_reg[<span class="hljs-number">4</span>], <span class="hljs-number">18b</span>
+    j <span class="hljs-number">23f</span>
+    <span class="hljs-comment">// If fault_addr &lt; pmpaddr[i-1] : continue looping</span>
+<span class="hljs-number">22</span>:
+    bgtu scratch_reg[<span class="hljs-number">5</span>], scratch_reg[<span class="hljs-number">4</span>], <span class="hljs-number">18b</span>
+    <span class="hljs-comment">// If fault_addr &gt;= pmpaddr[i] : continue looping</span>
+<span class="hljs-number">23</span>:
+    bleu scratch_reg[<span class="hljs-number">1</span>], scratch_reg[<span class="hljs-number">4</span>], <span class="hljs-number">18b</span>
+    <span class="hljs-comment">// If we get here, there is a TOR match, if the entry is locked jump to &lt;test_done&gt;, otherwise modify access bits and return</span>
+    andi scratch_reg[<span class="hljs-number">4</span>], scratch_reg[<span class="hljs-number">3</span>], <span class="hljs-number">128</span>
+    beqz scratch_reg[<span class="hljs-number">4</span>], <span class="hljs-number">24f</span>
+    la scratch_reg[<span class="hljs-number">0</span>], test_done
+    jalr x0, scratch_reg[<span class="hljs-number">0</span>], <span class="hljs-number">0</span>
+<span class="hljs-number">24</span>: 
+    j <span class="hljs-number">29f</span>
+
+    <span class="hljs-comment">// pmpcfg[i].A == NA4</span>
+<span class="hljs-number">25</span>:
+    csrr scratch_reg[<span class="hljs-number">0</span>], MTVAL
+    srli scratch_reg[<span class="hljs-number">0</span>], scratch_reg[<span class="hljs-number">0</span>], <span class="hljs-number">2</span>
+    <span class="hljs-comment">// Zero out pmpaddr[i][31:30]</span>
+    slli scratch_reg[<span class="hljs-number">4</span>], scratch_reg[<span class="hljs-number">1</span>], <span class="hljs-number">2</span>
+    srli scratch_reg[<span class="hljs-number">4</span>], scratch_reg[<span class="hljs-number">4</span>], <span class="hljs-number">2</span>
+    <span class="hljs-comment">// If fault_addr[31:2] != pmpaddr[i][29:0] =&gt; there is a mismatch, so continue looping</span>
+    bne scratch_reg[<span class="hljs-number">0</span>], scratch_reg[<span class="hljs-number">4</span>], <span class="hljs-number">18b</span>
+    <span class="hljs-comment">// If we get here, there is an NA4 address match, jump to &lt;test_done&gt; if the entry is locked, otherwise modify access bits</span>
+    andi scratch_reg[<span class="hljs-number">4</span>], scratch_reg[<span class="hljs-number">3</span>], <span class="hljs-number">128</span>
+    beqz scratch_reg[<span class="hljs-number">4</span>], <span class="hljs-number">26f</span>
+    la scratch_reg[<span class="hljs-number">0</span>], test_done
+    jalr x0, scratch_reg[<span class="hljs-number">0</span>], <span class="hljs-number">0</span>
+<span class="hljs-number">26</span>:
+    j <span class="hljs-number">29f</span>
+
+    <span class="hljs-comment">// pmpcfg[i].A == NAPOT</span>
+<span class="hljs-number">27</span>:
+    csrr scratch_reg[<span class="hljs-number">0</span>], MTVAL
+    <span class="hljs-comment">// get fault_addr[31:2]</span>
+    srli scratch_reg[<span class="hljs-number">0</span>], scratch_reg[<span class="hljs-number">0</span>], <span class="hljs-number">2</span>
+    <span class="hljs-comment">// mask the bottom pmp_granularity bits of fault_addr</span>
+    srli scratch_reg[<span class="hljs-number">0</span>], scratch_reg[<span class="hljs-number">0</span>], %(pmp_granularity)
+    slli scratch_reg[<span class="hljs-number">0</span>], scratch_reg[<span class="hljs-number">0</span>], %(pmp_granularity)
+    <span class="hljs-comment">// get pmpaddr[i][29:0]</span>
+    slli scratch_reg[<span class="hljs-number">4</span>], scratch_reg[<span class="hljs-number">1</span>], <span class="hljs-number">2</span>
+    srli scratch_reg[<span class="hljs-number">4</span>], scratch_reg[<span class="hljs-number">4</span>], <span class="hljs-number">2</span>
+    <span class="hljs-comment">// mask the bottom pmp_granularity bits of pmpaddr[i]</span>
+    srli scratch_reg[<span class="hljs-number">4</span>], scratch_reg[<span class="hljs-number">4</span>], %(pmp_granularity)
+    slli scratch_reg[<span class="hljs-number">4</span>], scratch_reg[<span class="hljs-number">4</span>], %(pmp_granularity)
+     <span class="hljs-comment">// If masked_fault_addr != masked_pmpaddr[i] : mismatch, so continue looping</span>
+    bne scratch_reg[<span class="hljs-number">0</span>], scratch_reg[<span class="hljs-number">4</span>], <span class="hljs-number">18b</span>
+    <span class="hljs-comment">// If we get here there is an NAPOT address match, jump to &lt;test_done&gt; if the entry is locked, otherwise modify access bits</span>
+    andi scratch_reg[<span class="hljs-number">4</span>], scratch_reg[<span class="hljs-number">3</span>], <span class="hljs-number">128</span>
+    beqz scratch_reg[<span class="hljs-number">4</span>], <span class="hljs-number">29f</span>
+    la scratch_reg[<span class="hljs-number">0</span>], test_done
+    jalr x0, scratch_reg[<span class="hljs-number">0</span>], <span class="hljs-number">0</span>
+<span class="hljs-number">28</span>:
+    j <span class="hljs-number">29f</span>
+
+<span class="hljs-number">29</span>:
+    <span class="hljs-comment">//== enables the correct access permissions ==//</span>
+    <span class="hljs-comment">// if `fault_type` == INSTRUCTION_ACCESS_FAULT</span>
+    ori scratch_reg[<span class="hljs-number">3</span>], scratch_reg[<span class="hljs-number">3</span>], <span class="hljs-number">4</span>
+    <span class="hljs-comment">// if `fault_type` == STORE_AMO_ACCESS_FAULT</span>
+    <span class="hljs-comment">// // The combination of W:1 and R:0 is reserved, so if we are enabling write permissions, also enable read permissions to adhere to the spec.</span>
+    <span class="hljs-comment">// ori scratch_reg[3], scratch_reg[3], 3</span>
+    <span class="hljs-comment">// if `fault_type` == LOAD_ACCESS_FAULT </span>
+    <span class="hljs-comment">// ori scratch_reg[3], scratch_reg[3], 1</span>
+
+    csrr scratch_reg[<span class="hljs-number">0</span>], MSCRATCH
+    <span class="hljs-comment">// Calculate (loop_counter % cfg_per_csr) to find the index of the correct entry in pmpcfg[i]</span>
+    li scratch_reg[<span class="hljs-number">4</span>], %(XLEN - $clog2(cfg_per_csr))
+    sll scratch_reg[<span class="hljs-number">0</span>], scratch_reg[<span class="hljs-number">0</span>], scratch_reg[<span class="hljs-number">4</span>]
+    srl scratch_reg[<span class="hljs-number">0</span>], scratch_reg[<span class="hljs-number">0</span>], scratch_reg[<span class="hljs-number">4</span>]
+    <span class="hljs-comment">// Multiply the index by 8 to get the shift amount.</span>
+    slli scratch_reg[<span class="hljs-number">4</span>], scratch_reg[<span class="hljs-number">0</span>], <span class="hljs-number">3</span>
+    <span class="hljs-comment">// Perform leftshifting to the updated configuration byte to the proper alignment; and OR pmpcfg[i] with the updated configuration byte</span>
+    sll scratch_reg[<span class="hljs-number">3</span>], scratch_reg[<span class="hljs-number">3</span>], scratch_reg[<span class="hljs-number">4</span>]
+    or scratch_reg[<span class="hljs-number">2</span>], scratch_reg[<span class="hljs-number">2</span>], scratch_reg[<span class="hljs-number">3</span>]
+    <span class="hljs-comment">// Calculate (loop_counter / cfg_per_csr) to find which pmpcfg CSR to write to</span>
+    csrr scratch_reg[<span class="hljs-number">0</span>], MSCRATCH
+    srli scratch_reg[<span class="hljs-number">0</span>], scratch_reg[<span class="hljs-number">0</span>], $clog2(cfg_per_csr)
+
+    <span class="hljs-comment">//== Write the updated pmpcfg[i] to the CSR bank and exit the handler ==//</span>
+    beqz scratch_reg[<span class="hljs-number">0</span>], <span class="hljs-number">30f</span>
+    li scratch_reg[<span class="hljs-number">4</span>], <span class="hljs-number">1</span>
+    beq scratch_reg[<span class="hljs-number">0</span>], scratch_reg[<span class="hljs-number">4</span>], <span class="hljs-number">31f</span>
+    li scratch_reg[<span class="hljs-number">4</span>], <span class="hljs-number">2</span>
+    beq cratch_reg[<span class="hljs-number">0</span>], scratch_reg[<span class="hljs-number">4</span>], <span class="hljs-number">32f</span>
+    li scratch_reg[<span class="hljs-number">4</span>], <span class="hljs-number">3</span>
+    beq scratch_reg[<span class="hljs-number">0</span>], scratch_reg[<span class="hljs-number">4</span>], <span class="hljs-number">33f</span>
+<span class="hljs-number">30</span>:
+    csrw PMPCFG0, scratch_reg[<span class="hljs-number">2</span>]
+    j <span class="hljs-number">34f</span>
+<span class="hljs-number">31</span>:
+    csrw PMPCFG1, scratch_reg[<span class="hljs-number">2</span>]
+    j <span class="hljs-number">34f</span>
+<span class="hljs-number">32</span>:
+    csrw PMPCFG2, scratch_reg[<span class="hljs-number">2</span>]
+    j <span class="hljs-number">34f</span>
+<span class="hljs-number">31</span>:
+    csrw PMPCFG3, scratch_reg[<span class="hljs-number">2</span>]
+<span class="hljs-number">34</span>:
+    <span class="hljs-comment">// End the pmp handler with a labeled nop instruction, this provides a branch target for the internal routine after it has &quot;fixed&quot; the pmp configuration CSR.</span>
+    nop
+</code></pre>
+<p>The flowchart below summarizes the exception handling routine.</p>
+<p><img src="riscv-dv_pmp_flowchart.png" alt="Flowchart"></p>
+<h2 id="handshake-between-testbench-and-dut">Handshake between testbench and DUT</h2>
+<p>RISCV-DV also defines handshake protocol and corresponding instruction stream for the comminication between testbench and tested core. The <a href="https://htmlpreview.github.io/?https://github.com/google/riscv-dv/blob/master/docs/build/singlehtml/index.html">online doc</a> well explained the details.</p>
+<p>Enabling bit <code>cfg.require_signature_addr</code> turns on/off of the handshake functionality. If it is set, function <code>riscv_asm_program_gen::gen_signature_handshake()</code> can generate the proper sequence of handshake instructions to signal the testbench.</p>
+<p>The handshake is carried out by writes to the address specified by <code>cfg.signature_addr</code>. The default address is 32'hdeed_beef, and can be configured via command line option +signature_addr. Writes to the signature address work like transmission by MMIO.</p>
+<p>The memory interface of testbench should implement features that monitors the the writes to signature and collects data according to types of signature.</p>
+<p>The four types of signature information that core can send to testbench is described in src/riscv_signature_pkg.sv, which are illustrated in the figure below. They are used to check internal stautus of a core in the situation such as handling exceptions/interrupts or changing privileged mode.</p>
+<p><img src="signature.png" alt="signature"></p>
+<h2 id="instruction-generation-flow">Instruction generation flow</h2>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/hLPDRniv3BtxLn0354WCszbpYdQJfkqcXomCn-Xb4IJoYBQ5Q4O3IHF4BVhVI-fZPZnDUbfVHY8fKdmadtpXlB2-hVIaeQ_oojHGVAczFO2e9Qojg1gZLOq5_9W0_Kwcfp2VVuHYXpNiKKYqHL3KnYDOjTjx2FivEFI0mPKM6zJm-122FMOrRy1ioQuCSHSUNtnI-YumUCFdDKAnVoUZYoA6011bQQnKzOwjhYzNwvlFGOErvFk4jTf2yKbOXCf8XCQQ7Vd-km2_npf6ct_yhpRt01y-mDAgPwLf5TreXvt90TqzczpKodS6jLJRoSyHU6YJ7zoX364JUiC00KKevg38dn9QVKTuGbiJK7VBIG2Xj2W8r4Ri20M688eP-UNjab0vcDPFEgpRXhBhmbxThLpKtQw-h1aVGcv7PiteQfEZul5kEhtfxXGTdK-dhAYK4-_30YMIYnb9mY88NHQwWR3oprYIA7vQ_WHvKpNbbcpfAwIqqO7mJLXW4uqgghPl7OV1Q945BWdGbul5vBZY3EoWJZydm_AmjAz6iacrw2jn7f7xPvanF34DdnTQ7qxXw-lYRoGEQ7B7SO6mvgB9GQzndAwHrglBPMgat6ZfwhT2rHiZ3-dwm_lJH3PmJREfQV3IJFQ-kj54ovtZsNWVZDrvcYofN2DykOUIYfza-59YI2GPsomlAREHZ1FRYbPxE56ry_PC6o7Fd3VsT6JfqVcvD3J2PUwpDn8Sv9SrWzm6ngFyNBl90-rw_xs-efFPOCnIOKkw4cLhqV6094iUi8nMvqegIpH5uq0f8uKRwosbRggaJSgZxg3EBP-O3z6UuGkrNK0lMT8QYGn7GGOy6cVNmTPO-BIw_FVg-ZUU2wadoWXr2n47i5oPQiE46WAd4Co_0QM0-QWMduKNPtVXtdUHerqkI_S4j7Hna6GOQEfLa1EHHQjCzaVCdTZyaHXXKM7rO757De-BTFnwVVCL2c_snj7iyhjKRAsf7k9UEH0-UQ0v8tzDFXWSYifaXsphzlGMI20fnQQrTxFyc93ZY9-4pI7e_W9JwyFhK7VPnyhswNVQHEUvhLBgRs0qxgHGfJQ1vKQ-qerFA7vWTfgqpeBkGGH9_WbZttBpWMthqt6O0JVOv6xEpCNpJJ3n-SXVnD4MdvLfNT1Pr8nGEWBP1HM1djZiNT9V0uiBfeXIjw7CtO4Z0dhVdwTEx7Xerfi73feDQ8ViHiI3ERaZNnigvTCCbAQdIEWXdhdW_SEQirgyNUe4xx29_uTkTm-_zVkVeiTMEmhVcVJPy1nVa1l-M_SB"><p>TODO: Add description of memory map of a test case. There is a reference slide in [3].</p>
+<h2 id="appendix">Appendix</h2>
+<h3 id="setting-up-privileged-csr-registers">Setting up privileged CSR registers</h3>
+<p>Let's begin with how privileged registers are defined. First class <code>riscv_reg_field</code> is used to model a register field.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/RP8zJyCm48Rt_8eRGJGjC0Q6Tc2e546LWI8XPBdn9J5AdChd1BNG_ywvJYk8wY5MtdlkwvNdvAHrNLD7UIs9m6hAUs6n58N6Mdr7mES6Djg9BwrS1Gbeuw0pf4k3QWXR97IYbpM76ONtj_JfERvBRZy688IiDEfoNEOv4WctswBdJkt5IH-mIbh5SrXKeT5HdauXRmqvAtaoujz13NSS3xdCz6ZTFOFQb5VNWxnjoGa_MDleFR9yY4pha8qeAmTjCNOaIVxC6lcFmWBGT4tOp2y5mRRrAbjEO3Q3ZEsnFG-zjjeXmSe60LvbtI5D692AO5cQrWvYA91cwR70CM_cANWnzGvIBDdGa1t8HPR2cOI5sOrgZp8E5pn-YD0eltimeCRYylx_7OlsQ5j-3ntnVXNtOdEz4tIkrlMDQ3UVc3ju_8dZSS5epg1_WBy0"><p>Then class <code>riscv_reg</code> uses instances of above field class to define privileged registers, which is parameterized by <code>(type REG_T = privileged_reg_t)</code>.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/ZLHDZzCm4BtxLym12H3jRiknWBGIYhXqEMnPXBHQEQuzIOmI9xATL0liVsTif-c7GDqUgjZpyjxupNDkd1VMzqtDP2sS0wkT7BZ5yZS3-hq3UkH6D0WhkCk-y6_ZTbiK3ZrjfXUaizoFfSxgGTUynW5h0gGbbgZIreGRH2XljOU77-liwtovMZoEfQ9M3wyU0ximwj0JBpJMAcBcyn6gZVQXzkRjr30rDgrAz9o4fhKxMmkb4ki9udHdp_ZCJEkHsYahJmOS-bgjaXqiCts3LdXKuNGz1bH-v50-OxjAomgq0ryXVDxSXGxi5KEZ0ld_5OvTPVwfGuK58Eab1uDva6PsozVPzsmDd-3zw-roEGEulePR8Ijj49fMOKHjZb6B4RNfExI3Tgqz0EzFW0k8m7k74-Jv7oF-S7gW6elpy-pdniA35hN-XMJL6BOSmjppvEfaMWWSdTMt8C1rA7MXvLvRaJYZrxNpQ2-AZwcW5tnlJKnYOTi6ujmTv2b_-KMUCKsCReuk3MMHn4qWE-CHKhPMQLF6vcr9AJ4-o5vKcFB9f4KA5XtTu8wKwDuQ6GB6yhFxaSmJNKVSBFcrR-JgHITAUks0rcg5CQXJcaVVoUo8ca7lujn69tBGbFXAMCLtsgBA6IMTQYy8UEHWyH_oG4LbfDGc8TW-7SjCTFtGy7Rx4wM7Zt_cymCXko58-Axz1G00"><p>Next, the class for privileged registers <code>riscv_privil_reg</code> is a subclass of <code>riscv_reg</code>.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/PP1DJWCn38NtFeMN81WEKB7eZcCaOUAPMdYIAdOZyNTtd1O4gDxP-PwVN_PggTbf4vWbgM9ZdNiuDkuieT7w3kXrXrpOHdzp2vzGgf6Jwy6mBbUItUu7XYVkLD0EXD7RKD96SKWkCAsK1nRi7YQSamX6FHsfFVowHRHwDkSa_FPlJoePOrqM9Okk_mjz7oFKISPRoXaN9icApwzEzlh2PSNeyt2U3oDrkYL1uuqKgEGH4oxft1KVFwRfAYpi7HpVzmK0"><p>By using the classes above, class <code>riscv_privileged_common_seq</code> provides some common routines for privileged mode operations.</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/dLMxZjim4Epr5GjN2N8sKXifxf3gW1I7E41AafPMCX6ALBYK3EVnxzcbvSV9iHtaAd4uErpE3dsFb4nCVUkAqXaYY9RAGNNH3jPXWvKgGzi6hmY__oo0_zv1MJUm78dMKuggGSyyNzjcf6nOapdMfmmi5d1IX8WDCJHIMsuWzNHKt1CLamu4YzStwLurtQhkxrNtrwldyv63Fc4yTwmD5RvvUpWVKz-fLZ0fdU1q1Uyly6mnnRtXKnMJEeP-5puav6wRJO9GtnhbSldNheivF7kRh77s1q9jqLKaIYssQum4UXoMVk1FY_g1sz1qmaWmqAEj6eolUCKWyzOxtf-QaOikGAdBofSx4Qd3Cja1tOwxBOrpe2VUQ4X1_C9es8wFgy-mZPQ_M38pUguFdg0EaO7nkaOmLdo9s26t_Oh9UjmBz1sidhwyWAr5I_CxM0oM7uznobHLL2aQJouhgU0rM98oCMcxiUKcTqk7Q-s7fld8fowVE6iZfXaN-SF1-TojJLoQ0gka3GA_rePRENjEUN0i8CFV9y1XVJy04tF5p8XYcDpS-1Bt1Xr7lXzcddh-F3g7sTUySBiyPbcD0sFP5RSxHicKPOYLzOtSJFpJmhT-2Dy456TKfahbgolzMwXV1U4i7aaDnet1u4kre7cjinmsblWbCBad1FtfURmen-QhlioBf6cIcV_eyvI0ufZJMu5B6yCZ3_npIWLlIGuaS4ZvTJgpHWUppZIeabaxLEzdnwxwePKpU-I9meTVy_cjpef7BfF_1Ny0"><p>Note on usage:</p>
+<ul>
+<li><code>enter_privileged_mode()</code> is employed in `riscv_asm_program_gen::gen_privileged_mode_switch_routine()' to set up privileged mode registers before switching to target privileged mode and jump to init section.</li>
+<li></li>
+</ul>
+<h3 id="kernel-sp">Kernel SP:</h3>
+<ul>
+<li><code>cfg.tp</code> is used as the kernel SP. In <code>riscv_asm_program_gen::pre_enter_privileged_mode()</code>, it sets up kerenal stack pointer by section &quot;h%(hart_id)_kernel_sp&quot; which assigns <code>cfg.tp</code> using the address of &quot;h%(hart_id)kernel_stack_end&quot;.</li>
+<li>It is the reason that in <code>riscv_instr_pkg::push_gpr_to_kernel_stack()</code>, TP is moved to SP before push GPRs to stack, as well as in <code>riscv_instr_pkg::pop_gpr_from_kernel_stack()</code>, SP is moved to TP before restore user mode SP by switching SCRATCH ans SP.</li>
+</ul>
+<h2 id="references">References</h2>
+<p>[1] <a href="https://github.com/google/riscv-dv">Source code at Github</a></p>
+<p>[2] <a href="https://htmlpreview.github.io/?https://github.com/google/riscv-dv/blob/master/docs/build/singlehtml/index.html">Online document</a></p>
+<p>[3] <a href="https://www.youtube.com/watch?v=9y_4ucNO04U">Talk at RISC-V Summit 2018</a></p>
+<p>[4] <a href="https://www.youtube.com/watch?v=st_ZiRHuNbU">Talk at RISC-V Summit 2019</a></p>
+
+        <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+        
+    </body>
+    </html>
