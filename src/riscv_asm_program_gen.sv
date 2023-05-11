@@ -548,12 +548,19 @@ class riscv_asm_program_gen extends uvm_object;
     int EDIV = 1;
     int len = (ELEN <= XLEN) ? ELEN : XLEN;
     int num_elements = VLEN / len;
-    if (!(RVV inside {supported_isa})) return;
+	vtype_t vtype_init;
+    if (!(RVV inside {supported_isa})) return;  
     LMUL = 1;
     SEW = (ELEN <= XLEN) ? ELEN : XLEN;
+    /*
     instr_stream.push_back($sformatf("li x%0d, %0d", cfg.gpr[1], cfg.vector_cfg.vl));
-    instr_stream.push_back($sformatf("%svsetvli x%0d, x%0d, e%0d, m%0d, d%0d",
-                                     indent, cfg.gpr[0], cfg.gpr[1], SEW, LMUL, EDIV));
+    instr_stream.push_back($sformatf("%svsetvli x%0d, x%0d, e%0d, m%0d",
+                                     indent, cfg.gpr[0], cfg.gpr[1], SEW, LMUL));
+    */
+    vtype_init.fractional_lmul = 1'b0;
+    vtype_init.vlmul = 1;
+    vtype_init.vsew = SEW;
+    add_vset_stream(vtype_init, cfg.vector_cfg.vl);
     instr_stream.push_back("vec_reg_init:");
 
     // Vector registers will be initialized using one of the following three methods
@@ -703,12 +710,17 @@ class riscv_asm_program_gen extends uvm_object;
   virtual function void gen_test_done();
     string str = format_string("test_done:", LABEL_STR_LEN);
     instr_stream.push_back(str);
-    instr_stream.push_back({indent, "li gp, 1"});
+	instr_stream.push_back("#ifdef DIFFTEST");
+	instr_stream.push_back({indent, "li a0, 0"});
+    instr_stream.push_back({indent, ".word 0x0000006b"});
+	instr_stream.push_back("#else");
+	instr_stream.push_back({indent, "li gp, 1"});
     if (cfg.bare_program_mode) begin
       instr_stream.push_back({indent, "j write_tohost"});
     end else begin
       instr_stream.push_back({indent, "ecall"});
     end
+    instr_stream.push_back("#endif");
   endfunction
 
   // Dump all GPR to the starting point of the program
@@ -1627,19 +1639,31 @@ class riscv_asm_program_gen extends uvm_object;
     instr_stream.push_back({indent, $sformatf("csrwi vxsat, %0d", cfg.vector_cfg.vxsat)});
     instr_stream.push_back({indent, $sformatf("csrwi vxrm, %0d", cfg.vector_cfg.vxrm)});
     init_vec_gpr(); // GPR init uses a temporary SEW/LMUL setting before the final value set below.
+    /*
     instr_stream.push_back($sformatf("li x%0d, %0d", cfg.gpr[1], cfg.vector_cfg.vl));
     if ((cfg.vector_cfg.vtype.vlmul > 1) && (cfg.vector_cfg.vtype.fractional_lmul)) begin
       lmul = $sformatf("mf%0d", cfg.vector_cfg.vtype.vlmul);
     end else begin
       lmul = $sformatf("m%0d", cfg.vector_cfg.vtype.vlmul);
     end
-    instr_stream.push_back($sformatf("%svsetvli x%0d, x%0d, e%0d, %0s, d%0d",
+    instr_stream.push_back($sformatf("%svsetvli x%0d, x%0d, e%0d, %0s",
                                      indent,
                                      cfg.gpr[0],
                                      cfg.gpr[1],
                                      cfg.vector_cfg.vtype.vsew,
-                                     lmul,
-                                     cfg.vector_cfg.vtype.vediv));
+                                     lmul));
+    */
+    add_vset_stream(cfg.vector_cfg.vtype, cfg.vector_cfg.vl);
   endfunction
 
+
+    virtual function void add_vset_stream(vtype_t vtype, bit [XLEN-1:0] vl);
+	  riscv_vset_stream vset_stream;
+	  vset_stream = riscv_vset_stream::type_id::create("vset_stream");
+	  vset_stream.cfg = cfg;
+	  vset_stream.gen_vset_stream(vtype, vl);
+	  for(int i = 0; i < vset_stream.instr_list.size(); i++) begin
+	    instr_stream.push_back({indent, vset_stream.instr_list[i].convert2asm()});
+	  end
+	endfunction
 endclass

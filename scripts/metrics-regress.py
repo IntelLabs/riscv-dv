@@ -11,7 +11,10 @@ def make_http_request( req_type, endpoint, params=None ):
     headers = { 'Content-Type': 'application/json',
                 'Private-Token': str(os.environ['METRICS_CI_TOKEN'])
                }
-
+    
+    if !server.startwith('chipsalliance.metrics.ca'):
+        print("Illegal URL: " + server)
+        exit(1)
     conn = http.client.HTTPSConnection(server)
     conn.request(req_type, endpoint, params, headers)
     response = conn.getresponse()

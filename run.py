@@ -440,7 +440,7 @@ def gcc_compile(test_list, output_dir, isa, mabi, opts, debug_cmd):
             # If march/mabi is not defined in the test gcc_opts, use the default
             # setting from the command line.
             if not re.search('march', cmd):
-                cmd += (" -march={}".format(test_isa))
+                cmd += (" -march={}_zifencei".format(test_isa))
             if not re.search('mabi', cmd):
                 cmd += (" -mabi={}".format(mabi))
             logging.info("Compiling {}".format(asm))
@@ -664,14 +664,17 @@ def iss_sim(test_list, output_dir, iss_list, iss_yaml, iss_opts,
                     elf = prefix + ".o"
                     log = ("{}/{}.{}.log".format(log_dir, test['test'], i))
                     cmd = get_iss_cmd(base_cmd, elf, log)
-                    if 'iss_opts' in test:
+                    if 'iss_opts' in test and iss == 'spike':
+                        idx = cmd.find('--log-commits')
+                        if(idx != -1):
+                            cmd = cmd[:idx] + test['iss_opts'] + ' ' + cmd[idx:]  
+                        else:
+                            logging.error("No option --log-commits for Spike.")
+                    if 'iss_opts' in test and iss != 'spike':
                         cmd += ' '
                         cmd += test['iss_opts']
                     logging.info("Running {} sim: {}".format(iss, elf))
-                    if iss == "ovpsim":
-                        run_cmd(cmd, timeout_s, debug_cmd=debug_cmd)
-                    else:
-                        run_cmd(cmd, timeout_s, debug_cmd=debug_cmd)
+                    run_cmd(cmd, timeout_s, debug_cmd=debug_cmd)
                     logging.debug(cmd)
 
 

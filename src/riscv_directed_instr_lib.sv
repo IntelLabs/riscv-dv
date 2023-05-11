@@ -93,6 +93,98 @@ class riscv_mem_access_stream extends riscv_directed_instr_stream;
 
 endclass
 
+// Vset instruction, three options:
+// 1) VSETIVLI: vsetivli rd, avl, vtypei
+// 2) VSETVLI: 
+//      li rd1, avl
+//      vsetvli rd, rd1, vtypei
+// 3) VSETVL:
+//      li rd1, avl
+//      li rd2, vtypei
+//      vsetvl rd, rd1, rd2
+class riscv_vset_stream extends riscv_directed_instr_stream;
+	riscv_vset_instr vset;
+	riscv_pseudo_instr li_avl;
+	riscv_pseudo_instr li_vtypei;
+	string str_vtypei;
+	
+	`uvm_object_utils(riscv_vset_stream)
+	
+	function new(string name = "");
+      super.new(name);
+	endfunction
+	
+	function void gen_vset_stream(vtype_t vtype, bit [XLEN-1:0] vl);
+	  $cast(vset, riscv_instr::get_rand_instr(.include_instr({VSETIVLI, VSETVLI, VSETVL})));
+	  vset.rd = cfg.gpr[0];
+	  case (vset.instr_name)
+        VSETIVLI: begin
+	      vset.vtype = vtype;
+	      vset.vl = vl[31:0];
+	      instr_list = {vset};
+        end
+        VSETVLI: begin
+	      li_avl = riscv_pseudo_instr::type_id::create("li_instr");
+	      `DV_CHECK_RANDOMIZE_WITH_FATAL(li_avl,
+            pseudo_instr_name == LI;
+            rd == cfg.gpr[1];
+		    )
+		  li_avl.imm_str = $sformatf("0x%0x", vl);
+	      vset.vtype = vtype;
+	      vset.rs1 = cfg.gpr[1];
+	      instr_list = {li_avl, vset};
+        end
+        VSETVL: begin
+	      li_vtypei = riscv_pseudo_instr::type_id::create("li_instr");
+	      `DV_CHECK_RANDOMIZE_WITH_FATAL(li_vtypei,
+            pseudo_instr_name == LI;
+            rd == cfg.gpr[2];
+		    )
+		  li_vtypei.imm_str = $sformatf("0x%0x", vtype2array(vtype));
+	      li_avl = riscv_pseudo_instr::type_id::create("li_instr");
+	      `DV_CHECK_RANDOMIZE_WITH_FATAL(li_avl,
+            pseudo_instr_name == LI;
+            rd == cfg.gpr[1];
+		    )
+		  li_avl.imm_str = $sformatf("0x%0x", vl);
+	      vset.vtype = vtype;
+	      vset.rs1 = cfg.gpr[1];
+	      vset.rs2 = cfg.gpr[2];
+	      instr_list = {li_vtypei, li_avl, vset};
+	    end
+	  endcase
+	endfunction
+	
+	function bit [XLEN-1:0] vtype2array(vtype_t vtype);
+		bit [XLEN-1:0] bit_array;
+		bit_array[7] = vtype.vma;
+		bit_array[6] = vtype.vta;
+		bit_array[5:3] = 3'($clog2(vtype.vsew/8));
+		case (vtype.vlmul)
+	      1: bit_array[2:0] = 3'b000;
+		  2: begin
+	        if(vtype.fractional_lmul)
+		      bit_array[2:0] = 3'b111;
+			else
+			  bit_array[2:0] = 3'b001;
+		  end
+		  4: begin
+	        if(vtype.fractional_lmul)
+		      bit_array[2:0] = 3'b110;
+			else
+			  bit_array[2:0] = 3'b010;
+		  end
+		  8: begin
+	        if(vtype.fractional_lmul)
+		      bit_array[2:0] = 3'b101;
+			else
+			  bit_array[2:0] = 3'b011;
+		  end
+		endcase
+		return bit_array;
+	endfunction
+endclass
+
 // Jump instruction (JAL, JALR)
 // la rd0, jump_tagert_label
 // addi rd1, offset, rd0

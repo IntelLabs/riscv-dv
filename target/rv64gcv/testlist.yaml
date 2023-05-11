@@ -117,7 +117,10 @@
     +no_branch_jump=1
     +boot_mode=m
     +no_csr_instr=1
-  iterations: 2
+    +dist_control_mode=1
+    +dist_rvv=2000
+  iss_opts: --varch=vlen:128,elen:64
+  iterations: 1
   gen_test: riscv_instr_base_test
   rtl_test: core_base_test
 
@@ -147,11 +150,14 @@
     +num_of_sub_program=0
     +enable_floating_point=1
     +enable_vector_extension=1
-    +directed_instr_0=riscv_vector_load_store_instr_stream,10
+    +directed_instr_0=riscv_vector_load_store_instr_stream,1000
+    +enable_fault_only_first_load=0
+    +enable_zvlsseg=1
     +no_branch_jump=1
     +boot_mode=m
     +no_csr_instr=1
-  iterations: 5
+  iss_opts: --varch=vlen:128,elen:64
+  iterations: 1
   gen_test: riscv_instr_base_test
   rtl_test: core_base_test
 

@@ -184,7 +184,8 @@ class riscv_instr extends uvm_object;
                                              riscv_instr_category_t include_category[$] = {},
                                              riscv_instr_category_t exclude_category[$] = {},
                                              riscv_instr_group_t include_group[$] = {},
-                                             riscv_instr_group_t exclude_group[$] = {});
+                                             riscv_instr_group_t exclude_group[$] = {},
+                                             int unsigned include_dist[$] = {});
      int unsigned idx;
      riscv_instr_name_t name;
      riscv_instr_name_t allowed_instr[$];
@@ -209,8 +210,13 @@ class riscv_instr extends uvm_object;
      disallowed_instr = {disallowed_instr, exclude_instr};
      if (disallowed_instr.size() == 0) begin
        if (include_instr.size() > 0) begin
-         idx = $urandom_range(0, include_instr.size()-1);
-         name = include_instr[idx];
+	     if (include_dist.size() > 0) begin
+		   idx = lookup_dist(include_dist);	   
+         end
+	     else begin
+           idx = $urandom_range(0, include_instr.size()-1);
+	     end
+	     name = include_instr[idx];
        end else if (allowed_instr.size() > 0) begin
          idx = $urandom_range(0, allowed_instr.size()-1);
          name = allowed_instr[idx];
@@ -238,6 +244,15 @@ class riscv_instr extends uvm_object;
      instr_h = new instr_template[name];
      return instr_h;
   endfunction : get_rand_instr
+
+  // input is array of dist weights returns random index
+  // Ref: https://verificationacademy.com/forums/systemverilog/help-distriution-constraint-variable-have-value-within-array-values-weights-another-array#reply-56293
+  static function int unsigned lookup_dist(int unsigned weights[$]); 
+    int value = $urandom_range(weights.sum()-1);
+    int limit = 0;
+    foreach (weights[ii]) if (value < (limit += weights[ii])) return ii;
+    // error if you reach here
+  endfunction
 
   static function riscv_instr get_load_store_instr(riscv_instr_name_t load_store_instr[$] = {});
      riscv_instr instr_h;

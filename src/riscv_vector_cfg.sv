@@ -40,6 +40,10 @@ class riscv_vector_cfg extends uvm_object;
   // Allow vector quad-widening instructions.
   rand bit vec_quad_widening;
 
+  constraint allow_vec_fp_c {soft vec_fp == 1;}
+  
+  constraint allow_vec_narrowing_widening_c {soft vec_narrowing_widening == 1;}
+
   constraint vec_quad_widening_c {
     (!vec_narrowing_widening) -> (!vec_quad_widening);
     // FP requires at least 16 bits and quad-widening requires no more than ELEN/4 bits.
@@ -65,6 +69,8 @@ class riscv_vector_cfg extends uvm_object;
 
   constraint legal_c {
     solve vtype before vl;
+	// SEW <= ELEN * LMUL if LMUL is a fractional value 
+	solve vtype.fractional_lmul, vtype.vlmul before vtype.vsew;
     solve vl before vstart;
     vstart inside {[0:vl]};
     vl inside {[1:VLEN/vtype.vsew]};
@@ -75,6 +81,11 @@ class riscv_vector_cfg extends uvm_object;
     vstart == 0;
     vl == VLEN/vtype.vsew;
     vtype.vediv == 1;
+  }
+  
+  // hcheng: Temporary constraint as XS3 VPU haven't supported fractional LMUL yet.
+  constraint frac_lmul_c {
+	soft vtype.fractional_lmul == 1'b0;
   }
 
   // For all widening instructions, the destination element width must be a supported element
@@ -93,8 +104,11 @@ class riscv_vector_cfg extends uvm_object;
   constraint vsew_c {
     vtype.vsew inside {8, 16, 32, 64, 128};
     vtype.vsew <= ELEN;
+	// [RVV Section 3.4.2] For a given supported fractional LMUL setting, implementations must support SEW settings between SEWMIN and LMUL * ELEN, inclusive.
+	if (vtype.fractional_lmul && vtype.vlmul > 0) {vtype.vsew <= ELEN / vtype.vlmul;}
+
     // TODO: Determine the legal range of floating point format
-    if (vec_fp) {vtype.vsew inside {32};}
+    if (vec_fp) {vtype.vsew inside {32, 64};}
     if (vec_narrowing_widening) {vtype.vsew < ELEN;}
     if (vec_quad_widening) {vtype.vsew < (ELEN >> 1);}
   }
@@ -146,7 +160,8 @@ class riscv_vector_cfg extends uvm_object;
       end else begin
         temp_eew = real'(vtype.vsew) * emul * real'(vtype.vlmul);
       end
-      if (temp_eew inside {[8:1024]}) begin
+      // For RVV 1.0, mew == 1'b1 is reserved thus EEW should no larger than 64
+      if (temp_eew inside {8, 16, 32, 64}) begin
         legal_eew.push_back(int'(temp_eew));
       end
       `uvm_info(`gfn, $sformatf("Checking emul: %.2f", emul), UVM_LOW)
