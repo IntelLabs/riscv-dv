@@ -560,7 +560,7 @@ class riscv_asm_program_gen extends uvm_object;
     vtype_init.fractional_lmul = 1'b0;
     vtype_init.vlmul = 1;
     vtype_init.vsew = SEW;
-    add_vset_stream(vtype_init, cfg.vector_cfg.vl);
+    add_vset_stream(vtype_init, num_elements);
     instr_stream.push_back("vec_reg_init:");
 
     // Vector registers will be initialized using one of the following three methods
