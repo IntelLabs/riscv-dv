@@ -115,7 +115,12 @@ class riscv_vset_stream extends riscv_directed_instr_stream;
 	endfunction
 	
 	function void gen_vset_stream(vtype_t vtype, bit [XLEN-1:0] vl);
-	  $cast(vset, riscv_instr::get_rand_instr(.include_instr({VSETIVLI, VSETVLI, VSETVL})));
+	  riscv_instr_name_t allowed_vset_instr[];
+      allowed_vset_instr = {VSETVLI, VSETVL};
+	  if (vl < 32) begin
+		allowed_vset_instr = {allowed_vset_instr, VSETIVLI};
+	  end
+	  $cast(vset, riscv_instr::get_rand_instr(.include_instr({allowed_vset_instr})));
 	  vset.rd = cfg.gpr[0];
 	  case (vset.instr_name)
         VSETIVLI: begin
