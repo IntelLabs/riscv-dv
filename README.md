@@ -30,6 +30,7 @@ python3 run.py --simulator vcs --target rv64gcv --test riscv_vector_load_store_t
 ```
 Testcases in assembly, ELF and BIN can be found in the directory out_2023-xx-xx/asm_test/, and Spike commit logs are in the directory out_2023-xx-xx/spike_sim/
 
+There is also a getting-started guide in [Chinese](./ug_Chinese.md).
 
 # Original README of upstream RISCV-DV
 
