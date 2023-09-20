@@ -18,8 +18,8 @@ We tested two RVV tests,
 
 Use the following commands to **generate testcases for DIFFTEST without simulation**:
 ```bash
-python3 run.py --simulator vcs --target rv64gcv --step gen,gcc_compile --test riscv_vector_arithmetic_test --gcc_opts "-DDIFFTEST"
-python3 run.py --simulator vcs --target rv64gcv --step gen,gcc_compile --test riscv_vector_load_store_test --gcc_opts "-DDIFFTEST"
+python3 run.py --simulator vcs --target rv64gcv --step gen,gcc_compile --test riscv_vector_arithmetic_test --gcc_opts='-DDIFFTEST'
+python3 run.py --simulator vcs --target rv64gcv --step gen,gcc_compile --test riscv_vector_load_store_test --gcc_opts='-DDIFFTEST'
 ```
 Testcases in assembly, ELF and BIN can be found in the directory out_2023-xx-xx/asm_test/,
 
