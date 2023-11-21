@@ -31,7 +31,14 @@
                     "riscv_instr_cover_group") \
     cg.sample(t); \
   end
-
+// //vector instrcution added
+//`define SAMPLE_V_TYPE(cg, val, typ = riscv_instr) \
+//  if (cg != null) begin \
+//    typ t; \
+//    `DV_CHECK_FATAL($cast(t, val), $sformatf("Cannot cast %0s to %0s", `"val`", `"typ`"), \
+//                    "riscv_instr_cover_group") \
+//    cg.sample(t); \
+//  end
 `define SAMPLE_F(cg, val) `SAMPLE_W_TYPE(cg, val, riscv_floating_point_instr)
 `define SAMPLE_B(cg, val) `SAMPLE_W_TYPE(cg, val, riscv_b_instr)
 `define SAMPLE_ZBA(cg, val) `SAMPLE_W_TYPE(cg, val, riscv_zba_instr)
@@ -39,8 +46,15 @@
 `define SAMPLE_ZBC(cg, val) `SAMPLE_W_TYPE(cg, val, riscv_zbc_instr)
 `define SAMPLE_ZBS(cg, val) `SAMPLE_W_TYPE(cg, val, riscv_zbs_instr)
 
+		//vector instruction added
+`define SAMPLE_V(cg, val) `SAMPLE_W_TYPE(cg, val,riscv_vector_instr) 
+
 `define INSTR_CG_BEGIN(INSTR_NAME, INSTR_CLASS = riscv_instr) \
   covergroup ``INSTR_NAME``_cg with function sample(INSTR_CLASS instr);
+
+//		//vector instruction added
+//`define INSTR_VEC_CG_BEGIN(INSTR_NAME, INSTR_CLASS = riscv_vector_instr) \
+//  covergroup ``INSTR_NAME``_cg with function sample(INSTR_CLASS instr);
 
 `define R_INSTR_CG_BEGIN(INSTR_NAME) \
   `INSTR_CG_BEGIN(INSTR_NAME) \
@@ -231,6 +245,17 @@
 `define CJ_INSTR_CG_BEGIN(INSTR_NAME) \
   `INSTR_CG_BEGIN(INSTR_NAME) \
     cp_imm_sign : coverpoint instr.imm_sign;
+
+
+		//vector instruction added
+`define VA_INSTR_CG_BEGIN(INSTR_NAME) \
+  `INSTR_CG_BEGIN(INSTR_NAME,riscv_vector_instr) \
+    cp_vs1 : coverpoint instr.vs1; \
+    cp_vs2 : coverpoint instr.vs2; \
+    cp_vs3 : coverpoint instr.vs3; \
+    cp_vm : coverpoint instr.vm; \
+    cp_wd : coverpoint instr.wd; \
+    cp_va_variant : coverpoint instr.va_variant;\
 
 // single/double precision floating point special values coverpoint
 `define FP_SPECIAL_VALUES_CP(VAR, NAME, PRECISION = S) \
@@ -481,6 +506,8 @@
 class riscv_instr_cover_group;
 
   riscv_instr_gen_config  cfg;
+
+  string cov_category_str;
   riscv_instr             pre_instr;
   riscv_instr_name_t      instr_list[$];
   int unsigned            instr_cnt;
@@ -508,6 +535,10 @@ class riscv_instr_cover_group;
   `VECTOR_INCLUDE("riscv_instr_cover_group_inc_cpu_declare.sv")
 
   ///////////// RV32I instruction functional coverage //////////////
+  //vector instruction added
+  `VA_INSTR_CG_BEGIN(vadd)
+  `CG_END
+
 
   // Arithmetic instructions
   `R_INSTR_CG_BEGIN(add)
@@ -1845,6 +1876,12 @@ class riscv_instr_cover_group;
         sw_cg = new();
     `CG_SELECTOR_END
 
+		//vector instuction added
+    `CG_SELECTOR_BEGIN(RVV)
+				vadd_cg = new();
+    `CG_SELECTOR_END
+
+
     // TODO sort when there is a RV32ZICSR isa enum
     if (RV32I inside {supported_isa}) begin
       if (!compliance_mode) begin
@@ -2189,6 +2226,8 @@ class riscv_instr_cover_group;
     end
     case (instr.instr_name)
       ADD        : `SAMPLE(add_cg, instr)
+			//vector instruction added
+      VADD       : `SAMPLE_V(vadd_cg, instr)
       SUB        : `SAMPLE(sub_cg, instr)
       ADDI       : `SAMPLE(addi_cg, instr)
       LUI        : `SAMPLE(lui_cg, instr)
