@@ -198,6 +198,37 @@ class riscv_floating_point_instr extends riscv_instr;
       return;
     end
     case(format)
+			VA_FORMAT : begin
+
+       // vs1 = get_vgpr(operands[1]);
+       // `uvm_info(`gfn, $sformatf("do vs1 get vreg %0s",operands[1]),
+       //           UVM_LOW)
+			end
+			VSET_FORMAT : begin
+
+			end
+      VS2_FORMAT : 	begin
+
+			end
+			VL_FORMAT : begin
+
+			end
+			VS_FORMAT : begin
+
+			end
+			VLS_FORMAT : begin
+
+			end
+      VSS_FORMAT : begin
+
+			end
+			VLX_FORMAT : begin
+
+			end
+			VSX_FORMAT : begin
+
+			end
+			
       I_FORMAT: begin
         // TODO ovpsim has an extra operand rte as below
         // fcvt.d.s fs1,fs4,rte
@@ -271,6 +302,16 @@ class riscv_floating_point_instr extends riscv_instr;
       `uvm_fatal(`gfn, $sformatf("Cannot convert %0s to FPR", str))
     end
   endfunction : get_fpr
+  
+	//function riscv_vreg_t get_vgpr(input string str);
+  //  str = str.toupper();
+  //      `uvm_info(`gfn, $sformatf("do get vreg %0s", str),
+  //                UVM_LOW)
+
+  //  if (!uvm_enum_wrapper#(riscv_vreg_t)::from_name(str, get_vgpr)) begin
+  //    `uvm_fatal(`gfn, $sformatf("Cannot convert %0s to VGPR", str))
+  //  end
+  //endfunction : get_vgpr
 
   virtual function void pre_sample();
     super.pre_sample();

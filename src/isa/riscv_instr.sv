@@ -44,6 +44,9 @@ class riscv_instr extends uvm_object;
   rand riscv_reg_t           rs2;
   rand riscv_reg_t           rs1;
   rand riscv_reg_t           rd;
+  rand riscv_vreg_t           vs2;
+  rand riscv_vreg_t           vs1;
+  rand riscv_vreg_t           vd;
   rand bit [31:0]            imm;
 
   // Helper fields

@@ -629,6 +629,58 @@ class riscv_vector_instr extends riscv_floating_point_instr;
 	end
   endfunction : pre_randomize
 
+  virtual function void update_src_regs(string operands[$]);
+        `uvm_info(`gfn, $sformatf("do vector src %0s",operands[1]),
+                  UVM_LOW)
+    if(category inside {LOAD, CSR}) begin
+      super.update_src_regs(operands);
+      return;
+    end
+    case(format)
+			VA_FORMAT : begin
+
+        vs1 = get_vgpr(operands[1]);
+        `uvm_info(`gfn, $sformatf("do vs1 get vreg %0s",operands[1]),
+                  UVM_LOW)
+			end
+			VSET_FORMAT : begin
+
+			end
+      VS2_FORMAT : 	begin
+
+			end
+			VL_FORMAT : begin
+
+			end
+			VS_FORMAT : begin
+
+			end
+			VLS_FORMAT : begin
+
+			end
+      VSS_FORMAT : begin
+
+			end
+			VLX_FORMAT : begin
+
+			end
+			VSX_FORMAT : begin
+
+			end
+  
+      default: `uvm_fatal(`gfn, $sformatf("Unsupported format %0s", format))
+    endcase
+  endfunction : update_src_regs
+  
+	function riscv_vreg_t get_vgpr(input string str);
+    str = str.toupper();
+        `uvm_info(`gfn, $sformatf("do get vreg %0s", str),
+                  UVM_LOW)
+
+    if (!uvm_enum_wrapper#(riscv_vreg_t)::from_name(str, get_vgpr)) begin
+      `uvm_fatal(`gfn, $sformatf("Cannot convert %0s to VGPR", str))
+    end
+  endfunction : get_vgpr
   virtual function void set_rand_mode();
     string name = instr_name.name();
     has_rs1 = 1;
@@ -729,8 +781,8 @@ class riscv_vset_instr extends riscv_instr;
 	// csr_c.constraint_mode(0);
   endfunction
   
-  
-  virtual function string convert2asm(string prefix = "");
+	
+	virtual function string convert2asm(string prefix = "");
     string asm_str;
 	asm_str = {instr_name.name(), " ", rd.name()};
 	case(instr_name)

@@ -128,18 +128,48 @@ class riscv_instr_cov_test extends uvm_test;
       `SAMPLE(instr_cg.opcode_cg, binary[6:2])
     end
     if (instr_enum::from_name(process_instr_name(trace["instr"]), instr_name)) begin
+          `uvm_info(`gfn, $sformatf("instr_enum is %0s",
+                              process_instr_name(trace["instr"])), UVM_LOW)
+			
       if (riscv_instr::instr_template.exists(instr_name)) begin
         riscv_instr instr;
         instr = riscv_instr::get_instr(instr_name);
+				//added
+          `uvm_info(`gfn, $sformatf("instr_enum22 is %0s",
+                              process_instr_name(trace["instr"])), UVM_LOW)
         if ((instr.group inside {RV32I, RV32M, RV32C, RV64I, RV64M, RV64C,
-                                 RV32F, RV64F, RV32D, RV64D, RV32B, RV64B,
-                                 RV32ZBA, RV32ZBB, RV32ZBC, RV32ZBS,
-                                 RV64ZBA, RV64ZBB, RV64ZBC, RV64ZBS}) &&
+                                  RV32D, RV64D, RV32B, RV64B
+                                 }) &&
             (instr.group inside {supported_isa})) begin
+          `uvm_info(`gfn, $sformatf("sample 111 is %0s",
+                              process_instr_name(trace["instr"])), UVM_LOW)
           assign_trace_info_to_instr(instr);
           instr.pre_sample();
+          `uvm_info(`gfn, $sformatf("sample scalar cg is %0s",
+                              process_instr_name(trace["instr"])), UVM_LOW)
           instr_cg.sample(instr);
         end
+        else if ((instr.group inside {RVV}) &&
+            (instr.group inside {supported_isa})) begin
+          `uvm_info(`gfn, $sformatf("sample 222 is %0s",
+                              process_instr_name(trace["instr"])), UVM_LOW)
+          assign_trace_info_to_instr(instr);
+          instr.pre_sample();
+          `uvm_info(`gfn, $sformatf("sample vector cg is %0s",
+                              process_instr_name(trace["instr"])), UVM_LOW)
+          instr_cg.sample(instr);
+				end
+        else if ((instr.group inside {RV32F, RV64F,RV32ZBA, RV32ZBB, RV32ZBC,
+					          RV32ZBS,RV64ZBA, RV64ZBB, RV64ZBC, RV64ZBS}) &&
+            (instr.group inside {supported_isa})) begin
+          `uvm_info(`gfn, $sformatf("sample 333 is %0s",
+                              process_instr_name(trace["instr"])), UVM_LOW)
+          assign_trace_info_to_instr(instr);
+          instr.pre_sample();
+          `uvm_info(`gfn, $sformatf("sample floating cg is %0s",
+                              process_instr_name(trace["instr"])), UVM_LOW)
+          instr_cg.sample(instr);
+				end
         return 1'b1;
       end
     end
@@ -175,10 +205,25 @@ class riscv_instr_cov_test extends uvm_test;
 
   function string process_instr_name(string instr_name);
     instr_name = instr_name.toupper();
+    `uvm_info(`gfn, $sformatf("instruction is:%0s",
+                              instr_name), UVM_LOW)
+
     foreach (instr_name[i]) begin
-      if (instr_name[i] == ".") begin
+    `uvm_info(`gfn, $sformatf("111instruction is:%0s",
+                              instr_name), UVM_LOW)
+			if(instr_name == "VADD.VV")begin
+    `uvm_info(`gfn, $sformatf("222instruction is:%0s",
+                              instr_name), UVM_LOW)
+        instr_name = "VADD";
+    `uvm_info(`gfn, $sformatf("go into instruction is:%0s",
+                              instr_name), UVM_LOW)
+			end
+			else if (instr_name[i] == ".") begin
+    `uvm_info(`gfn, $sformatf("333instruction is:%0s",
+                              instr_name), UVM_LOW)
         instr_name[i] = "_";
       end
+
     end
 
     case (instr_name)
@@ -198,7 +243,7 @@ class riscv_instr_cov_test extends uvm_test;
       "FMV_D":  instr_name = "FSGNJ_D";
       "FABS_D": instr_name = "FSGNJX_D";
       "FNEG_D": instr_name = "FSGNJN_D";
-      default: ;
+			default: ;
     endcase
 
     return instr_name;

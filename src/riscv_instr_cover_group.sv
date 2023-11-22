@@ -31,14 +31,7 @@
                     "riscv_instr_cover_group") \
     cg.sample(t); \
   end
-// //vector instrcution added
-//`define SAMPLE_V_TYPE(cg, val, typ = riscv_instr) \
-//  if (cg != null) begin \
-//    typ t; \
-//    `DV_CHECK_FATAL($cast(t, val), $sformatf("Cannot cast %0s to %0s", `"val`", `"typ`"), \
-//                    "riscv_instr_cover_group") \
-//    cg.sample(t); \
-//  end
+
 `define SAMPLE_F(cg, val) `SAMPLE_W_TYPE(cg, val, riscv_floating_point_instr)
 `define SAMPLE_B(cg, val) `SAMPLE_W_TYPE(cg, val, riscv_b_instr)
 `define SAMPLE_ZBA(cg, val) `SAMPLE_W_TYPE(cg, val, riscv_zba_instr)
@@ -47,6 +40,7 @@
 `define SAMPLE_ZBS(cg, val) `SAMPLE_W_TYPE(cg, val, riscv_zbs_instr)
 
 		//vector instruction added
+`define SAMPLE_VSET(cg, val) `SAMPLE_W_TYPE(cg, val,riscv_vset_instr) 
 `define SAMPLE_V(cg, val) `SAMPLE_W_TYPE(cg, val,riscv_vector_instr) 
 
 `define INSTR_CG_BEGIN(INSTR_NAME, INSTR_CLASS = riscv_instr) \
@@ -248,16 +242,21 @@
 
 
 		//vector instruction added
-`define VA_INSTR_CG_BEGIN(INSTR_NAME) \
+`define VSET_INSTR_CG_BEGIN(INSTR_NAME) \
+  `INSTR_CG_BEGIN(INSTR_NAME,riscv_vset_instr) \
+    cp_vtype : coverpoint instr.vtype; \
+
+`define V_INSTR_CG_BEGIN(INSTR_NAME) \
   `INSTR_CG_BEGIN(INSTR_NAME,riscv_vector_instr) \
     cp_vs1 : coverpoint instr.vs1; \
-    cp_vs2 : coverpoint instr.vs2; \
-    cp_vs3 : coverpoint instr.vs3; \
-    cp_vm : coverpoint instr.vm; \
-    cp_wd : coverpoint instr.wd; \
-    cp_va_variant : coverpoint instr.va_variant;\
+    //cp_vs2 : coverpoint instr.vs2; \
+    //cp_vs3 : coverpoint instr.vs3; \
+    //cp_vd : coverpoint instr.vd; \
+    cp_va_variant : coverpoint instr.va_variant; \
+    //cp_vm : coverpoint instr.vm; \
+    //cp_wd : coverpoint instr.wd; \
 
-// single/double precision floating point special values coverpoint
+ // single/double precision floating point special values coverpoint
 `define FP_SPECIAL_VALUES_CP(VAR, NAME, PRECISION = S) \
     cp_sfp_special_values_on_``NAME`` : coverpoint VAR[31:0] { \
       option.weight = (`"PRECISION`" == "S"); \
@@ -536,9 +535,18 @@ class riscv_instr_cover_group;
 
   ///////////// RV32I instruction functional coverage //////////////
   //vector instruction added
-  `VA_INSTR_CG_BEGIN(vadd)
+  `VSET_INSTR_CG_BEGIN(vsetivli)
   `CG_END
 
+
+  `VSET_INSTR_CG_BEGIN(vsetvli)
+  `CG_END
+
+  `VSET_INSTR_CG_BEGIN(vsetvl)
+  `CG_END
+  
+	`V_INSTR_CG_BEGIN(vadd)
+  `CG_END
 
   // Arithmetic instructions
   `R_INSTR_CG_BEGIN(add)
@@ -1878,6 +1886,9 @@ class riscv_instr_cover_group;
 
 		//vector instuction added
     `CG_SELECTOR_BEGIN(RVV)
+				vsetivli_cg = new();
+				vsetvli_cg = new();
+				vsetvl_cg = new();
 				vadd_cg = new();
     `CG_SELECTOR_END
 
@@ -2227,6 +2238,9 @@ class riscv_instr_cover_group;
     case (instr.instr_name)
       ADD        : `SAMPLE(add_cg, instr)
 			//vector instruction added
+      VSETIVLI   : `SAMPLE_VSET(vsetivli_cg, instr)
+      VSETVL     : `SAMPLE_VSET(vsetvl_cg, instr)
+      VSETVLI    : `SAMPLE_VSET(vsetvli_cg, instr)
       VADD       : `SAMPLE_V(vadd_cg, instr)
       SUB        : `SAMPLE(sub_cg, instr)
       ADDI       : `SAMPLE(addi_cg, instr)

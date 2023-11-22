@@ -1,6 +1,7 @@
 
   typedef uvm_enum_wrapper#(riscv_reg_t) gpr_enum;
   typedef uvm_enum_wrapper#(riscv_fpr_t) fpr_enum;
+  typedef uvm_enum_wrapper#(riscv_vreg_t) vgpr_enum;
   typedef uvm_enum_wrapper#(privileged_reg_t) preg_enum;
 
   typedef enum bit[1:0] {
@@ -61,6 +62,8 @@
   compare_result_e      compare_result;
   logical_similarity_e  logical_similarity;
   string                trace;
+
+	//added
 
   `VECTOR_INCLUDE("riscv_instr_cov_item_inc_declares.sv")
 
@@ -260,6 +263,34 @@
   virtual function void update_src_regs(string operands[$]);
     privileged_reg_t preg;
     case(format)
+			VA_FORMAT : begin
+			
+			end
+			VSET_FORMAT : begin
+
+			end
+      VS2_FORMAT : 	begin
+
+			end
+			VL_FORMAT : begin
+
+			end
+			VS_FORMAT : begin
+
+			end
+			VLS_FORMAT : begin
+
+			end
+      VSS_FORMAT : begin
+
+			end
+			VLX_FORMAT : begin
+
+			end
+			VSX_FORMAT : begin
+
+			end
+			
       J_FORMAT, U_FORMAT : begin
         // instr rd,imm
         `DV_CHECK_FATAL(operands.size() == 2)
@@ -425,7 +456,8 @@
     end
   endfunction : get_gpr
 
-  virtual function bit [XLEN-1:0] get_gpr_state(string name);
+  
+	virtual function bit [XLEN-1:0] get_gpr_state(string name);
     if (name inside {"zero", "x0"}) begin
       return 0;
     end else if (gpr_state.exists(name)) begin
