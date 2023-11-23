@@ -5,6 +5,7 @@ class riscv_instr_cov_test extends uvm_test;
 
   riscv_instr_gen_config    cfg;
   riscv_instr_cover_group   instr_cg;
+  riscv_instr_vector_cover_group   instr_v_cg;
   string                    trace_csv[$];
   string                    trace[string];
   bit                       report_illegal_instr;
@@ -15,6 +16,7 @@ class riscv_instr_cov_test extends uvm_test;
 
   `uvm_component_utils(riscv_instr_cov_test)
   `uvm_component_new
+
 
   task run_phase(uvm_phase phase);
     int i;
@@ -40,11 +42,13 @@ class riscv_instr_cov_test extends uvm_test;
     riscv_instr::create_instr_list(cfg);
     riscv_csr_instr::create_csr_filter(cfg);
     instr_cg = new(cfg);
+    instr_v_cg = new(cfg);
     `uvm_info(`gfn, $sformatf("%0d CSV trace files to be processed", trace_csv.size()), UVM_LOW)
     foreach (trace_csv[i]) begin
       bit expect_illegal_instr;
       entry_cnt = 0;
       instr_cg.reset();
+      instr_v_cg.reset();
       `uvm_info(`gfn, $sformatf("Processing CSV trace[%0d]: %s", i, trace_csv[i]), UVM_LOW)
       fd = $fopen(trace_csv[i], "r");
       if (fd) begin
@@ -128,48 +132,43 @@ class riscv_instr_cov_test extends uvm_test;
       `SAMPLE(instr_cg.opcode_cg, binary[6:2])
     end
     if (instr_enum::from_name(process_instr_name(trace["instr"]), instr_name)) begin
-          `uvm_info(`gfn, $sformatf("instr_enum is %0s",
-                              process_instr_name(trace["instr"])), UVM_LOW)
-			
       if (riscv_instr::instr_template.exists(instr_name)) begin
         riscv_instr instr;
         instr = riscv_instr::get_instr(instr_name);
 				//added
-          `uvm_info(`gfn, $sformatf("instr_enum22 is %0s",
-                              process_instr_name(trace["instr"])), UVM_LOW)
-        if ((instr.group inside {RV32I, RV32M, RV32C, RV64I, RV64M, RV64C,
-                                  RV32D, RV64D, RV32B, RV64B
-                                 }) &&
-            (instr.group inside {supported_isa})) begin
-          `uvm_info(`gfn, $sformatf("sample 111 is %0s",
-                              process_instr_name(trace["instr"])), UVM_LOW)
-          assign_trace_info_to_instr(instr);
-          instr.pre_sample();
-          `uvm_info(`gfn, $sformatf("sample scalar cg is %0s",
-                              process_instr_name(trace["instr"])), UVM_LOW)
-          instr_cg.sample(instr);
-        end
-        else if ((instr.group inside {RVV}) &&
-            (instr.group inside {supported_isa})) begin
-          `uvm_info(`gfn, $sformatf("sample 222 is %0s",
-                              process_instr_name(trace["instr"])), UVM_LOW)
-          assign_trace_info_to_instr(instr);
-          instr.pre_sample();
-          `uvm_info(`gfn, $sformatf("sample vector cg is %0s",
-                              process_instr_name(trace["instr"])), UVM_LOW)
-          instr_cg.sample(instr);
-				end
-        else if ((instr.group inside {RV32F, RV64F,RV32ZBA, RV32ZBB, RV32ZBC,
-					          RV32ZBS,RV64ZBA, RV64ZBB, RV64ZBC, RV64ZBS}) &&
-            (instr.group inside {supported_isa})) begin
-          `uvm_info(`gfn, $sformatf("sample 333 is %0s",
-                              process_instr_name(trace["instr"])), UVM_LOW)
-          assign_trace_info_to_instr(instr);
-          instr.pre_sample();
-          `uvm_info(`gfn, $sformatf("sample floating cg is %0s",
-                              process_instr_name(trace["instr"])), UVM_LOW)
-          instr_cg.sample(instr);
-				end
+          `uvm_info(`gfn, $sformatf("cfg.vector_extension is %0d,%0d,%0d",
+                              cfg.enable_vector_extension,cfg.enable_floating_point,cfg.instr_cnt), UVM_LOW)
+				//if(cfg.enable_vector_extension == 1)begin
+          if ((instr.group inside {RVV}) &&
+             (instr.group inside {supported_isa})) begin
+           assign_trace_info_to_instr(instr);
+           instr.pre_sample();
+           `uvm_info(`gfn, $sformatf("sample vector cg is %0s",
+                               process_instr_name(trace["instr"])), UVM_LOW)
+           instr_v_cg.sample(instr);
+				  end
+				//end
+				//else begin
+				  else if ((instr.group inside {RV32I, RV32M, RV32C, RV64I, RV64M, RV64C,
+                                   RV32D, RV64D, RV32B, RV64B
+                                  }) &&
+             (instr.group inside {supported_isa})) begin
+           assign_trace_info_to_instr(instr);
+           instr.pre_sample();
+           `uvm_info(`gfn, $sformatf("sample scalar cg is %0s",
+                               process_instr_name(trace["instr"])), UVM_LOW)
+           instr_cg.sample(instr);
+          end
+          else if ((instr.group inside {RV32F, RV64F,RV32ZBA, RV32ZBB, RV32ZBC,
+				  	          RV32ZBS,RV64ZBA, RV64ZBB, RV64ZBC, RV64ZBS}) &&
+              (instr.group inside {supported_isa})) begin
+            assign_trace_info_to_instr(instr);
+            instr.pre_sample();
+            `uvm_info(`gfn, $sformatf("sample floating cg is %0s",
+                                process_instr_name(trace["instr"])), UVM_LOW)
+            instr_cg.sample(instr);
+				  end
+			  //end
         return 1'b1;
       end
     end
@@ -205,25 +204,18 @@ class riscv_instr_cov_test extends uvm_test;
 
   function string process_instr_name(string instr_name);
     instr_name = instr_name.toupper();
-    `uvm_info(`gfn, $sformatf("instruction is:%0s",
-                              instr_name), UVM_LOW)
+		if(instr_name == "VADD.VV")begin
+        instr_name = "VADD";
+			end
 
     foreach (instr_name[i]) begin
-    `uvm_info(`gfn, $sformatf("111instruction is:%0s",
-                              instr_name), UVM_LOW)
-			if(instr_name == "VADD.VV")begin
-    `uvm_info(`gfn, $sformatf("222instruction is:%0s",
-                              instr_name), UVM_LOW)
-        instr_name = "VADD";
-    `uvm_info(`gfn, $sformatf("go into instruction is:%0s",
-                              instr_name), UVM_LOW)
-			end
-			else if (instr_name[i] == ".") begin
-    `uvm_info(`gfn, $sformatf("333instruction is:%0s",
-                              instr_name), UVM_LOW)
+			//if(instr_name == "VADD.VV")begin
+      //  instr_name = "VADD";
+			//end
+			if (instr_name[i] == ".") begin
         instr_name[i] = "_";
       end
-
+       
     end
 
     case (instr_name)

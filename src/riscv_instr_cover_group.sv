@@ -39,16 +39,13 @@
 `define SAMPLE_ZBC(cg, val) `SAMPLE_W_TYPE(cg, val, riscv_zbc_instr)
 `define SAMPLE_ZBS(cg, val) `SAMPLE_W_TYPE(cg, val, riscv_zbs_instr)
 
-		//vector instruction added
-`define SAMPLE_VSET(cg, val) `SAMPLE_W_TYPE(cg, val,riscv_vset_instr) 
-`define SAMPLE_V(cg, val) `SAMPLE_W_TYPE(cg, val,riscv_vector_instr) 
+//		//vector instruction added
+//`define SAMPLE_VSET(cg, val) `SAMPLE_W_TYPE(cg, val,riscv_vset_instr) 
+//`define SAMPLE_V(cg, val) `SAMPLE_W_TYPE(cg, val,riscv_vector_instr) 
 
 `define INSTR_CG_BEGIN(INSTR_NAME, INSTR_CLASS = riscv_instr) \
   covergroup ``INSTR_NAME``_cg with function sample(INSTR_CLASS instr);
 
-//		//vector instruction added
-//`define INSTR_VEC_CG_BEGIN(INSTR_NAME, INSTR_CLASS = riscv_vector_instr) \
-//  covergroup ``INSTR_NAME``_cg with function sample(INSTR_CLASS instr);
 
 `define R_INSTR_CG_BEGIN(INSTR_NAME) \
   `INSTR_CG_BEGIN(INSTR_NAME) \
@@ -535,18 +532,18 @@ class riscv_instr_cover_group;
 
   ///////////// RV32I instruction functional coverage //////////////
   //vector instruction added
-  `VSET_INSTR_CG_BEGIN(vsetivli)
-  `CG_END
+  //`VSET_INSTR_CG_BEGIN(vsetivli)
+  //`CG_END
 
 
-  `VSET_INSTR_CG_BEGIN(vsetvli)
-  `CG_END
+  //`VSET_INSTR_CG_BEGIN(vsetvli)
+  //`CG_END
 
-  `VSET_INSTR_CG_BEGIN(vsetvl)
-  `CG_END
-  
-	`V_INSTR_CG_BEGIN(vadd)
-  `CG_END
+  //`VSET_INSTR_CG_BEGIN(vsetvl)
+  //`CG_END
+  //
+	//`V_INSTR_CG_BEGIN(vadd)
+  //`CG_END
 
   // Arithmetic instructions
   `R_INSTR_CG_BEGIN(add)
@@ -1884,13 +1881,13 @@ class riscv_instr_cover_group;
         sw_cg = new();
     `CG_SELECTOR_END
 
-		//vector instuction added
-    `CG_SELECTOR_BEGIN(RVV)
-				vsetivli_cg = new();
-				vsetvli_cg = new();
-				vsetvl_cg = new();
-				vadd_cg = new();
-    `CG_SELECTOR_END
+		////vector instuction added
+    //`CG_SELECTOR_BEGIN(RVV)
+		//		vsetivli_cg = new();
+		//		vsetvli_cg = new();
+		//		vsetvl_cg = new();
+		//		vadd_cg = new();
+    //`CG_SELECTOR_END
 
 
     // TODO sort when there is a RV32ZICSR isa enum
@@ -2227,6 +2224,8 @@ class riscv_instr_cover_group;
     if (instr_cnt > 1) begin
       instr.check_hazard_condition(pre_instr);
     end
+		
+          `uvm_info(",","riscv_instr_cover_group", UVM_LOW)
     if ((instr.binary[1:0] != 2'b11) && (RV32C inside {supported_isa})) begin
       `SAMPLE(hint_cg, instr);
       `SAMPLE(compressed_opcode_cg, instr.binary[15:0]);
@@ -2238,10 +2237,10 @@ class riscv_instr_cover_group;
     case (instr.instr_name)
       ADD        : `SAMPLE(add_cg, instr)
 			//vector instruction added
-      VSETIVLI   : `SAMPLE_VSET(vsetivli_cg, instr)
-      VSETVL     : `SAMPLE_VSET(vsetvl_cg, instr)
-      VSETVLI    : `SAMPLE_VSET(vsetvli_cg, instr)
-      VADD       : `SAMPLE_V(vadd_cg, instr)
+      //VSETIVLI   : `SAMPLE_VSET(vsetivli_cg, instr)
+      //VSETVL     : `SAMPLE_VSET(vsetvl_cg, instr)
+      //VSETVLI    : `SAMPLE_VSET(vsetvli_cg, instr)
+      //VADD       : `SAMPLE_V(vadd_cg, instr)
       SUB        : `SAMPLE(sub_cg, instr)
       ADDI       : `SAMPLE(addi_cg, instr)
       LUI        : `SAMPLE(lui_cg, instr)
