@@ -533,13 +533,13 @@ class riscv_vector_instr extends riscv_floating_point_instr;
       end
       VL_FORMAT: begin
         if (sub_extension == "zvlsseg") begin
-	      if(instr_name == VLRE_V) begin
-		    asm_str = $sformatf("%0s %s,(%s)", add_nfields(get_instr_name(), 2),
-                                             vd.name(), rs1.name());  
-	      end else begin
+	        if(instr_name == VLRE_V) begin
+		        asm_str = $sformatf("%0s %s,(%s)", add_nfields(get_instr_name(), 2),
+                                               vd.name(), rs1.name());  
+	        end else begin
             asm_str = $sformatf("%0s %s,(%s)", add_nfields(get_instr_name(), 5),
-                                             vd.name(), rs1.name());
-		  end
+                                               vd.name(), rs1.name());
+		      end
         end else begin
           asm_str = $sformatf("%0s %s,(%s)", get_instr_name(), vd.name(), rs1.name());
         end
@@ -629,43 +629,126 @@ class riscv_vector_instr extends riscv_floating_point_instr;
 	end
   endfunction : pre_randomize
 
-  virtual function void update_src_regs(string operands[$]);
-        `uvm_info(`gfn, $sformatf("do vector src %0s",operands[1]),
-                  UVM_LOW)
+  virtual function void update_src_regs(string operands[$],string find_va_variant);
+        `uvm_info(`gfn, $sformatf("do vector src %0s,%0s,%0s,instr_name is %0s,va_variant is %0s,has_va_variant is %0d",operands[0],operands[1],operands[2],instr_name,find_va_variant,has_va_variant), UVM_LOW)
     if(category inside {LOAD, CSR}) begin
-      super.update_src_regs(operands);
+      super.update_src_regs(operands,find_va_variant);
       return;
     end
     case(format)
 			VA_FORMAT : begin
+				va_variant = find_va_variant;
+        if(instr_name == VMV)begin
+					if(find_va_variant == VV)begin
+						vs1 = get_vgpr(operands[0]);
+          end
+					else if(find_va_variant == VX)begin
+						 rs1 = get_gpr(operands[0]);
+					end
+					else if(find_va_variant == VI)begin
+						//get_val(,imm);
+				  end
+				end
+				else if(instr_name == VFMV || instr_name == VFMV_S_F)begin
+					 //vd = get_gpr();
+					 fs1 = get_fpr(operands[0]);
+				end
+				else if(instr_name == VMV_X_S)begin
+					 //rd = get_gpr();
+					 vs2 = get_vgpr(operands[0]);
+				end
+				else if(instr_name == VMV_S_X)begin
+					 //vd = get_gpr();
+					 rs1 = get_gpr(operands[0]);
+				end
+				else if(instr_name == VFMV_F_S)begin
+					 //fd =  get_fpr();
+					 vs2 = get_vgpr(operands[0]);
+				end
+        else begin
+           if(!has_va_variant)begin
+						 vs1 =get_vgpr(operands[0]);
+					 	 vs2 =get_vgpr(operands[1]);
+						 //vd = get_vgpr(operands[2]);
+             `uvm_info(`gfn, $sformatf("do get vreg no va_variant %0s,%0s", vs1,vs2),UVM_LOW)
+					 end
+					 else begin
+             if(find_va_variant == "WV"||find_va_variant == "VV"||find_va_variant == "VVM"||find_va_variant == "VM")begin
+               //vd =get_vgpr(operands[0]);
+							 vs2 =get_vgpr(operands[1]);
+               vs1 = get_vgpr(operands[0]);
+               `uvm_info(`gfn, $sformatf("do get vregWV,VV,VVM,VM  %0s,%0s", vs1,vs2),UVM_LOW)
+						 end
+						 else if(find_va_variant == "WI"||find_va_variant == "VI"||find_va_variant == "VIM")begin
+               //vd =get_vgpr(operands[0]);
+							 vs2 =get_vgpr(operands[1]);
+               //get_val(,imm);
+               `uvm_info(`gfn, $sformatf("do get vregWI,VI,VIM %0s", vs2),UVM_LOW)
+					   end
+						 else if(find_va_variant == "VF"||find_va_variant == "VFM")begin
+               //vd =get_vgpr(operands[0]);
+               fs1 =  get_fpr(operands[2]);
+							 vs2 =get_vgpr(operands[1]);
+               `uvm_info(`gfn, $sformatf("do get vregVF,VFM %0s,%0s", vs2,fs1),UVM_LOW)
+						 end
+						 else if(find_va_variant == "WX"||find_va_variant == "VX"||find_va_variant == "VXM")begin
+               //vd = get_vgpr(operands[0]);
+							 vs2 =get_vgpr(operands[1]);
+							 rs1 =get_gpr(operands[2]);
+               `uvm_info(`gfn, $sformatf("do get vregWX,VX,VXM %0s,%0s", vs2,rs1),UVM_LOW)
+						 end
+						 else if(find_va_variant == "WF")begin
+               //vd =get_vgpr(operands[0]);
+							 vs2 =get_vgpr(operands[1]);
+							 fs1 = get_fpr(operands[2]);
+               `uvm_info(`gfn, $sformatf("do get vregWF %0s,%0s", fs1,vs2),UVM_LOW)
+						 end
+					 end
+				end
 
-        vs1 = get_vgpr(operands[1]);
-        `uvm_info(`gfn, $sformatf("do vs1 get vreg %0s",operands[1]),
-                  UVM_LOW)
 			end
 			VSET_FORMAT : begin
 
 			end
       VS2_FORMAT : 	begin
-
+				if(instr_name == VID_V)begin
+           //vd =get_vgpr(operands[0]);
+				end
+				else if (instr_name inside{VPOPC_M,VFIRST_M})begin
+					 //rd = get_gpr();
+					 vs2 =get_vgpr(operands[1]);
+				end
+				else begin
+           //vd =get_vgpr(operands[0]);
+					 vs2 =get_vgpr(operands[1]);
+				end
 			end
 			VL_FORMAT : begin
-
-			end
+          //vd =get_vgpr(operands[0]);
+				  rs1 =get_gpr(operands[2]);
+		  end
 			VS_FORMAT : begin
-
+				  rs1 =get_gpr(operands[2]);
+					vs3 =get_vgpr(operands[1]);
 			end
 			VLS_FORMAT : begin
-
+				  rs1 =get_gpr(operands[2]);
+				  rs2 =get_gpr(operands[2]);
 			end
       VSS_FORMAT : begin
-
+				  rs1 =get_gpr(operands[2]);
+				  rs2 =get_gpr(operands[2]);
+					vs3 =get_vgpr(operands[1]);
 			end
 			VLX_FORMAT : begin
-
+          //vd =get_vgpr(operands[0]);
+				  rs1 =get_gpr(operands[2]);
+					vs2 =get_vgpr(operands[1]);
 			end
 			VSX_FORMAT : begin
-
+					vs3 =get_vgpr(operands[1]);
+					vs2 =get_vgpr(operands[1]);
+				  rs1 =get_gpr(operands[2]);
 			end
   
       default: `uvm_fatal(`gfn, $sformatf("Unsupported format %0s", format))
@@ -681,6 +764,7 @@ class riscv_vector_instr extends riscv_floating_point_instr;
       `uvm_fatal(`gfn, $sformatf("Cannot convert %0s to VGPR", str))
     end
   endfunction : get_vgpr
+
   virtual function void set_rand_mode();
     string name = instr_name.name();
     has_rs1 = 1;

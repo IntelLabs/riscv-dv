@@ -238,7 +238,7 @@ class riscv_zbb_instr extends riscv_instr;
            });
   endfunction : is_supported
 
-  virtual function void update_src_regs(string operands[$]);
+  virtual function void update_src_regs(string operands[$],string find_va_variant);
     // All ZBB I_FORMAT instructions other than RORI use the immediate to specify the operation,
     // rather than being an explicit operand. Handle this case here, otherwise use the normal
     // `update_src_regs`
@@ -247,7 +247,7 @@ class riscv_zbb_instr extends riscv_instr;
       rs1 = get_gpr(operands[1]);
       rs1_value = get_gpr_state(operands[1]);
     end else begin
-      super.update_src_regs(operands);
+      super.update_src_regs(operands,find_va_variant);
     end
   endfunction : update_src_regs
 

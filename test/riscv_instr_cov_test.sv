@@ -2,7 +2,6 @@
 class riscv_instr_cov_test extends uvm_test;
 
   typedef uvm_enum_wrapper#(riscv_instr_name_t) instr_enum;
-
   riscv_instr_gen_config    cfg;
   riscv_instr_cover_group   instr_cg;
   riscv_instr_vector_cover_group   instr_v_cg;
@@ -13,8 +12,8 @@ class riscv_instr_cov_test extends uvm_test;
   int unsigned              total_entry_cnt;
   int unsigned              skipped_cnt;
   int unsigned              illegal_instr_cnt;
-
-  `uvm_component_utils(riscv_instr_cov_test)
+	
+	`uvm_component_utils(riscv_instr_cov_test)
   `uvm_component_new
 
 
@@ -123,6 +122,7 @@ class riscv_instr_cov_test extends uvm_test;
   function bit sample();
     riscv_instr_name_t instr_name;
     bit [XLEN-1:0] binary;
+		string find_va_variant;
     get_val(trace["binary"], binary, .hex(1));
     if ((binary[1:0] != 2'b11) && (RV32C inside {supported_isa})) begin
       `SAMPLE(instr_cg.compressed_opcode_cg, binary[15:0])
@@ -131,66 +131,61 @@ class riscv_instr_cov_test extends uvm_test;
     if (binary[1:0] == 2'b11) begin
       `SAMPLE(instr_cg.opcode_cg, binary[6:2])
     end
-    if (instr_enum::from_name(process_instr_name(trace["instr"]), instr_name)) begin
-      if (riscv_instr::instr_template.exists(instr_name)) begin
+    if (instr_enum::from_name(process_instr_name(trace["instr"],find_va_variant), instr_name)) begin
+			if (riscv_instr::instr_template.exists(instr_name)) begin
         riscv_instr instr;
         instr = riscv_instr::get_instr(instr_name);
 				//added
-          `uvm_info(`gfn, $sformatf("cfg.vector_extension is %0d,%0d,%0d",
-                              cfg.enable_vector_extension,cfg.enable_floating_point,cfg.instr_cnt), UVM_LOW)
-				//if(cfg.enable_vector_extension == 1)begin
           if ((instr.group inside {RVV}) &&
              (instr.group inside {supported_isa})) begin
-           assign_trace_info_to_instr(instr);
+					 assign_trace_info_to_instr(instr,find_va_variant);
            instr.pre_sample();
-           `uvm_info(`gfn, $sformatf("sample vector cg is %0s",
-                               process_instr_name(trace["instr"])), UVM_LOW)
+           `uvm_info(`gfn, $sformatf("sample vector cg is %0s,vector_va_variant is %0s",
+                               process_instr_name(trace["instr"],find_va_variant),find_va_variant), UVM_LOW)
            instr_v_cg.sample(instr);
 				  end
-				//end
-				//else begin
 				  else if ((instr.group inside {RV32I, RV32M, RV32C, RV64I, RV64M, RV64C,
                                    RV32D, RV64D, RV32B, RV64B
                                   }) &&
              (instr.group inside {supported_isa})) begin
-           assign_trace_info_to_instr(instr);
+           assign_trace_info_to_instr(instr,find_va_variant);
            instr.pre_sample();
            `uvm_info(`gfn, $sformatf("sample scalar cg is %0s",
-                               process_instr_name(trace["instr"])), UVM_LOW)
+                               process_instr_name(trace["instr"],find_va_variant)), UVM_LOW)
            instr_cg.sample(instr);
           end
           else if ((instr.group inside {RV32F, RV64F,RV32ZBA, RV32ZBB, RV32ZBC,
 				  	          RV32ZBS,RV64ZBA, RV64ZBB, RV64ZBC, RV64ZBS}) &&
-              (instr.group inside {supported_isa})) begin
-            assign_trace_info_to_instr(instr);
-            instr.pre_sample();
-            `uvm_info(`gfn, $sformatf("sample floating cg is %0s",
-                                process_instr_name(trace["instr"])), UVM_LOW)
-            instr_cg.sample(instr);
-				  end
-			  //end
-        return 1'b1;
-      end
-    end
+											(instr.group inside {supported_isa})) begin
+											assign_trace_info_to_instr(instr,find_va_variant);
+											instr.pre_sample();
+											`uvm_info(`gfn, $sformatf("sample floating cg is %0s",
+												process_instr_name(trace["instr"],find_va_variant)), UVM_LOW)
+												instr_cg.sample(instr);
+							 end
+							 return 1'b1;
+					end
+			end
     `uvm_info(`gfn, $sformatf("Cannot find opcode: %0s",
-                              process_instr_name(trace["instr"])), UVM_LOW)
+    process_instr_name(trace["instr"],find_va_variant)), UVM_LOW)
   endfunction
 
-  virtual function void assign_trace_info_to_instr(riscv_instr instr);
-    riscv_reg_t gpr;
-    string operands[$];
-    string gpr_update[$];
-    string pair[$];
-    get_val(trace["pc"], instr.pc, .hex(1));
-    get_val(trace["binary"], instr.binary, .hex(1));
-    instr.trace = trace["instr_str"];
-    if (instr.instr_name inside {NOP, WFI, FENCE, FENCE_I, EBREAK, C_EBREAK, SFENCE_VMA,
-                                 ECALL, C_NOP, MRET, SRET, URET}) begin
-      return;
-    end
+  virtual function void assign_trace_info_to_instr(riscv_instr instr,string find_va_variant);
+  	riscv_reg_t gpr;
+  	string operands[$];
+  	string gpr_update[$];
+  	string pair[$];
+  	get_val(trace["pc"], instr.pc, .hex(1));
+  	get_val(trace["binary"], instr.binary, .hex(1));
+  	instr.trace = trace["instr_str"];
+  	if (instr.instr_name inside {NOP, WFI, FENCE, FENCE_I, EBREAK, C_EBREAK, SFENCE_VMA,
+  		ECALL, C_NOP, MRET, SRET, URET}) begin
+  		return;
+  	end
 
-    split_string(trace["operand"], ",", operands);
-    instr.update_src_regs(operands);
+  	split_string(trace["operand"], ",", operands);
+    
+		instr.update_src_regs(operands,find_va_variant);
 
     split_string(trace["gpr"], ";", gpr_update);
     foreach (gpr_update[i]) begin
@@ -202,22 +197,55 @@ class riscv_instr_cov_test extends uvm_test;
     end
   endfunction : assign_trace_info_to_instr
 
-  function string process_instr_name(string instr_name);
-    instr_name = instr_name.toupper();
-		if(instr_name == "VADD.VV")begin
-        instr_name = "VADD";
-			end
 
-    foreach (instr_name[i]) begin
-			//if(instr_name == "VADD.VV")begin
-      //  instr_name = "VADD";
-			//end
-			if (instr_name[i] == ".") begin
-        instr_name[i] = "_";
+	function string process_instr_name(string instr_name,ref find_va_variant);
+    int find_vpos;
+    bit find_va_variant_bit;
+		int instr_name_len;
+		string find_va_variant;
+		instr_name = instr_name.toupper();
+		//if vector instruction
+		`uvm_info(`gfn, $sformatf("process_instr_name instr_name is %0s,instr_name[0] is %0s",	instr_name,instr_name[0]), UVM_LOW)
+		if(instr_name[0] == "V")begin
+      foreach (instr_name[i]) begin
+		  	if (instr_name[i] == ".") begin
+          instr_name[i] = "_";
+        end
       end
-       
-    end
-
+			find_va_variant_bit = get_va_variant(instr_name);
+			if(instr_name == "VMV_V_V" || instr_name == "VMV_V_X" || instr_name == "VMV_V_I")begin
+        instr_name = "VMV";
+			end
+			else if(instr_name == "VFMV_V_F")begin
+        instr_name = "VFMV";
+			end
+			else if(instr_name == "VCPOP_M")begin
+        instr_name = "VPOPC_M";
+			end
+			else if(instr_name inside{"VREDSUM_VS","VREDMAXU_VS","VREDMAX_VS","VREDMINU_VS","VREDMIN_VS","VREDAND_VS","VREDOR_VS",
+			"VREDXOR_VS","VWREDSUMU_VS","VWREDSUM_VS","VFREDOSUM_VS","VFREDUSUM_VS","VFREDMAX_VS","VFREDMIN_VS","VFWREDOSUM_VS","VFWREDUSUM_VS"} )begin
+    
+			end
+			else if(find_va_variant_bit == 1)begin
+				instr_name_len = instr_name.len();
+				find_vpos = find_pos(instr_name);
+				find_va_variant = instr_name.substr(find_vpos+1,instr_name_len-1);
+				instr_name = instr_name.substr(0,(find_vpos - 1));
+				`uvm_info(`gfn, $sformatf("after process_instr_name instr_name is %0s,find_va_variant is %0s,instr_len is %0d",	instr_name,find_va_variant,instr_name_len), UVM_LOW)
+			end
+			else begin
+			
+			end
+		end
+		//if scalar instruction
+		else begin
+      foreach (instr_name[i]) begin
+		  	if (instr_name[i] == ".") begin
+          instr_name[i] = "_";
+        end
+      end
+	  end
+    
     case (instr_name)
       // rename to new name as ovpsim still uses old name
      "FMV_S_X": instr_name = "FMV_W_X";
@@ -237,11 +265,42 @@ class riscv_instr_cov_test extends uvm_test;
       "FNEG_D": instr_name = "FSGNJN_D";
 			default: ;
     endcase
-
-    return instr_name;
+    
+		return instr_name;
   endfunction : process_instr_name
 
-  function void split_string(string str, byte step, ref string result[$]);
+	function bit get_va_variant(string instr_name);
+  bit find_va_variant_bit;
+	foreach(instr_name[i])begin
+		if(instr_name[i] == "_")begin
+			if(instr_name[i+1] == "V")begin
+				if(instr_name[i+2] == "V" ||  instr_name[i+2] == "I" || instr_name[i+2] == "X" ||instr_name[i+2] == "F" || instr_name[i+2] == "S" || instr_name[i+2] == "M"||
+					instr_name[i+2] == "V" & instr_name[i+3] == "M" ||  instr_name[i+2] == "I" & instr_name[i+3] == "M"|| 
+				  instr_name[i+2] == "X" & instr_name[i+3] == "M"||instr_name[i+2] == "F" & instr_name[i+3] == "M")begin
+		      find_va_variant_bit = 1;
+		    end
+			end
+			else if(instr_name[i+1] == "W")begin
+				if(instr_name[i+2] == "V" ||instr_name[i+2] == "I" ||instr_name[i+2] == "X" ||instr_name[i+2] == "F")begin
+		      find_va_variant_bit = 1;
+				end
+			end
+	  end
+	end
+	return find_va_variant_bit;
+	endfunction
+
+	function int find_pos(string instr_name);
+		int find_vpos;
+		foreach (instr_name[i])begin
+      if(instr_name[i] == "_")begin
+        find_vpos = i;
+			end
+		end
+		return find_vpos;
+	endfunction
+  
+	function void split_string(string str, byte step, ref string result[$]);
     string tmp_str;
     int i;
     bit in_quote;

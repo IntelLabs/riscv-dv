@@ -585,11 +585,13 @@ class riscv_instr extends uvm_object;
 
   virtual function string get_instr_name();
     get_instr_name = instr_name.name();
-    foreach(get_instr_name[i]) begin
-      if (get_instr_name[i] == "_") begin
-        get_instr_name[i] = ".";
+
+    `uvm_info("riscv_instr", $sformatf("instr_name is %0s", get_instr_name), UVM_LOW)
+	  	foreach(get_instr_name[i]) begin
+        if (get_instr_name[i] == "_") begin
+          get_instr_name[i] = ".";
+        end
       end
-    end
     return get_instr_name;
   endfunction
 

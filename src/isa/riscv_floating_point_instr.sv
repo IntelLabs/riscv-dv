@@ -192,9 +192,9 @@ class riscv_floating_point_instr extends riscv_instr;
   endfunction
 
   // coverage related functons
-  virtual function void update_src_regs(string operands[$]);
+  virtual function void update_src_regs(string operands[$],string find_va_variant);
     if(category inside {LOAD, CSR}) begin
-      super.update_src_regs(operands);
+      super.update_src_regs(operands,find_va_variant);
       return;
     end
     case(format)

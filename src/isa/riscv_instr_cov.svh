@@ -260,7 +260,7 @@
                               gpr_hazard.name(), lsu_hazard.name()), UVM_FULL)
   endfunction
 
-  virtual function void update_src_regs(string operands[$]);
+  virtual function void update_src_regs(string operands[$],string find_va_variant);
     privileged_reg_t preg;
     case(format)
 			VA_FORMAT : begin
@@ -451,6 +451,9 @@
 
   function riscv_reg_t get_gpr(input string str);
     str = str.toupper();
+		
+        `uvm_info(`gfn, $sformatf("do get reg %0s", str),
+                  UVM_LOW)
     if (!gpr_enum::from_name(str, get_gpr)) begin
       `uvm_fatal(`gfn, $sformatf("Cannot convert %0s to GPR", str))
     end

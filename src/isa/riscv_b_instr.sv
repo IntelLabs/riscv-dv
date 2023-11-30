@@ -365,7 +365,7 @@ class riscv_b_instr extends riscv_instr;
   endfunction
 
   // coverage related functons
-  virtual function void update_src_regs(string operands[$]);
+  virtual function void update_src_regs(string operands[$],string find_va_variant);
     // handle special I_FORMAT (FSRI, FSRIW) and R4_FORMAT
     case(format)
       I_FORMAT: begin
@@ -393,7 +393,7 @@ class riscv_b_instr extends riscv_instr;
       default: ;
     endcase
     // reuse base function to handle the other instructions
-    super.update_src_regs(operands);
+    super.update_src_regs(operands,find_va_variant);
   endfunction : update_src_regs
 
 endclass

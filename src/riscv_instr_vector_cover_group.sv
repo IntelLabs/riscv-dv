@@ -13,6 +13,7 @@
     //cp_vs3 : coverpoint instr.vs3; \
     //cp_vd : coverpoint instr.vd; \
     cp_va_variant : coverpoint instr.va_variant; \
+
     //cp_vm : coverpoint instr.vm; \
     //cp_wd : coverpoint instr.wd; \
 
@@ -29,6 +30,10 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
   
 	`V_INSTR_CG_BEGIN(vadd)
+	 
+    //cp_va_variant : coverpoint instr.va_variant{
+    // bins va_variant = {VV,VX};
+		//}
   `CG_END
 
 	function new(riscv_instr_gen_config cfg);
