@@ -234,7 +234,77 @@ class riscv_instr_cov_test extends uvm_test;
 				`uvm_info(`gfn, $sformatf("after process_instr_name instr_name is %0s,find_va_variant is %0s,instr_len is %0d",	instr_name,find_va_variant,instr_name_len), UVM_LOW)
 			end
 			else begin
-			
+        if(instr_name[1] == "L")begin
+					if(instr_name[2] == "S" && instr_name[3] == "E")begin
+						if(instr_name[4] == "G")begin
+		    		  foreach(instr_name[i])begin
+                if(instr_name[i] == "F" && instr_name[i+1] == "F")
+                  instr_name = "VLSEGEFF_V";
+		    		  	else instr_name = "VLSEGE_V";
+		    		  end
+				    end
+				    else instr_name = "VLSE_V";
+					end
+
+					else if(instr_name[2] == "E") begin
+		    	  	foreach(instr_name[i])begin
+                if(instr_name[i] == "F" && instr_name[i+1] == "F")
+                  instr_name = "VLEFF_V";
+		    	  		else instr_name = "VLE_V";
+		    	  	end
+				  end
+          else if(instr_name[2] == "S" && instr_name[3] == "S" && instr_name[4] == "E" && instr_name[5] == "G" )begin
+						instr_name = "VLSSEGE_V";
+					end
+					else if(instr_name[2] =="U") begin
+					  if(instr_name[3] == "X" && instr_name[4] == "E")
+							instr_name = "VLUXEI_V";
+						else instr_name = "VLUXSEGEI_V";
+					end
+					else if(instr_name[2] =="O") begin
+					  if(instr_name[3] == "X" && instr_name[4] == "E")
+							instr_name = "VLOXEI_V";
+						else instr_name = "VLOXSEGEI_V";
+					end
+					else begin
+		    	  	foreach(instr_name[i])begin
+                if(instr_name[i] == "R" && instr_name[i+1] == "E")
+                  instr_name = "VLRE_V";
+		    	  	end
+					end
+	 	    end
+				else if (instr_name[1] == "S") begin
+					if(instr_name[2] == "S" && instr_name[3] == "E" )begin
+						if(instr_name[4] == "G")begin
+		    		  	instr_name = "VSSEGE_V";
+				    end
+				    else instr_name = "VSSE_V";
+					end
+
+					else if(instr_name[2] == "E") begin
+		    	  		instr_name = "VSE_V";
+				  end
+          else if(instr_name[2] == "S" && instr_name[3] == "S" && instr_name[4] == "E" && instr_name[5] == "G" )begin
+						instr_name = "VSSSEGE_V";
+					end
+					else if(instr_name[2] =="U") begin
+					  if(instr_name[3] == "X" && instr_name[4] == "E")
+							instr_name = "VSUXEI_V";
+						else instr_name = "VSUXSEGEI_V";
+					end
+					else if(instr_name[2] =="O") begin
+					  if(instr_name[3] == "X" && instr_name[4] == "E")
+							instr_name = "VSOXEI_V";
+						else instr_name = "VSOXSEGEI_V";
+					end
+					else begin
+		    	  	foreach(instr_name[i])begin
+                if(instr_name[i] == "R")
+                  instr_name = "VSR_V";
+		    	  	end
+					end
+				end
+				`uvm_info(`gfn, $sformatf("load_store process_instr_name instr_name is %0s",	instr_name), UVM_LOW)
 			end
 		end
 		//if scalar instruction

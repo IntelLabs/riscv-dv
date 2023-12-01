@@ -262,6 +262,7 @@
 
   virtual function void update_src_regs(string operands[$],string find_va_variant);
     privileged_reg_t preg;
+        `uvm_info(`gfn, $sformatf("do scalar src %0s,%0s,%0s,instr_name is %0s",operands[0],operands[1],operands[2],instr_name), UVM_LOW)
     case(format)
 			VA_FORMAT : begin
 			
