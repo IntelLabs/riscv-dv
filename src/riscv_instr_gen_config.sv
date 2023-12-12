@@ -23,8 +23,8 @@ class riscv_instr_gen_config extends uvm_object;
   //-----------------------------------------------------------------------------
   // Random instruction generation settings
   //-----------------------------------------------------------------------------
-
-  // Instruction count of the main program
+  
+	// Instruction count of the main program
   rand int               main_program_instr_cnt;
 
   // Instruction count of each sub-program

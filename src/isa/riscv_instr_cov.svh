@@ -449,6 +449,11 @@
     rd = get_gpr(reg_name);
     rd_value = get_gpr_state(reg_name);
   endfunction : update_dst_regs
+  
+	virtual function void update_vset_dst_regs(string reg_name, string val_str,ref bit[XLEN-1:0] vsetrd_value);
+  endfunction : update_vset_dst_regs
+  virtual function void update_vset_src_regs(string operands[$],ref real find_vlmul,ref int find_vsew);
+	endfunction : update_vset_src_regs
 
   function riscv_reg_t get_gpr(input string str);
     str = str.toupper();
@@ -462,7 +467,7 @@
 
   
 	virtual function bit [XLEN-1:0] get_gpr_state(string name);
-    if (name inside {"zero", "x0"}) begin
+	if (name inside {"zero", "x0"}) begin
       return 0;
     end else if (gpr_state.exists(name)) begin
       return gpr_state[name];

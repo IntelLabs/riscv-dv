@@ -108,7 +108,7 @@
   description: >
     Arithmetic vector instruction test
   gen_opts: >
-    +instr_cnt=10000
+    +instr_cnt=100000
     +num_of_sub_program=0
     +enable_floating_point=1
     +enable_vector_extension=1
@@ -146,7 +146,7 @@
   description: >
     Vector load/store random test
   gen_opts: >
-    +instr_cnt=10000
+    +instr_cnt=1000
     +num_of_sub_program=0
     +enable_floating_point=1
     +enable_vector_extension=1

@@ -43,6 +43,7 @@ package riscv_instr_pkg;
     RANDOM_VALUES_LOAD
   } vreg_init_method_t;
 
+
   typedef enum bit [3:0] {
     BARE = 4'b0000,
     SV32 = 4'b0001,
@@ -1303,16 +1304,23 @@ package riscv_instr_pkg;
 
   typedef struct packed {
     bit ill;
-	bit vma;
-	bit vta;
+  	bit vma;
+  	bit vta;
     bit fractional_lmul;
     bit [XLEN-2:7] reserved;
     int vediv;
     int vsew;
     int vlmul;
   } vtype_t;
-
-  typedef enum bit [1:0] {
+	
+	typedef struct {
+   int find_vlmul;
+	 int find_vsew;
+	 int find_vl;
+	 bit find_vm;
+	}find_vset_t;
+  
+	typedef enum bit [1:0] {
     RoundToNearestUp,
     RoundToNearestEven,
     RoundDown,
@@ -1332,6 +1340,9 @@ package riscv_instr_pkg;
     ZBT,
     ZB_TMP // for uncategorized instructions
   } b_ext_group_t;
+
+  
+
 
   `VECTOR_INCLUDE("riscv_instr_pkg_inc_variables.sv")
 
