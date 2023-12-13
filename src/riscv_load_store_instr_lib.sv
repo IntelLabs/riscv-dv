@@ -655,40 +655,6 @@ class riscv_vector_load_store_instr_stream extends riscv_mem_access_stream;
     instr_list.push_back(load_store_instr);
   endfunction
 
-// hcheng: Temporary replace build_allowed_instr() as XS3 haven't supported vector store yet.
-  virtual function void build_allowed_instr();
-	// NFIELD must greater than 1 for segmented load/store
-	bit emul_less_than_eight = eew / cfg.vector_cfg.vtype.vsew * cfg.vector_cfg.vtype.vlmul < 8;
-    case (address_mode)
-      UNIT_STRIDED : begin
-        allowed_instr = {VLE_V, allowed_instr};
-        if (cfg.vector_cfg.enable_fault_only_first_load) begin
-          allowed_instr = {VLEFF_V, allowed_instr};
-        end
-        if (cfg.vector_cfg.enable_zvlsseg && emul_less_than_eight) begin
-          allowed_instr = {VLSEGE_V, allowed_instr};
-          if (cfg.vector_cfg.enable_fault_only_first_load) begin
-            allowed_instr = {VLSEGEFF_V, allowed_instr};
-          end
-        end
-      end
-      STRIDED : begin
-        allowed_instr = {VLSE_V, allowed_instr};
-        if (cfg.vector_cfg.enable_zvlsseg && emul_less_than_eight) begin
-          allowed_instr = {VLSSEGE_V, allowed_instr};
-        end
-      end
-      INDEXED : begin
-        allowed_instr = {VLUXEI_V, VLOXEI_V, allowed_instr};
-        if (cfg.vector_cfg.enable_zvlsseg && emul_less_than_eight) begin
-          allowed_instr = {VLUXSEGEI_V, VLOXSEGEI_V, allowed_instr};
-        end
-      end
-    endcase
-  endfunction
-
-  // TODO: reuse the following build_allowed_instr once XS3 supports vector stores.
-  /*
   virtual function void build_allowed_instr();
     case (address_mode)
       UNIT_STRIDED : begin
@@ -717,7 +683,6 @@ class riscv_vector_load_store_instr_stream extends riscv_mem_access_stream;
       end
     endcase
   endfunction
-  */
 
   virtual function void randomize_vec_load_store_instr();
     $cast(load_store_instr, riscv_instr::get_load_store_instr(allowed_instr));
