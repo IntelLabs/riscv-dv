@@ -27,7 +27,7 @@ sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
 from riscv_trace_csv import *
 from lib import *
 
-RD_RE = re.compile(r"(core\s+\d+:\s+)?(?P<pri>\d) 0x(?P<addr>[a-f0-9]+?) " "\((?P<bin>.*?)\) .*?(?P<reg>[xf]\s*\d{1,2}?)\s+?0x(?P<val>[a-f0-9]+)")
+RD_RE = re.compile(r"(core\s+\d+:\s+)?(?P<pri>\d) 0x(?P<addr>[a-f0-9]+?) " "\((?P<bin>.*?)\).*? (?P<reg>[xf]\s*\d{1,2}?)\s+?0x(?P<val>[a-f0-9]+)")
 VRD_RE = re.compile(r"core\s+\d+:\s+(?P<pri>[0-3]) 0x[a-f0-9]+? \(0x[a-f0-9]+?\) c8_vstart 0x(?P<vstart>[a-f0-9]+).*?e(?P<sew>\d+) m(?P<lmul>f?\d+) l(?P<vl>\d+)")
 VREG_RE = re.compile(r"v ?(?P<vreg>\d+)\s+?0x(?P<vval>[a-f0-9]+)")    
 FRM_RE = re.compile(r"core\s+\d+:\s+(?P<pri>[0-3]) 0x[a-f0-9]+? \(0x[a-f0-9]+?\) c2_frm 0x(?P<frm>[a-f0-9]+)")
