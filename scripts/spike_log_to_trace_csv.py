@@ -27,7 +27,7 @@ sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
 from riscv_trace_csv import *
 from lib import *
 
-RD_RE = re.compile(r"(core\s+\d+:\s+)?(?P<pri>\d) 0x(?P<addr>[a-f0-9]+?) " "\((?P<bin>.*?)\) .*?(?P<reg>[xf]\s*\d*?)\s+?0x(?P<val>[a-f0-9]+)")
+RD_RE = re.compile(r"(core\s+\d+:\s+)?(?P<pri>\d) 0x(?P<addr>[a-f0-9]+?) " "\((?P<bin>.*?)\) .*?(?P<reg>[xf]\s*\d{1,2}?)\s+?0x(?P<val>[a-f0-9]+)")
 VRD_RE = re.compile(r"core\s+\d+:\s+(?P<pri>[0-3]) 0x[a-f0-9]+? \(0x[a-f0-9]+?\) c8_vstart 0x(?P<vstart>[a-f0-9]+).*?e(?P<sew>\d+) m(?P<lmul>f?\d+) l(?P<vl>\d+)")
 VREG_RE = re.compile(r"v ?(?P<vreg>\d+)\s+?0x(?P<vval>[a-f0-9]+)")    
 FRM_RE = re.compile(r"core\s+\d+:\s+(?P<pri>[0-3]) 0x[a-f0-9]+? \(0x[a-f0-9]+?\) c2_frm 0x(?P<frm>[a-f0-9]+)")
@@ -36,6 +36,7 @@ VTYPE_RE = re.compile(r"core\s+\d+:\s+(?P<pri>[0-3]) 0x[a-f0-9]+? \(0x[a-f0-9]+?
 CORE_RE = re.compile(r"core\s+\d+:\s+0x(?P<addr>[a-f0-9]+?) \(0x(?P<bin>.*?)\) (?P<instr>.*?)$")
 ADDR_RE = re.compile(r"(?P<rd>[a-z0-9]+?),(?P<imm>[\-0-9]+?)\((?P<rs1>[a-z0-9]+)\)")
 ILLE_RE = re.compile(r"trap_illegal_instruction")
+VLOAD_RD_RE = re.compile(r"core\s+\d+:\s+(?P<pri>[0-3]) 0x[a-f0-9]+? \(0x[a-f0-9]+?\) e(?P<sew>\d+) m(?P<lmul>f?\d+) l(?P<vl>\d+) (?P<regs>.*) c8_vstart 0x(?P<vstart>[a-f0-9]+) (?P<mems>.*)")
 
 LOGGER = logging.getLogger()
 
@@ -181,16 +182,24 @@ def read_spike_trace(path, full_trace):
                 instr.mode = commit_match.group('pri')
 
             vcommit_match = VRD_RE.match(line)
-            if vcommit_match:
-                lmul = vcommit_match.group('lmul')
+            vload_match = VLOAD_RD_RE.match(line)
+            if vcommit_match or vload_match:
+                if vcommit_match and (not vload_match):
+                    vrd_match = vcommit_match
+                elif (not vcommit_match) and vload_match:
+                    vrd_match = vload_match
+                else:
+                    print("Line matches both non-vector-load and vector-load patterns. ")
+                    sys.exit(1)
+                lmul = vrd_match.group('lmul')
                 if lmul[0] == 'f':
                     lmul = '1/' + lmul[1:]
-                instr.csr.append('vstart' + ':' + vcommit_match.group('vstart'))
-                instr.csr.append('sew' + ':' + vcommit_match.group('sew'))
-                instr.csr.append('lmul' + ':' + vcommit_match.group('lmul'))
-                instr.csr.append('vl' + ':' + vcommit_match.group('vl'))
+                instr.csr.append('vstart' + ':' + vrd_match.group('vstart'))
+                instr.csr.append('sew' + ':' + vrd_match.group('sew'))
+                instr.csr.append('lmul' + ':' + vrd_match.group('lmul'))
+                instr.csr.append('vl' + ':' + vrd_match.group('vl'))
 
-                instr.mode = vcommit_match.group('pri')
+                instr.mode = vrd_match.group('pri')
                 for v in VREG_RE.finditer(line):
                     instr.gpr.append('v' + v.group('vreg') + ':' + v.group('vval'))
 
