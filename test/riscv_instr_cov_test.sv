@@ -12,10 +12,9 @@ class riscv_instr_cov_test extends uvm_test;
   int unsigned              total_entry_cnt;
   int unsigned              skipped_cnt;
   int unsigned              illegal_instr_cnt;
-  find_vset_t  find_vset;	
+  find_vcsr_t               find_vcsr;
 	`uvm_component_utils(riscv_instr_cov_test)
   `uvm_component_new
-
 
   task run_phase(uvm_phase phase);
     int i;
@@ -54,7 +53,7 @@ class riscv_instr_cov_test extends uvm_test;
         // Get the header line
         if ($fgets(line, fd)) begin
           split_string(line, ",", header);
-          `uvm_info(`gfn, $sformatf("Header: %0s", line), UVM_HIGH);
+          `uvm_info(`gfn, $sformatf("Header: %0s", line), UVM_LOW);
         end else begin
           `uvm_info(`gfn, $sformatf("Skipping empty trace file: %0s", trace_csv[i]), UVM_LOW)
           continue;
@@ -124,6 +123,12 @@ class riscv_instr_cov_test extends uvm_test;
     bit [XLEN-1:0] binary;
 		string find_va_variant;
 		bit find_vm;
+		//string vl;
+		//string lmul;
+		//string sew;
+		//string vstart;
+  	string csr_status[$];
+  	string csr_pair[$];
     get_val(trace["binary"], binary, .hex(1));
     if ((binary[1:0] != 2'b11) && (RV32C inside {supported_isa})) begin
       `SAMPLE(instr_cg.compressed_opcode_cg, binary[15:0])
@@ -139,14 +144,34 @@ class riscv_instr_cov_test extends uvm_test;
 				//added
           if ((instr.group inside {RVV}) &&
              (instr.group inside {supported_isa})) begin
-					 assign_trace_info_to_instr(instr,find_va_variant,find_vset);
+           split_string(trace["csr"], ";", csr_status);
+           foreach (csr_status[i]) begin
+             split_string(csr_status[i], ":", csr_pair);
+             if (csr_pair.size() != 2) begin
+               `uvm_fatal(`gfn, $sformatf("Illegal csr status format: %0s", csr_status[i]))
+             end
+           `uvm_info(`gfn, $sformatf("sample vector csr, csr name is %0s, csr value is %0s",
+                               csr_pair[0],csr_pair[1]), UVM_LOW)
+						 if(csr_pair[0] == "vstart")
+               get_val(csr_pair[1],find_vcsr.vstart,.hex(1));
+						 else if(csr_pair[0] == "lmul")
+               find_vcsr.lmul = csr_pair[1].atoreal();
+						 else if(csr_pair[0] == "sew")
+               find_vcsr.sew = csr_pair[1].atoreal();
+						 else if(csr_pair[0] == "vl")
+               find_vcsr.vl = csr_pair[1].atoreal();
+           end
+           `uvm_info(`gfn, $sformatf("sample vector csrcase, vstart is %0d, vl is %0d, sew is %0d, lmul is %0d",
+                               find_vcsr.vstart,find_vcsr.vl,find_vcsr.sew,find_vcsr.lmul), UVM_LOW)
+					 assign_trace_info_to_instr(instr,find_va_variant);
            //instr.pre_sample();
+ 
            `uvm_info(`gfn, $sformatf("sample vector cg is %0s,vector_va_variant is %0s",
                                process_instr_name(trace["instr"],find_va_variant),find_va_variant), UVM_LOW)
 					//if(instr.instr_name == VADD )begin
 					//	 if(find_va_variant == "VV")begin
 					//		 if(find_vm == 1)begin
-             instr_v_cg.sample(instr,find_va_variant,find_vset);
+             instr_v_cg.sample(instr,find_va_variant);
 					//	 end
 					// end
 					//end
@@ -156,7 +181,7 @@ class riscv_instr_cov_test extends uvm_test;
                                    RV32D, RV64D, RV32B, RV64B
                                   }) &&
              (instr.group inside {supported_isa})) begin
-           assign_trace_info_to_instr(instr,find_va_variant,find_vset);
+           assign_trace_info_to_instr(instr,find_va_variant);
            instr.pre_sample();
            `uvm_info(`gfn, $sformatf("sample scalar cg is %0s",
                                process_instr_name(trace["instr"],find_va_variant)), UVM_LOW)
@@ -165,7 +190,7 @@ class riscv_instr_cov_test extends uvm_test;
           else if ((instr.group inside {RV32F, RV64F,RV32ZBA, RV32ZBB, RV32ZBC,
 				  	          RV32ZBS,RV64ZBA, RV64ZBB, RV64ZBC, RV64ZBS}) &&
 											(instr.group inside {supported_isa})) begin
-											assign_trace_info_to_instr(instr,find_va_variant,find_vset);
+											assign_trace_info_to_instr(instr,find_va_variant);
 											instr.pre_sample();
 											`uvm_info(`gfn, $sformatf("sample floating cg is %0s",
 												process_instr_name(trace["instr"],find_va_variant)), UVM_LOW)
@@ -178,18 +203,12 @@ class riscv_instr_cov_test extends uvm_test;
     process_instr_name(trace["instr"],find_va_variant)), UVM_LOW)
   endfunction
 
-  virtual function void assign_trace_info_to_instr(riscv_instr instr,string find_va_variant,ref find_vset_t find_vset);
+  virtual function void assign_trace_info_to_instr(riscv_instr instr,string find_va_variant);
   	riscv_reg_t gpr;
   	string operands[$];
   	string gpr_update[$];
   	string pair[$];
 		bit find_vm;
-		int find_vl;
-		real find_vlmul;
-		int find_vsew;
-		string find_vlmul_str;
-		string find_vsew_str;
-		bit[XLEN-1:0] vsetrd_value;
   	get_val(trace["pc"], instr.pc, .hex(1));
   	get_val(trace["binary"], instr.binary, .hex(1));
   	instr.trace = trace["instr_str"];
@@ -201,15 +220,14 @@ class riscv_instr_cov_test extends uvm_test;
   	split_string(trace["operand"], ",", operands);
 		if(instr.instr_name inside {VMERGE, VFMERGE, VADC, VSBC, VMADC, VMSBC})begin
 		  if(operands[3] == "v0")begin
-        find_vset.find_vm = 1;
-        `uvm_info(`gfn, $sformatf("find_vm is %0d ,instr_name is %0s",find_vset.find_vm,instr.instr_name), UVM_LOW)
+        find_vm = 1;
+        `uvm_info(`gfn, $sformatf("find_vm is %0d ,instr_name is %0s",find_vm,instr.instr_name), UVM_LOW)
 			end
 		end else if(operands[3] == "v0.t")begin
-        find_vset.find_vm = 1;
-        `uvm_info(`gfn, $sformatf("find_vm is %0d ,instr_name is %0s",find_vset.find_vm,instr.instr_name), UVM_LOW)
+        find_vm = 1;
+        `uvm_info(`gfn, $sformatf("find_vm is %0d ,instr_name is %0s",find_vm,instr.instr_name), UVM_LOW)
 		end
 		instr.update_src_regs(operands,find_va_variant);
-		instr.update_vset_src_regs(operands,find_vlmul,find_vsew);
 
     split_string(trace["gpr"], ";", gpr_update);
 
@@ -219,46 +237,8 @@ class riscv_instr_cov_test extends uvm_test;
         `uvm_fatal(`gfn, $sformatf("Illegal gpr update format: %0s", gpr_update[i]))
       end
       instr.update_dst_regs(pair[0], pair[1]);
-      instr.update_vset_dst_regs(pair[0], pair[1],vsetrd_value);
     end
-		if(instr.instr_name == VSETIVLI)begin
-        find_vset.find_vl = operands[1].atoreal();
-				find_vlmul_str = operands[3];
-				find_vsew_str = operands[2];
-				find_vset.find_vsew = find_vsew_str.substr(1,(find_vsew_str.len() - 1));
-				if(find_vlmul_str[1] == "f")
-				find_vlmul_str = find_vlmul_str.substr(2,(find_vlmul_str.len() - 1));
-				else
-				find_vlmul_str = find_vlmul_str.substr(1,(find_vlmul_str.len() - 1));
-        find_vset.find_vlmul = find_vlmul_str.atoreal();
-				`uvm_info(`gfn, $sformatf("find_vl is %0d ,find_vmul is %0d ,find_vsew is %0d, instr_name is %0s",find_vset.find_vl,find_vset.find_vlmul,find_vset.find_vsew,instr.instr_name), UVM_LOW)
 
-		end else if(instr.instr_name == VSETVLI)begin
-			if(operands[0] == "0" && operands[1] == "0")begin
-			end
-			else begin
-				find_vset.find_vl = vsetrd_value;
-			end
-				find_vsew_str = operands[2];
-				find_vset.find_vsew = find_vsew_str.substr(1,(find_vsew_str.len() - 1));
-			  find_vlmul_str = operands[3];
-				if(find_vlmul_str[1] == "f")
-				find_vlmul_str = find_vlmul_str.substr(2,(find_vlmul_str.len() - 1));
-				else
-				find_vlmul_str = find_vlmul_str.substr(1,(find_vlmul_str.len() - 1));
-        find_vset.find_vlmul = find_vlmul_str.atoreal();
-				`uvm_info(`gfn, $sformatf("find_vl is %0d ,find_vmul is %0d ,find_vsew is %0d, instr_name is %0s",find_vset.find_vl,find_vset.find_vlmul,find_vset.find_vsew,instr.instr_name), UVM_LOW)
-		end else if (instr.instr_name == VSETVL)begin
-			if(operands[0] == "0" && operands[1] == "0")begin   //need to check again
-			end
-			else begin
-				find_vset.find_vl = vsetrd_value;
-				find_vset.find_vlmul = find_vlmul;
-				find_vset.find_vsew = find_vsew;
-			end
-        `uvm_info(`gfn, $sformatf("find_vl is %0d ,find_vmul is %0d ,find_vsew is %0d,instr_name is %0s",find_vset.find_vl,find_vset.find_vlmul,find_vset.find_vsew,instr.instr_name), UVM_LOW)
-
-		end
   endfunction : assign_trace_info_to_instr
 
 

@@ -25,6 +25,7 @@
   } special_val_e;
 
   static bit [XLEN-1:0] gpr_state[string];
+  static bit [VLEN-1:0] vgpr_state[string];
 
   rand bit [XLEN-1:0]   rs1_value;
   rand bit [XLEN-1:0]   rs2_value;
@@ -34,6 +35,7 @@
   rand bit [XLEN-1:0]   fs2_value;
   rand bit [XLEN-1:0]   fs3_value;
   rand bit [XLEN-1:0]   fd_value;
+  rand bit [VLEN-1:0]   vd_value;
   bit [31:0]            binary;
   bit [XLEN-1:0]        pc;
   bit [XLEN-1:0]        mem_addr;
@@ -450,14 +452,12 @@
     rd_value = get_gpr_state(reg_name);
   endfunction : update_dst_regs
   
-	virtual function void update_vset_dst_regs(string reg_name, string val_str,ref bit[XLEN-1:0] vsetrd_value);
-  endfunction : update_vset_dst_regs
-  virtual function void update_vset_src_regs(string operands[$],ref real find_vlmul,ref int find_vsew);
-	endfunction : update_vset_src_regs
 
   function riscv_reg_t get_gpr(input string str);
     str = str.toupper();
-		
+		if(str[0] == "(")begin
+    str = str.substr(1,(str.len() - 2));
+		end
         `uvm_info(`gfn, $sformatf("do get reg %0s", str),
                   UVM_LOW)
     if (!gpr_enum::from_name(str, get_gpr)) begin

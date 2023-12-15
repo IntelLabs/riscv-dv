@@ -1314,11 +1314,12 @@ package riscv_instr_pkg;
   } vtype_t;
 	
 	typedef struct {
-   int find_vlmul;
-	 int find_vsew;
-	 int find_vl;
-	 bit find_vm;
-	}find_vset_t;
+   int lmul;
+	 int sew;
+	 int vl;
+	 bit[XLEN-1 : 0] vstart;
+	 bit vm;
+	}find_vcsr_t;
   
 	typedef enum bit [1:0] {
     RoundToNearestUp,

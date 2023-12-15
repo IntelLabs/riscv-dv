@@ -140,7 +140,6 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
 		}
   `CG_END
 
-  find_vset_t find_vset;	
 	function new(riscv_instr_gen_config cfg);
 		super.new(cfg);
     `CG_SELECTOR_BEGIN(RVV)
@@ -149,7 +148,7 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
     `uvm_info(",","riscv_instr_vector_cover_group", UVM_LOW)
 	endfunction
 	
-	function void sample(riscv_instr instr,string find_va_variant,find_vset_t find_vset);
+	function void sample(riscv_instr instr,string find_va_variant);
     //case (instr.instr_name)
     //  VADD       : `SAMPLE_V(vadd_cg, instr)
     //  default: begin
@@ -158,11 +157,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
     //    end
     //  end
     //endcase
-		if(instr.instr_name == VADD && find_va_variant == "VV" && find_vset.find_vm == 1 && find_vset.find_vlmul == 1 && find_vset.find_vsew == 64 && find_vset.find_vl == 4)begin
+		if(instr.instr_name == VADD && find_va_variant == "VV" )begin
       VADD_VV_VLMUL1_VSEW64_VM1_VL4       : `SAMPLE_V(vadd_vv_vlmul1_vsew64_vm1_vl4_cg, instr)
 		end
     `uvm_info(",","riscv_instr_vector_cover_group", UVM_LOW)
-    `uvm_info("", $sformatf("riscv_instr_vector_cover_group instr is %0s, find_vl is %0d,va_variant is %0s,find_vm is %0d, find_vlmul is %0d, find_vsew is %0d",instr.instr_name,find_vset.find_vl,find_va_variant,find_vset.find_vm,find_vset.find_vlmul,find_vset.find_vsew), UVM_LOW)
+   // `uvm_info("", $sformatf("riscv_instr_vector_cover_group instr is %0s, find_vl is %0d,va_variant is %0s,find_vm is %0d, find_vlmul is %0d, find_vsew is %0d",instr.instr_name,find_va_variant), UVM_LOW)
 	endfunction
 
 endclass

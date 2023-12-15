@@ -572,6 +572,9 @@ class riscv_asm_program_gen extends uvm_object;
       end
       RANDOM_VALUES_VMV: begin
         for (int v = 0; v < NUM_VEC_GPR; v++) begin
+          instr_stream.push_back($sformatf("%0svmv.v.x v%0d, x0", indent, v));
+        end
+        for (int v = 0; v < NUM_VEC_GPR; v++) begin
           for (int e = 0; e < num_elements; e++) begin
             if (e > 0) instr_stream.push_back($sformatf("%0svmv.v.v v0, v%0d", indent, v));
             instr_stream.push_back($sformatf("%0sli x%0d, 0x%0x",
