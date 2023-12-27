@@ -452,6 +452,8 @@
     rd_value = get_gpr_state(reg_name);
   endfunction : update_dst_regs
   
+  //virtual function void update_vec_csr(find_vcsr_t find_vcsr);
+  //endfunction : update_vec_csr
 
   function riscv_reg_t get_gpr(input string str);
     str = str.toupper();

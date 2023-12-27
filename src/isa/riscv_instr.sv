@@ -296,6 +296,7 @@ class riscv_instr extends uvm_object;
      return instr_h;
   endfunction : get_instr
 
+
   // Disable the rand mode for unused operands to randomization performance
   virtual function void set_rand_mode();
     case (format) inside

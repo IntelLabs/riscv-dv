@@ -677,6 +677,7 @@ package riscv_instr_pkg;
     INVALID_INSTR
   } riscv_instr_name_t;
 
+
   // Maximum virtual address bits used by the program
   parameter int MAX_USED_VADDR_BITS = 30;
 
@@ -1318,7 +1319,7 @@ package riscv_instr_pkg;
 	 int sew;
 	 int vl;
 	 bit[XLEN-1 : 0] vstart;
-	 bit vm;
+	 bit find_vm;
 	}find_vcsr_t;
   
 	typedef enum bit [1:0] {

@@ -41,7 +41,11 @@ class riscv_vector_instr extends riscv_floating_point_instr;
   string            sub_extension;
   rand bit [2:0]    nfields; // Used by segmented load/store
   rand bit [3:0]    emul;
-  
+  int               vl;
+	int               lmul;
+	int               sew;
+ 	bit               find_vm;
+
   constraint avoid_reserved_vregs_c {
     if (m_cfg.vector_cfg.reserved_vregs.size() > 0) {
 	  if (is_widening_instr) {
@@ -831,7 +835,14 @@ class riscv_vector_instr extends riscv_floating_point_instr;
 			end
 		endcase
   endfunction : update_dst_regs
-	
+  
+	//function void update_vec_csr(find_vcsr_t find_vcsr);
+  //lmul = find_vcsr.lmul;
+	//vl = find_vcsr.vl;
+	//sew = find_vcsr.sew;
+	//find_vm = find_vcsr.find_vm;
+	//endfunction
+
 	function riscv_vreg_t get_vgpr(input string str);
     str = str.toupper();
         `uvm_info(`gfn, $sformatf("do get vreg %0s", str),
