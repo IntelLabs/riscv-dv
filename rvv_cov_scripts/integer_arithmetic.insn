@@ -1,0 +1,3 @@
+vadd    vv,vx,vi INT_ARITHMETIC   NORMAL VL,VTA
+vsub    vv,vx    INT_ARITHMETIC   NORMAL VL,VTA
+vrsub   vx,vi    INT_ARITHMETIC   NORMAL VL,VTA
