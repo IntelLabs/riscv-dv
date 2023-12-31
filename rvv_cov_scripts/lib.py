@@ -65,7 +65,7 @@ class Vm_Vma_Feature(Enum):
     VM_0 = 2
     VM_1 = 3
 
-vm_vma_features = {
+vm_vma_feature_str = {
     Vm_Vma_Feature.VM_0_VMA : "VM = 0, VMA",
     Vm_Vma_Feature.VM_0 : "VM = 0",
     Vm_Vma_Feature.VM_1 : "VM = 1"

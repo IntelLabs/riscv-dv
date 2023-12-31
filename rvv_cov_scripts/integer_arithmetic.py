@@ -126,10 +126,10 @@ class VectorInsn(object):
                 row = [self.category.name,
                     self.name,
                     self.style.name,
-                    ','.join([x.name for x in self.csr_read]),
-                    ','.join([x.name for x in self.csr_write]), 
                     ','.join([str(x) for x in self.lmul]),
-                    ','.join([str(x) for x in self.sew])]
+                    ','.join([str(x) for x in self.sew]),
+                    ','.join([x.name for x in self.csr_read]) + '\nget_vl(lmul, sew)',
+                    ','.join([x.name for x in self.csr_write])] 
             else:
                 row = [ "",
                     "",
@@ -144,10 +144,7 @@ class VectorInsn(object):
             else:
                 row.append("")
             # VM_MTA
-            if i % len(self.variants) == 0:
-                row.append(vm_vma_features[self.vm_vma_feature[i // len(self.variants)]])
-            else:
-                row.append("")
+            row.append(vm_vma_feature_str[self.vm_vma_feature[i % len(self.vm_vma_feature)]])
             # Operands
             # pdb.set_trace()
             row.append(','.join([str(x) for x in self.dst_operands[self.variants[i // len(self.vm_vma_feature)]][self.vm_vma_feature[i % len(self.vm_vma_feature)]]]))
@@ -222,7 +219,7 @@ class VectorInsn(object):
         return res
 
     def get_vl(self, lmul, sew):
-        vlmax = vlen * lmul / sew
+        vlmax = int(self.vlen * lmul / sew)
         return str(list(range(vlmax + 1)))
 
 
@@ -232,7 +229,8 @@ def main():
     parser.add_argument("--insn_file", type=str, help="Input vector instruction file")
     args = parser.parse_args()
     insn_list = []
-    headers = ["Category", "Instruction", "Style", "CSR read", "CSR write", "LMUL", "SEW", "Variant","VM VMA", "Dst Operand", "Src Operand"]
+    headers = ["Category", "Instruction", "Style", "LMUL", "SEW", "CSR read", "CSR write", "Variant","VM VMA", 
+        "Dst Operand\nget_dst_regs(variant, lmul, sew, vm_vma_feature)", "Src Operand\nget_src_regs(variant, lmul, sew, vm_vma_feature)"]
     with open(args.insn_file, "r") as fd:
         for line in fd:
             insn_list.append(VectorInsn(line))
@@ -242,6 +240,7 @@ def main():
     print(tabulate(table_data, headers, tablefmt="grid"))
 
     print(insn_list[0].get_src_regs(Variant.VV, 4, 32, Vm_Vma_Feature.VM_0_VMA))
+    print(insn_list[0].get_vl(4, 32))
 
 if __name__ == "__main__":
     main()
