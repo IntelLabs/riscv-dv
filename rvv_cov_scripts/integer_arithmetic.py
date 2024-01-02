@@ -3,6 +3,8 @@ import re
 import sys
 import os
 import pdb
+import csv
+import pandas as pd
 from tabulate import tabulate
 from lib import *
 
@@ -147,11 +149,13 @@ class VectorInsn(object):
             row.append(vm_vma_feature_str[self.vm_vma_feature[i % len(self.vm_vma_feature)]])
             # Operands
             # pdb.set_trace()
-            row.append(','.join([str(x) for x in self.dst_operands[self.variants[i // len(self.vm_vma_feature)]][self.vm_vma_feature[i % len(self.vm_vma_feature)]]]))
-            row.append(','.join([str(x) for x in self.src_operands[self.variants[i // len(self.vm_vma_feature)]][self.vm_vma_feature[i % len(self.vm_vma_feature)]]]))
+            row.append(','.join([str(x) for x in self.dst_operands[self.variants[i // len(self.vm_vma_feature)]][self.vm_vma_feature[i % len(self.vm_vma_feature)]]])
+                + "\nget_dst_regs(variant, lmul, sew, vm_vma_feature)")
+            row.append(','.join([str(x) for x in self.src_operands[self.variants[i // len(self.vm_vma_feature)]][self.vm_vma_feature[i % len(self.vm_vma_feature)]]])
+                + "\nget_src_regs(variant, lmul, sew, vm_vma_feature)")
             res.append(row)
         return res
-    
+
     def get_dst_regs(self, variant, lmul, sew, vm_vma_feature):
         dst_reg = self.dst_operands[variant][vm_vma_feature]
         for reg in dst_reg:
@@ -230,7 +234,7 @@ def main():
     args = parser.parse_args()
     insn_list = []
     headers = ["Category", "Instruction", "Style", "LMUL", "SEW", "CSR read", "CSR write", "Variant","VM VMA", 
-        "Dst Operand\nget_dst_regs(variant, lmul, sew, vm_vma_feature)", "Src Operand\nget_src_regs(variant, lmul, sew, vm_vma_feature)"]
+        "Dst Operand", "Src Operand"]
     with open(args.insn_file, "r") as fd:
         for line in fd:
             insn_list.append(VectorInsn(line))
@@ -238,6 +242,14 @@ def main():
     for insn in insn_list:
         table_data += insn.format_table()
     print(tabulate(table_data, headers, tablefmt="grid"))
+    
+    with open("rvv_insn.csv", 'w') as csv_fd:
+        csv_writer = csv.writer(csv_fd, delimiter = ';')
+        csv_writer.writerow(headers)
+        for row in table_data:
+            csv_writer.writerow(row)
+    pd.read_csv("rvv_insn.csv", delimiter=';').to_excel("rvv_insn.xlsx", index=False)
+        
 
     print(insn_list[0].get_src_regs(Variant.VV, 4, 32, Vm_Vma_Feature.VM_0_VMA))
     print(insn_list[0].get_vl(4, 32))
