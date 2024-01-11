@@ -23,25 +23,26 @@ class VectorInsn(object):
             self.csr_read = [CSR[x] for x in segs[4].split(',')]
         if len(segs) >= 6:
             self.csr_write = [CSR[x] for x in segs[5].split(',')]
-        # Temporarily clear variants for vzext/vsext to avoid initialization dst_operands/src_operands based on variants
-        if self.style in (Style.EXTENSION_VF2, Style.EXTENSION_VF4, Style.EXTENSION_VF8):
-            self.variants = []
 
         # initialize legal lmul and sew based on variant and style
-        self.lmul = [2**x for x in range(-3,4)]
-        self.sew = [2**x for x in range(3,7)]
-        if self.style == Style.WIDENING or self.style == Style.NARROWING:
-            self.lmul.remove(8)
-            self.sew.remove(64)
-        if self.style in (Style.EXTENSION_VF2, Style.EXTENSION_VF4, Style.EXTENSION_VF8):
-            self.lmul.remove(0.125)
-            self.sew.remove(8)
-        if self.style in (Style.EXTENSION_VF4, Style.EXTENSION_VF8):
-            self.lmul.remove(0.25)
-            self.sew.remove(16)
-        if self.style == Style.EXTENSION_VF8:
-            self.lmul.remove(0.5)
-            self.sew.remove(32)
+        self.lmul = {}
+        self.sew = {}
+        for variant in self.variants:
+            self.lmul[variant] = [2**x for x in range(-3,4)]
+            self.sew[variant] = [2**x for x in range(3,7)]
+            # vzext, vsext
+            if self.style == Style.EXTENSION:
+                self.lmul[variant].remove(0.125)
+                self.sew[variant].remove(8)
+                if variant in (Variant.VF4, Variant.VF8):
+                    self.lmul[variant].remove(0.25)
+                    self.sew[variant].remove(16)
+                if variant == Variant.VF8:
+                    self.lmul[variant].remove(0.5)
+                    self.sew[variant].remove(32)    
+            if self.style == Style.WIDENING or self.style == Style.NARROWING:
+                self.lmul[variant].remove(8)
+                self.sew[variant].remove(64)
 
         # Initialize vm related attributes    
         self.vm_mask = {}
@@ -300,56 +301,44 @@ class VectorInsn(object):
                 self.dst_operands[Variant.V_I][Vm_Vma_Feature.VM_1] = (VectorOp(Factor.X1, Factor.X1, 'VD'),)
                 self.src_operands[Variant.V_I] = {}
                 self.src_operands[Variant.V_I][Vm_Vma_Feature.VM_1] = (Imm5Op('Imm'), )
+            elif variant == Variant.VF2:
+                self.dst_operands[Variant.VF2] = {}
+                self.dst_operands[Variant.VF2][Vm_Vma_Feature.VM_1] = (VectorOp(Factor.X1, Factor.X1, 'VD'),)
+                self.dst_operands[Variant.VF2][Vm_Vma_Feature.VM_0_VMA] = (VectorOp(Factor.X1, Factor.X1, 'VD'),)
+                self.src_operands[Variant.VF2] = {}
+                self.src_operands[Variant.VF2][Vm_Vma_Feature.VM_1] = (VectorOp(Factor.X0_5, Factor.X0_5, 'VS2'),)
+                self.src_operands[Variant.VF2][Vm_Vma_Feature.VM_0_VMA] = (VectorOp(Factor.X0_5, Factor.X0_5, 'VS2'), VectorOp(Factor.VALUE_1, Factor.VALUE_1, 'V0.t'))
+            elif variant == Variant.VF4:
+                self.dst_operands[Variant.VF4] = {}
+                self.dst_operands[Variant.VF4][Vm_Vma_Feature.VM_1] = (VectorOp(Factor.X1, Factor.X1, 'VD'),)
+                self.dst_operands[Variant.VF4][Vm_Vma_Feature.VM_0_VMA] = (VectorOp(Factor.X1, Factor.X1, 'VD'),)
+                self.src_operands[Variant.VF4] = {}
+                self.src_operands[Variant.VF4][Vm_Vma_Feature.VM_1] = (VectorOp(Factor.X0_25, Factor.X0_25, 'VS2'),)
+                self.src_operands[Variant.VF4][Vm_Vma_Feature.VM_0_VMA] = (VectorOp(Factor.X0_25, Factor.X0_25, 'VS2'), VectorOp(Factor.VALUE_1, Factor.VALUE_1, 'V0.t'))
+            elif variant == Variant.VF8:
+                self.dst_operands[Variant.VF8] = {}
+                self.dst_operands[Variant.VF8][Vm_Vma_Feature.VM_1] = (VectorOp(Factor.X1, Factor.X1, 'VD'),)
+                self.dst_operands[Variant.VF8][Vm_Vma_Feature.VM_0_VMA] = (VectorOp(Factor.X1, Factor.X1, 'VD'),)
+                self.src_operands[Variant.VF8] = {}
+                self.src_operands[Variant.VF8][Vm_Vma_Feature.VM_1] = (VectorOp(Factor.X0_125, Factor.X0_125, 'VS2'),)
+                self.src_operands[Variant.VF8][Vm_Vma_Feature.VM_0_VMA] = (VectorOp(Factor.X0_125, Factor.X0_125, 'VS2'), VectorOp(Factor.VALUE_1, Factor.VALUE_1, 'V0.t'))
             else:
                 print("Not a valid variant when initialize operands.")
-
-        
-        if self.style in (Style.EXTENSION_VF2, Style.EXTENSION_VF4, Style.EXTENSION_VF8):
-            # Set variant to NONE to ease implemenation of output functions
-            self.variants = [Variant.NONE]
-            # Set vm_mask and vm_vma_feature
-            self.vm_mask[Variant.NONE] = Vm_Mask.VM_MASK
-            self.vm_vma_feature = {}
-            self.vm_vma_feature[Variant.NONE] = [Vm_Vma_Feature.VM_0_VMA, Vm_Vma_Feature.VM_1]
-            if self.style == Style.EXTENSION_VF2:
-                self.dst_operands[Variant.NONE] = {}
-                self.dst_operands[Variant.NONE][Vm_Vma_Feature.VM_1] = (VectorOp(Factor.X1, Factor.X1, 'VD'),)
-                self.dst_operands[Variant.NONE][Vm_Vma_Feature.VM_0_VMA] = (VectorOp(Factor.X1, Factor.X1, 'VD'),)
-                self.src_operands[Variant.NONE] = {}
-                self.src_operands[Variant.NONE][Vm_Vma_Feature.VM_1] = (VectorOp(Factor.X0_5, Factor.X0_5, 'VS2'),)
-                self.src_operands[Variant.NONE][Vm_Vma_Feature.VM_0_VMA] = (VectorOp(Factor.X0_5, Factor.X0_5, 'VS2'), VectorOp(Factor.VALUE_1, Factor.VALUE_1, 'V0.t'))
-            if self.style == Style.EXTENSION_VF4:
-                self.dst_operands[Variant.NONE] = {}
-                self.dst_operands[Variant.NONE][Vm_Vma_Feature.VM_1] = (VectorOp(Factor.X1, Factor.X1, 'VD'),)
-                self.dst_operands[Variant.NONE][Vm_Vma_Feature.VM_0_VMA] = (VectorOp(Factor.X1, Factor.X1, 'VD'),)
-                self.src_operands[Variant.NONE] = {}
-                self.src_operands[Variant.NONE][Vm_Vma_Feature.VM_1] = (VectorOp(Factor.X0_25, Factor.X0_25, 'VS2'),)
-                self.src_operands[Variant.NONE][Vm_Vma_Feature.VM_0_VMA] = (VectorOp(Factor.X0_25, Factor.X0_25, 'VS2'), VectorOp(Factor.VALUE_1, Factor.VALUE_1, 'V0.t'))
-            if self.style == Style.EXTENSION_VF8:
-                self.dst_operands[Variant.NONE] = {}
-                self.dst_operands[Variant.NONE][Vm_Vma_Feature.VM_1] = (VectorOp(Factor.X1, Factor.X1, 'VD'),)
-                self.dst_operands[Variant.NONE][Vm_Vma_Feature.VM_0_VMA] = (VectorOp(Factor.X1, Factor.X1, 'VD'),)
-                self.src_operands[Variant.NONE] = {}
-                self.src_operands[Variant.NONE][Vm_Vma_Feature.VM_1] = (VectorOp(Factor.X0_125, Factor.X0_125, 'VS2'),)
-                self.src_operands[Variant.NONE][Vm_Vma_Feature.VM_0_VMA] = (VectorOp(Factor.X0_125, Factor.X0_125, 'VS2'), VectorOp(Factor.VALUE_1, Factor.VALUE_1, 'V0.t'))
-
 
     def format_table(self):
         res = []
         for variant in self.variants:
             for mask_feature in self.vm_vma_feature[variant]:
-                # Category, Name, Style, CSR read, CSR write, lmul, sew
+                # Category, Name, Style, Variants, lmul, sew, CSR read, CSR write 
                 row = [self.category.name,
                     self.name,
                     self.style.name,
-                    ','.join([str(x) for x in self.lmul]),
-                    ','.join([str(x) for x in self.sew]),
+                    variant.name,
+                    ','.join([str(x) for x in self.lmul[variant]]),
+                    ','.join([str(x) for x in self.sew[variant]]),
                     ','.join([x.name for x in self.csr_read]) + '\nget_vl(lmul, sew)',
                     ','.join([x.name for x in self.csr_write])] 
-                # Variants
-                row.append(variant.name)
                 # VM_MTA
-                # pdb.set_trace()
                 row.append(vm_vma_feature_str[mask_feature])
                 # Operands
                 row.append(','.join([str(x) for x in self.dst_operands[variant][mask_feature]])
@@ -358,31 +347,30 @@ class VectorInsn(object):
                     + "\nget_src_regs(variant, lmul, sew, vm_vma_feature)")
                 
                 # Operands for each lmul, sew and vm_vma_feature tuple
-                for l in self.lmul:
-                    for e in self.sew:
-                        operand_str = str(self.get_dst_regs(variant, l, e, mask_feature)) + "\n" + \
-                                    str(self.get_src_regs(variant, l, e, mask_feature)) + "\n" + \
-                                    str(self.get_vl(l, e))
-                        # pdb.set_trace()
-                        row.append(operand_str)
-                num_empty_columns = 7 * 4 - len(self.lmul) * len(self.sew)
-                for i in range(num_empty_columns):
-                    row.append("")
+                for l in [2**x for x in range(-3,4)]:
+                    for e in [2**x for x in range(3,7)]:
+                        if (l in self.lmul[variant]) and (e in self.sew[variant]):
+                            operand_str = str(self.get_dst_regs(variant, l, e, mask_feature)) + "\n" + \
+                                        str(self.get_src_regs(variant, l, e, mask_feature)) + "\n" + \
+                                        "VL:" + str(self.get_vl(l, e))
+                            row.append(operand_str)
+                        else:
+                            row.append("Not applicable")
                 res.append(row)
         # remove duplicated items for readability
         rows_per_variant = []
         for variant in self.variants:
             rows_per_variant.append(len(self.vm_vma_feature[variant]))
         rows_total = sum(rows_per_variant)
-        # set first four columns to empty string of all rows expect first one
+        # set first three columns to empty string of all rows expect first one
         for i in range(1, rows_total):
-            for j in range(7):
+            for j in range(3):
                 res[i][j] = ""
         # For each variant, set variant column to empty string from the second to last row
         rows_preceding = 0
         for i in range(len(rows_per_variant)):
             for k in range(1, rows_per_variant[i]):
-                res[rows_preceding + k][7] = ""
+                res[rows_preceding + k][3] = ""
             rows_preceding += rows_per_variant[i]
         
         return res
@@ -466,8 +454,9 @@ def main():
     insn_list = []
     headers = ["Category", "Instruction", "Style", "LMUL", "SEW", "CSR read", "CSR write", "Variant","VM VMA", 
         "Dst Operand", "Src Operand"]
-    for i in range(7*4):
-        headers.append("Details")
+    for l in [2**x for x in range(-3,4)]:
+        for e in [2**x for x in range(3,7)]:
+            headers.append("Details_lmul_" + str(l) + "_sew_" + str(e))
     with open(args.insn_file, "r") as fd:
         for line in fd:
             insn_list.append(VectorInsn(line))

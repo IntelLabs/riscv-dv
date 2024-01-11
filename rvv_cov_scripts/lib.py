@@ -13,7 +13,6 @@ class Category(Enum):
 
 class Variant(Enum):
     ILLEGAL = 0
-    NONE = 1
     VV = 2
     VX = 3
     VI = 4
@@ -26,6 +25,9 @@ class Variant(Enum):
     V_V = 11
     V_X = 12
     V_I = 13
+    VF2 = 14
+    VF4 = 15
+    VF8 = 16
 
 variants = {
     "vv" : Variant.VV,
@@ -39,7 +41,10 @@ variants = {
     "vim" : Variant.VIM,
     "v.v" : Variant.V_V,
     "v.x" : Variant.V_X,
-    "v.i" : Variant.V_I
+    "v.i" : Variant.V_I,
+    "vf2" : Variant.VF2,
+    "vf4" : Variant.VF4,
+    "vf8" : Variant.VF8
 }
 
 class Style(Enum):
@@ -52,9 +57,7 @@ class Style(Enum):
     COMPARE = 6
     MERGE = 7
     MOVE = 8
-    EXTENSION_VF2 = 9
-    EXTENSION_VF4 = 10
-    EXTENSION_VF8 = 11
+    EXTENSION = 9
 
 class Vm_Mask(Enum):
     ILLEGAL = 0
