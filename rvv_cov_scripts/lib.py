@@ -13,25 +13,25 @@ class Category(Enum):
 
 class Variant(Enum):
     ILLEGAL = 0
-    VV = 1
-    VX = 2
-    VI = 3
-    WX = 4
-    WI = 5
-    VVM = 6
-    VXM = 7
-    VIM = 8
-    V_V = 9
-    V_X = 10
-    V_I = 11
-    VF2 = 12
-    VF4 = 13
-    VF8 = 14
+    NONE = 1
+    VV = 2
+    VX = 3
+    VI = 4
+    WV = 5
+    WX = 6
+    WI = 7
+    VVM = 8
+    VXM = 9
+    VIM = 10
+    V_V = 11
+    V_X = 12
+    V_I = 13
 
 variants = {
     "vv" : Variant.VV,
     "vx" : Variant.VX,
     "vi" : Variant.VI,
+    "wv" : Variant.WV,
     "wx" : Variant.WX,
     "wi" : Variant.WI,
     "vvm" : Variant.VVM,
@@ -39,10 +39,7 @@ variants = {
     "vim" : Variant.VIM,
     "v.v" : Variant.V_V,
     "v.x" : Variant.V_X,
-    "v.i" : Variant.V_I,
-    "vf2" : Variant.VF2,
-    "vf4" : Variant.VF4,
-    "vf8" : Variant.VF8
+    "v.i" : Variant.V_I
 }
 
 class Style(Enum):
@@ -52,13 +49,18 @@ class Style(Enum):
     NARROWING = 3
     SUM_W_CARRY = 4
     DIFF_W_BORROW = 5
-    EXTENSION = 6
+    COMPARE = 6
+    MERGE = 7
+    MOVE = 8
+    EXTENSION_VF2 = 9
+    EXTENSION_VF4 = 10
+    EXTENSION_VF8 = 11
 
 class Vm_Mask(Enum):
     ILLEGAL = 0
     VM_MASK = 1
-    VM_NONMASK = 2
-    VM_NONE = 3
+    VM_NONMASK_ONLY_0 = 2
+    VM_NONMASK_ONLY_1 = 3
 
 class Vm_Vma_Feature(Enum):
     VM_0_VMA = 1
