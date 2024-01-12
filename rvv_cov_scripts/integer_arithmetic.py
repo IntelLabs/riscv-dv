@@ -371,6 +371,8 @@ class VectorInsn(object):
         for i in range(len(rows_per_variant)):
             for k in range(1, rows_per_variant[i]):
                 res[rows_preceding + k][3] = ""
+                res[rows_preceding + k][4] = ""
+                res[rows_preceding + k][5] = ""
             rows_preceding += rows_per_variant[i]
         
         return res
@@ -452,7 +454,7 @@ def main():
     parser.add_argument("--insn_file", type=str, help="Input vector instruction file")
     args = parser.parse_args()
     insn_list = []
-    headers = ["Category", "Instruction", "Style", "LMUL", "SEW", "CSR read", "CSR write", "Variant","VM VMA", 
+    headers = ["Category", "Instruction", "Style", "Variant", "LMUL", "SEW", "CSR read", "CSR write", "VM VMA", 
         "Dst Operand", "Src Operand"]
     for l in [2**x for x in range(-3,4)]:
         for e in [2**x for x in range(3,7)]:
