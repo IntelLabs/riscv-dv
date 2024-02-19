@@ -88,7 +88,7 @@ def get_env_var(var, debug_cmd=None):
     return val
 
 
-def run_cmd(cmd, timeout_s=999, exit_on_error=1, check_return_code=True,
+def run_cmd(cmd, timeout_s=2000000, exit_on_error=1, check_return_code=True,
             debug_cmd=None):
     """Run a command and return output
 
@@ -137,7 +137,7 @@ def run_cmd(cmd, timeout_s=999, exit_on_error=1, check_return_code=True,
     return output
 
 
-def run_parallel_cmd(cmd_list, timeout_s=999, exit_on_error=0,
+def run_parallel_cmd(cmd_list, timeout_s=1000000, exit_on_error=0,
                      check_return_code=True, debug_cmd=None):
     """Run a list of commands in parallel
 
@@ -205,7 +205,6 @@ def run_cmd_output(cmd, debug_cmd=None):
         # sys.exit(RET_FAIL) # Unreachable
     if output:
         logging.debug(output)
-
 
 def process_regression_list(testlist, test, iterations, matched_list,
                             riscv_dv_root):

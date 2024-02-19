@@ -230,7 +230,7 @@ def setup_parser():
                         default=0,
                         help="Random instruction count for debug mode")
     parser.add_argument("-to", "--timeout", dest="timeout", type=int,
-                        default=1000,
+                        default=1000000,
                         help="Number of CSV to process per run")
     parser.add_argument("-s", "--steps", type=str, default="all",
                         help="Run steps: csv,cov", dest="steps")

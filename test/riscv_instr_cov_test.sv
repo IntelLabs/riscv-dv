@@ -126,14 +126,18 @@ class riscv_instr_cov_test extends uvm_test;
 		bit find_vm;
   	string csr_status[$];
   	string csr_pair[$];
+		//int lmul_len;
+		//string lmul_fin;
+		//string lmul_str;
   	string find_operands[$];
+		bit [2:0]lmul;
     get_val(trace["binary"], binary, .hex(1));
     if ((binary[1:0] != 2'b11) && (RV32C inside {supported_isa})) begin
-      `SAMPLE(instr_cg.compressed_opcode_cg, binary[15:0])
-      `SAMPLE(instr_cg.illegal_compressed_instr_cg, binary)
+      if(only_vec_cov == 0) `SAMPLE(instr_cg.compressed_opcode_cg, binary[15:0])
+      if(only_vec_cov == 0)`SAMPLE(instr_cg.illegal_compressed_instr_cg, binary)
     end
-    if (binary[1:0] == 2'b11) begin
-      `SAMPLE(instr_cg.opcode_cg, binary[6:2])
+    if (binary[1:0] == 2'b11)begin
+      if(only_vec_cov == 0)`SAMPLE(instr_cg.opcode_cg, binary[6:2])
     end
     if (instr_enum::from_name(process_instr_name(trace["instr"],find_va_variant), instr_name)) begin
 			if (riscv_instr::instr_template.exists(instr_name)) begin
@@ -143,6 +147,7 @@ class riscv_instr_cov_test extends uvm_test;
           if ((instr.group inside {RVV}) &&
              (instr.group inside {supported_isa})) begin
            split_string(trace["csr"], ";", csr_status);
+
            foreach (csr_status[i]) begin
              split_string(csr_status[i], ":", csr_pair);
              if (csr_pair.size() != 2) begin
@@ -152,35 +157,73 @@ class riscv_instr_cov_test extends uvm_test;
                                csr_pair[0],csr_pair[1]), UVM_LOW)
 						 if(csr_pair[0] == "vstart")
                get_val(csr_pair[1],find_vcsr.vstart,.hex(1));
-						 else if(csr_pair[0] == "lmul")
-               find_vcsr.lmul = csr_pair[1].atoreal();
 						 else if(csr_pair[0] == "sew")
                find_vcsr.sew = csr_pair[1].atoreal();
 						 else if(csr_pair[0] == "vl")
                find_vcsr.vl = csr_pair[1].atoreal();
+			//			 else if(csr_pair[0] == "lmul")begin
+      //         if(csr_pair[1][0] == "f")begin
+			//				   find_vcsr.fractional_lmul = 1'b1;
+			//				   lmul_len = csr_pair[1].len();
+			//				   lmul_str = csr_pair[1];
+			//				   if(lmul_len == 2)begin
+      //             lmul_fin = lmul_str[1];
+			//				   end
+			//				   else begin
+			//				     lmul_fin = lmul_str.substr(1,lmul_len); 
+			//			     end
+			//				   find_vcsr.lmul = lmul_fin.atoreal();
+			//				 end
+			//				 find_vcsr.lmul = csr_pair[1].atoreal();
+			//			 end
+						 else if(csr_pair[0] == "vtype")begin
+               get_val(csr_pair[1],find_vcsr.vtype,.hex(1));
+               find_vcsr.vta = find_vcsr.vtype[6];   
+               find_vcsr.vma = find_vcsr.vtype[7];   
+               lmul = find_vcsr.vtype[2:0];  
+		           find_vcsr.lmul = get_digital_lmul(lmul);
+   					 end
+						 else if(csr_pair[0] == "fflags")begin
+               find_vcsr.fflags = csr_pair[1].atoreal();
+						 end
+						 else if(csr_pair[0] == "vxsat")begin
+               find_vcsr.vxsat = csr_pair[1].atoreal();
+						 end
+						 else if(csr_pair[0] == "vxrm")begin
+               find_vcsr.vxrm = csr_pair[1].atoreal();
+						 end
+						 else if(csr_pair[0] == "frm")begin
+               find_vcsr.frm = csr_pair[1].atoreal();
+						 end
            end
-           `uvm_info(`gfn, $sformatf("sample vector csrcase, vstart is %0d, vl is %0d, sew is %0d, lmul is %0d",
-                               find_vcsr.vstart,find_vcsr.vl,find_vcsr.sew,find_vcsr.lmul), UVM_LOW)
+					     find_vcsr.va_variant = find_va_variant;
+           `uvm_info(`gfn, $sformatf("sample vector csrcase, vcsr.va_variant is %0s, find_va_variant is %0s, vstart is %0b, vl is %0d, sew is %0d, lmul is %0f,vtype is %0b, vta is %0d, vma is %0d, fflags is %0d, vxsat is %0d, vxrm is %0d, frm is %0d",
+                               find_va_variant,find_vcsr.va_variant,find_vcsr.vstart,find_vcsr.vl,find_vcsr.sew,find_vcsr.lmul,find_vcsr.vtype, find_vcsr.vta, find_vcsr.vma,find_vcsr.fflags,find_vcsr.vxsat,find_vcsr.vxrm, find_vcsr.frm), UVM_LOW)
   	       split_string(trace["operand"], ",", find_operands);
-		         if(find_operands[3] == "v0")begin
-               find_vcsr.find_vm = 0;
-               `uvm_info(`gfn, $sformatf("find_vm is %0d ,instr_name is %0s",find_vcsr.find_vm,instr.instr_name), UVM_LOW)
-		         end else if(find_operands[3] == "v0.t")begin
-               find_vcsr.find_vm = 0;
-               `uvm_info(`gfn, $sformatf("find_vm is %0d ,instr_name is %0s",find_vcsr.find_vm,instr.instr_name), UVM_LOW)
+		         if((instr.instr_name inside {VMERGE, VFMERGE, VADC, VSBC, VMADC, VMSBC}) && (find_operands[3] == "v0"))begin
+               find_vcsr.vm = 0;
+               `uvm_info(`gfn, $sformatf("find_vm is %0d ,instr_name is %0s",find_vcsr.vm,instr.instr_name), UVM_LOW)
+		         end else if((find_operands[4] == "v0.t") ||(find_operands[3] == "v0.t") || (find_operands[2] == "v0.t")|| (find_operands[1] == "v0.t"))begin
+               find_vcsr.vm = 0;
+               `uvm_info(`gfn, $sformatf("find_vm is %0d ,instr_name is %0s",find_vcsr.vm,instr.instr_name), UVM_LOW)
 		         end
 						 else begin
-               find_vcsr.find_vm = 1;
-               `uvm_info(`gfn, $sformatf("find_vm is %0d ,instr_name is %0s",find_vcsr.find_vm,instr.instr_name), UVM_LOW)
+               find_vcsr.vm = 1;
+               `uvm_info(`gfn, $sformatf("find_vm is %0d ,instr_name is %0s",find_vcsr.vm,instr.instr_name), UVM_LOW)
 						 end
 					 assign_trace_info_to_instr(instr,find_va_variant);
            //instr.pre_sample();
  
-           `uvm_info(`gfn, $sformatf("sample vector cg is %0s,vector_va_variant is %0s",
-                               process_instr_name(trace["instr"],find_va_variant),find_va_variant), UVM_LOW)
-						instr_name_sample = get_instr_name_sample(instr,find_va_variant,find_vcsr);
-            `uvm_info(`gfn, $sformatf("instr_name_sample in vector is %0s",instr_name_sample), UVM_LOW)
-            instr_v_cg.sample(instr,instr_name_sample);
+           //`uvm_info(`gfn, $sformatf("sample vector cg is %0s,vector_va_variant is %0s",
+           //                    process_instr_name(trace["instr"],find_va_variant),find_va_variant), UVM_LOW)
+					 // instr_name_sample = get_instr_name_sample(instr,find_va_variant,find_vcsr);
+           // `uvm_info(`gfn, $sformatf("instr_name_sample in vector is %0s",instr_name_sample), UVM_LOW)
+           // instr_v_cg.sample(instr,instr_name_sample);
+					instr_v_cg.sample(instr);
+          `uvm_info(`gfn, $sformatf("sample vector cg is %0s,variant is %0s",instr.instr_name,find_vcsr.va_variant), UVM_LOW)
+          `uvm_info(`gfn, $sformatf("sample vector cg is %0s,lmul is %0f",instr.instr_name,find_vcsr.lmul), UVM_LOW)
+          `uvm_info(`gfn, $sformatf("sample vector cg is %0s,sew is %0d",instr.instr_name,find_vcsr.sew), UVM_LOW)
+          `uvm_info(`gfn, $sformatf("sample vector cg is %0s,vm is %0d",instr.instr_name,find_vcsr.vm), UVM_LOW)
 				  end
 				  else if ((instr.group inside {RV32I, RV32M, RV32C, RV64I, RV64M, RV64C,
                                    RV32D, RV64D, RV32B, RV64B
@@ -190,16 +233,16 @@ class riscv_instr_cov_test extends uvm_test;
            instr.pre_sample();
            `uvm_info(`gfn, $sformatf("sample scalar cg is %0s",
                                process_instr_name(trace["instr"],find_va_variant)), UVM_LOW)
-           instr_cg.sample(instr);
+           if(only_vec_cov == 0)instr_cg.sample(instr);
           end
           else if ((instr.group inside {RV32F, RV64F,RV32ZBA, RV32ZBB, RV32ZBC,
-				  	          RV32ZBS,RV64ZBA, RV64ZBB, RV64ZBC, RV64ZBS}) &&
-											(instr.group inside {supported_isa})) begin
+				  	          RV32ZBS,RV64ZBA, RV64ZBB, RV64ZBC, RV64ZBS} ) &&
+											(instr.group inside {supported_isa}) ) begin
 											assign_trace_info_to_instr(instr,find_va_variant);
 											instr.pre_sample();
 											`uvm_info(`gfn, $sformatf("sample floating cg is %0s",
 												process_instr_name(trace["instr"],find_va_variant)), UVM_LOW)
-												instr_cg.sample(instr);
+												if(only_vec_cov == 0)instr_cg.sample(instr);
 							 end
 							 return 1'b1;
 					end
@@ -208,13 +251,36 @@ class riscv_instr_cov_test extends uvm_test;
     process_instr_name(trace["instr"],find_va_variant)), UVM_LOW)
   endfunction
 
-  function string get_instr_name_sample(riscv_instr instr,string find_va_variant,find_vcsr_t find_vcsr);
-  string instr_name_sample;
-	instr_name_sample =$sformatf("%0s_LMUL%0d_SEW%0d_VARIANTS%0s_VM%0d",instr.instr_name,find_vcsr.lmul,find_vcsr.sew,find_va_variant,find_vcsr.find_vm);
-		`uvm_info(`gfn, $sformatf("instr_name_sample is %0s",	instr_name_sample), UVM_LOW)
-		return instr_name_sample;
-	endfunction
+  //function string get_instr_name_sample(riscv_instr instr,string find_va_variant,find_vcsr_t find_vcsr);
+  //string instr_name_sample;
+	//case(find_vcsr.lmul)
+	//	3'b000:instr_name_sample =$sformatf("%0s_LMUL1_SEW%0d_VARIANT%0s",instr.instr_name,find_vcsr.sew,find_va_variant);
+	//	3'b001:instr_name_sample =$sformatf("%0s_LMUL2_SEW%0d_VARIANT%0s",instr.instr_name,find_vcsr.sew,find_va_variant);
+	//	3'b010:instr_name_sample =$sformatf("%0s_LMUL4_SEW%0d_VARIANT%0s",instr.instr_name,find_vcsr.sew,find_va_variant);
+	//	3'b011:instr_name_sample =$sformatf("%0s_LMUL8_SEW%0d_VARIANT%0s",instr.instr_name,find_vcsr.sew,find_va_variant);
+	//	3'b101:instr_name_sample =$sformatf("%0s_LMUL0_125_SEW%0d_VARIANT%0s",instr.instr_name,find_vcsr.sew,find_va_variant);
+	//	3'b110:instr_name_sample =$sformatf("%0s_LMUL0_25_SEW%0d_VARIANT%0s",instr.instr_name,find_vcsr.sew,find_va_variant);
+	//	3'b111:instr_name_sample =$sformatf("%0s_LMUL0_5_SEW%0d_VARIANT%0s",instr.instr_name,find_vcsr.sew,find_va_variant);
+	//endcase
+	//	`uvm_info(`gfn, $sformatf("instr_name_sample is %0s",	instr_name_sample), UVM_LOW)
+	//	return instr_name_sample;
+	//endfunction
   
+  function real get_digital_lmul(bit[2:0] lmul);
+	  real find_lmul;
+		case(lmul)
+		3'b000:find_lmul =1;
+		3'b001:find_lmul =2;
+		3'b010:find_lmul =4;
+		3'b011:find_lmul =8;
+		3'b101:find_lmul =0.125;
+		3'b110:find_lmul =0.25;
+		3'b111:find_lmul =0.5;
+	endcase
+		`uvm_info(`gfn, $sformatf("find_lmul is %0f",	find_lmul), UVM_LOW)
+		return find_lmul;
+	endfunction
+
 	virtual function void assign_trace_info_to_instr(riscv_instr instr,string find_va_variant);
   	riscv_reg_t gpr;
   	string operands[$];
@@ -232,15 +298,15 @@ class riscv_instr_cov_test extends uvm_test;
   	split_string(trace["operand"], ",", operands);
 		////if(instr.instr_name inside {VMERGE, VFMERGE, VADC, VSBC, VMADC, VMSBC})begin
 		//  if(operands[3] == "v0")begin
-    //    find_vcsr.find_vm = 1;
-    //    `uvm_info(`gfn, $sformatf("find_vm is %0d ,instr_name is %0s",find_vcsr.find_vm,instr.instr_name), UVM_LOW)
+    //    find_vcsr.vm = 1;
+    //    `uvm_info(`gfn, $sformatf("find_vm is %0d ,instr_name is %0s",find_vcsr.vm,instr.instr_name), UVM_LOW)
 	  ////end
 		//  end else if(operands[3] == "v0.t")begin
-    //    find_vcsr.find_vm = 1;
-    //    `uvm_info(`gfn, $sformatf("find_vm is %0d ,instr_name is %0s",find_vcsr.find_vm,instr.instr_name), UVM_LOW)
+    //    find_vcsr.vm = 1;
+    //    `uvm_info(`gfn, $sformatf("find_vm is %0d ,instr_name is %0s",find_vcsr.vm,instr.instr_name), UVM_LOW)
 		//  end
 		instr.update_src_regs(operands,find_va_variant);
-		//instr.update_vec_csr(find_vcsr);
+		instr.update_vec_csr(find_vcsr);
 
     split_string(trace["gpr"], ";", gpr_update);
 
@@ -271,11 +337,21 @@ class riscv_instr_cov_test extends uvm_test;
         end
       end
 			find_va_variant_bit = get_va_variant(instr_name);
-			if(instr_name == "VMV_V_V" || instr_name == "VMV_V_X" || instr_name == "VMV_V_I")begin
+			if(instr_name == "VMV_V_V" )begin
         instr_name = "VMV";
+				find_va_variant = "VV";
+			end
+			else if(instr_name == "VMV_V_X")begin
+        instr_name = "VMV";
+				find_va_variant = "VX";
+			end
+			else if(instr_name == "VMV_V_I")begin
+        instr_name = "VMV";
+				find_va_variant = "VI";
 			end
 			else if(instr_name == "VFMV_V_F")begin
         instr_name = "VFMV";
+				find_va_variant = "VF";
 			end
 			else if(instr_name == "VCPOP_M")begin
         instr_name = "VPOPC_M";
@@ -397,6 +473,7 @@ class riscv_instr_cov_test extends uvm_test;
 			default: ;
     endcase
     
+		`uvm_info(`gfn, $sformatf("finalfinalprocess_instr_name instr_name is %0s,instr_name[0] is %0s",	instr_name,instr_name[0]), UVM_LOW)
 		return instr_name;
   endfunction : process_instr_name
 

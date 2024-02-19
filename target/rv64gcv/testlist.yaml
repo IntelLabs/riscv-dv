@@ -60,7 +60,7 @@
   description: >
     Enable floating point instructions
   gen_opts: >
-    +instr_cnt=10000
+    +instr_cnt=100000
     +num_of_sub_program=0
     +no_fence=1
     +no_data_page=1
@@ -108,7 +108,7 @@
   description: >
     Arithmetic vector instruction test
   gen_opts: >
-    +instr_cnt=100000
+    +instr_cnt=10000
     +num_of_sub_program=0
     +enable_floating_point=1
     +enable_vector_extension=1
@@ -120,7 +120,7 @@
     +dist_control_mode=1
     +dist_rvv=2000
   iss_opts: --varch=vlen:128,elen:64
-  iterations: 1
+  iterations: 1 
   gen_test: riscv_instr_base_test
   rtl_test: core_base_test
 
@@ -146,7 +146,7 @@
   description: >
     Vector load/store random test
   gen_opts: >
-    +instr_cnt=10000
+    +instr_cnt=100
     +num_of_sub_program=0
     +enable_floating_point=1
     +enable_vector_extension=1

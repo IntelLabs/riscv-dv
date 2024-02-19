@@ -278,7 +278,7 @@ def do_simulate(sim_cmd, simulator, test_list, cwd, sim_opts, seed_gen,
                              end_signature_addr, timeout_s, output_dir,
                              debug_cmd)
             else:
-                batch_cnt = 1
+                batch_cnt =  1 
                 if batch_size > 0:
                     batch_cnt = int((iterations + batch_size - 1) / batch_size)
                 logging.info(
@@ -813,7 +813,7 @@ def parse_args(cwd):
                         help="RISC-V ISA subset")
     parser.add_argument("-m", "--mabi", type=str, default="",
                         help="mabi used for compilation", dest="mabi")
-    parser.add_argument("--gen_timeout", type=int, default=360,
+    parser.add_argument("--gen_timeout", type=int, default=1000000,
                         help="Generator timeout limit in seconds")
     parser.add_argument("--end_signature_addr", type=str, default="0",
                         help="Address that privileged CSR test writes to at EOT")

@@ -77,6 +77,7 @@ class riscv_vector_cfg extends uvm_object;
   }
 
   // Basic constraint for initial bringup
+	//jiawen:need change
   constraint bringup_c {
     vstart == 0;
     vl == VLEN/vtype.vsew;
@@ -86,7 +87,7 @@ class riscv_vector_cfg extends uvm_object;
   // hcheng: Temporary constraint as XS3 VPU haven't supported fractional LMUL yet.
   //jiawen:wait to solve
 	constraint frac_lmul_c {
-	soft vtype.fractional_lmul == 1'b0;
+	soft vtype.fractional_lmul == 1'b1;
   }
 
   // For all widening instructions, the destination element width must be a supported element
@@ -123,6 +124,10 @@ class riscv_vector_cfg extends uvm_object;
     vtype.vediv inside {1, 2, 4, 8};
     vtype.vediv <= (vtype.vsew / SELEN);
   }
+
+  //constraint v_try_sew {
+  //  vtype.vsew == 8;
+  //}
 
   `uvm_object_utils_begin(riscv_vector_cfg)
     `uvm_field_int(vtype.ill, UVM_DEFAULT)

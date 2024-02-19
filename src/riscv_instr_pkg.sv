@@ -1315,11 +1315,20 @@ package riscv_instr_pkg;
   } vtype_t;
 	
 	typedef struct {
-   int lmul;
-	 int sew;
-	 int vl;
+  real lmul;
+	int sew;
+	int vl;
 	 bit[XLEN-1 : 0] vstart;
-	 bit find_vm;
+	 bit vm;
+	 bit vta;
+	 bit vma;
+	 //bit fractional_lmul;
+	 bit [XLEN-1 : 0] vtype;
+	 string va_variant; 
+	 bit[XLEN-1 : 0] fflags;
+	 bit[XLEN-1 : 0] vxsat;
+	 bit[XLEN-1 : 0] vxrm;
+	 bit[XLEN-1 : 0] frm;
 	}find_vcsr_t;
   
 	typedef enum bit [1:0] {

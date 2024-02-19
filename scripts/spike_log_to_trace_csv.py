@@ -28,15 +28,17 @@ from riscv_trace_csv import *
 from lib import *
 
 RD_RE = re.compile(r"(core\s+\d+:\s+)?(?P<pri>\d) 0x(?P<addr>[a-f0-9]+?) " "\((?P<bin>.*?)\).*? (?P<reg>[xf]\s*\d{1,2}?)\s+?0x(?P<val>[a-f0-9]+)")
-VRD_RE = re.compile(r"core\s+\d+:\s+(?P<pri>[0-3]) 0x[a-f0-9]+? \(0x[a-f0-9]+?\) c8_vstart 0x(?P<vstart>[a-f0-9]+).*?e(?P<sew>\d+) m(?P<lmul>f?\d+) l(?P<vl>\d+)")
+VRD_RE = re.compile(r"core\s+\d+:\s+(?P<pri>[0-3]) 0x[a-f0-9]+? \(0x[a-f0-9]+?\).*?c8_vstart 0x(?P<vstart>[a-f0-9]+).*?e(?P<sew>\d+).*?m(?P<lmul>f?\d+).*?l(?P<vl>\d+)")
 VREG_RE = re.compile(r"v ?(?P<vreg>\d+)\s+?0x(?P<vval>[a-f0-9]+)")    
-FRM_RE = re.compile(r"core\s+\d+:\s+(?P<pri>[0-3]) 0x[a-f0-9]+? \(0x[a-f0-9]+?\) c2_frm 0x(?P<frm>[a-f0-9]+)")
-VXRM_RE = re.compile(r"core\s+\d+:\s+(?P<pri>[0-3]) 0x[a-f0-9]+? \(0x[a-f0-9]+?\) c10_vxrm 0x(?P<vxrm>[a-f0-9]+)")
+FRM_RE = re.compile(r"core\s+\d+:\s+(?P<pri>[0-3]) 0x[a-f0-9]+? \(0x[a-f0-9]+?\).*?c2_frm 0x(?P<frm>[a-f0-9]+)")
+VXRM_RE = re.compile(r"core\s+\d+:\s+(?P<pri>[0-3]) 0x[a-f0-9]+? \(0x[a-f0-9]+?\).*?c10_vxrm 0x(?P<vxrm>[a-f0-9]+)")
 VTYPE_RE = re.compile(r"core\s+\d+:\s+(?P<pri>[0-3]) 0x[a-f0-9]+? \(0x[a-f0-9]+?\).*?c3105_vtype 0x(?P<vtype>[a-f0-9]+)")
 CORE_RE = re.compile(r"core\s+\d+:\s+0x(?P<addr>[a-f0-9]+?) \(0x(?P<bin>.*?)\) (?P<instr>.*?)$")
 ADDR_RE = re.compile(r"(?P<rd>[a-z0-9]+?),(?P<imm>[\-0-9]+?)\((?P<rs1>[a-z0-9]+)\)")
 ILLE_RE = re.compile(r"trap_illegal_instruction")
-VLOAD_RD_RE = re.compile(r"core\s+\d+:\s+(?P<pri>[0-3]) 0x[a-f0-9]+? \(0x[a-f0-9]+?\) e(?P<sew>\d+) m(?P<lmul>f?\d+) l(?P<vl>\d+) (?P<regs>.*) c8_vstart 0x(?P<vstart>[a-f0-9]+) (?P<mems>.*)")
+VLOAD_RD_RE = re.compile(r"core\s+\d+:\s+(?P<pri>[0-3]) 0x[a-f0-9]+? \(0x[a-f0-9]+?\).*?e(?P<sew>\d+).*?m(?P<lmul>f?\d+).*?l(?P<vl>\d+) (?P<regs>.*).*?c8_vstart 0x(?P<vstart>[a-f0-9]+) (?P<mems>.*)")
+VXSAT_RE = re.compile(r"core\s+\d+:\s+(?P<pri>[0-3]) 0x[a-f0-9]+? \(0x[a-f0-9]+?\).*?c9_vxsat 0x(?P<vxsat>[a-f0-9]+)")
+FFLAGS_RE = re.compile(r"core\s+\d+:\s+(?P<pri>[0-3]) 0x[a-f0-9]+? \(0x[a-f0-9]+?\).*?c1_fflags 0x(?P<fflags>[a-f0-9]+)")
 
 LOGGER = logging.getLogger()
 
@@ -217,6 +219,16 @@ def read_spike_trace(path, full_trace):
             if vtype_match:
                 instr.csr.append('vtype' + ':' + vtype_match.group('vtype'))
 
+            vxsat_match = VXSAT_RE.match(line)
+            if vxsat_match:
+                # Update c9_vxsat
+                instr.csr.append('vxsat' + ':' + vxsat_match.group('vxsat'))
+            
+            fflags_match = FFLAGS_RE.match(line)
+            if fflags_match:
+                # Update c1_fflags
+                instr.csr.append('fflags' + ':' + fflags_match.group('fflags'))
+        
         # At EOF, we might have an instruction in hand. Yield it if so.
         if instr is not None:
             yield (instr, False)

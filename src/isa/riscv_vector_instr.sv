@@ -41,10 +41,20 @@ class riscv_vector_instr extends riscv_floating_point_instr;
   string            sub_extension;
   rand bit [2:0]    nfields; // Used by segmented load/store
   rand bit [3:0]    emul;
-  int               vl;
-	int               lmul;
-	int               sew;
  	bit               find_vm;
+ 	bit               find_vma;
+ 	bit               find_vta;
+ 	real              find_lmul;
+ 	int               find_int_lmul;
+ 	int               find_int_va_variant;
+ 	int               find_sew;
+ 	string            find_va_variant;
+ 	int               find_vl;
+	bit [XLEN-1 : 0]  find_vstart;
+	bit [XLEN-1 : 0]  find_fflags;
+	bit [XLEN-1 : 0]  find_vxsat;
+	bit [XLEN-1 : 0]  find_vxrm;
+	bit [XLEN-1 : 0]  find_frm;
 
   constraint avoid_reserved_vregs_c {
     if (m_cfg.vector_cfg.reserved_vregs.size() > 0) {
@@ -451,16 +461,12 @@ class riscv_vector_instr extends riscv_floating_point_instr;
       if (instr_name inside {VLEFF_V, VLSEGEFF_V}) begin
         name = name.substr(0, name.len() - 5);
         name = $sformatf("%0s%0dFF.V", name, eew);
-      `uvm_info(`gfn, $sformatf("aaa%0s -> %0s", super.get_instr_name(), name), UVM_LOW)
       end else if (instr_name inside {VLM_V, VSM_V, VSR_V}) begin 
 	    // do nothing to just return name as-is
       `uvm_info(`gfn, $sformatf("%0s -> %0s", super.get_instr_name(), name), UVM_LOW)
 	  end else begin
-      `uvm_info(`gfn, $sformatf("bbbbefore 111name_len is %0d,name is %0s", name.len(), name), UVM_LOW)
         name = name.substr(0, name.len() - 3);
-      `uvm_info(`gfn, $sformatf("bbbbefore name_len is %0d,name is %0s", name.len(), name), UVM_LOW)
         name = $sformatf("%0s%0d.V", name, eew);
-      `uvm_info(`gfn, $sformatf("bbb%0s -> %0s", super.get_instr_name(), name), UVM_LOW)
       end
       `uvm_info(`gfn, $sformatf("%0s -> %0s", super.get_instr_name(), name), UVM_LOW)
     end
@@ -639,6 +645,7 @@ class riscv_vector_instr extends riscv_floating_point_instr;
 	  nfields_whole_reg_c.constraint_mode(0);
 	end
   endfunction : pre_randomize
+  
 
   virtual function void update_src_regs(string operands[$],string find_va_variant);
         `uvm_info(`gfn, $sformatf("do vector src %0s,%0s,%0s,%0s,instr_name is %0s,va_variant is %0s,has_va_variant is %0d",operands[0],operands[1],operands[2],operands[3],instr_name,find_va_variant,has_va_variant), UVM_LOW)
@@ -656,7 +663,7 @@ class riscv_vector_instr extends riscv_floating_point_instr;
           end
 					else if(find_va_variant == VX)begin
 					   //vd = get_vgpr(operands[0]);
-						 rs1 = get_gpr(operands[0]);
+						 rs1 = get_gpr(operands[1]);
 					end
 					else if(find_va_variant == VI)begin
 					  //vd = get_vgpr(operands[0]);
@@ -700,29 +707,29 @@ class riscv_vector_instr extends riscv_floating_point_instr;
                //`uvm_info(`gfn, $sformatf("do get vregWI,VI,VIM %0s", vs2),UVM_LOW)
 					   end
 						 else if(find_va_variant == "VF"||find_va_variant == "VFM")begin
-                if (instr_name inside {VFMADD, VFNMADD, VFMACC, VFNMACC, VFNMSUB, VFWNMSAC,
-                                       VFWMACC, VFMSUB, VFMSAC, VFNMSAC, VFWNMACC, VFWMSAC}) begin
+                //if (instr_name inside {VFMADD, VFNMADD, VFMACC, VFNMACC, VFNMSUB, VFWNMSAC,
+                //                       VFWMACC, VFMSUB, VFMSAC, VFNMSAC, VFWNMACC, VFWMSAC}) begin
                     //vd =get_vgpr(operands[0]);
-                    fs1 =  get_fpr(operands[1]);
-							      vs2 =get_vgpr(operands[2]);
-									end else begin
+                //    fs1 =  get_fpr(operands[1]);
+							  //    vs2 =get_vgpr(operands[2]);
+								//	end else begin
                     //vd =get_vgpr(operands[0]);
                     fs1 =  get_fpr(operands[2]);
 							      vs2 =get_vgpr(operands[1]);
-                  end
+                //  end
 										//`uvm_info(`gfn, $sformatf("do get vregVF,VFM %0s,%0s", vs2,fs1),UVM_LOW)
 						 end
 						 else if(find_va_variant == "WX"||find_va_variant == "VX"||find_va_variant == "VXM")begin
-                if (instr_name inside {VMADD, VNMSUB, VMACC, VNMSAC, VWMACCSU, VWMACCU,
-                                       VWMACCUS, VWMACC}) begin
+                //if (instr_name inside {VMADD, VNMSUB, VMACC, VNMSAC, VWMACCSU, VWMACCU,
+                //                       VWMACCUS, VWMACC}) begin
                      //vd = get_vgpr(operands[0]);
-							       vs2 =get_vgpr(operands[2]);
-							       rs1 =get_gpr(operands[1]);
-									 end else begin
+							  //     vs2 =get_vgpr(operands[2]);
+							  //     rs1 =get_gpr(operands[1]);
+								//	 end else begin
                      //vd = get_vgpr(operands[0]);
 							       vs2 =get_vgpr(operands[1]);
 							       rs1 =get_gpr(operands[2]);
-									 end
+								//	 end
                //`uvm_info(`gfn, $sformatf("do get vregWX,VX,VXM %0s,%0s", vs2,rs1),UVM_LOW)
 						 end
 						 else if(find_va_variant == "WF")begin
@@ -836,12 +843,48 @@ class riscv_vector_instr extends riscv_floating_point_instr;
 		endcase
   endfunction : update_dst_regs
   
-	//function void update_vec_csr(find_vcsr_t find_vcsr);
-  //lmul = find_vcsr.lmul;
-	//vl = find_vcsr.vl;
-	//sew = find_vcsr.sew;
-	//find_vm = find_vcsr.find_vm;
-	//endfunction
+	function void update_vec_csr(find_vcsr_t find_vcsr);
+	find_vm = find_vcsr.vm;
+	find_vma = find_vcsr.vma;
+	find_vta = find_vcsr.vta;
+	find_lmul = find_vcsr.lmul;
+	find_vl = find_vcsr.vl;
+	find_fflags = find_vcsr.fflags;
+	find_vxsat = find_vcsr.vxsat;
+	find_vxrm = find_vcsr.vxrm;
+	find_frm = find_vcsr.frm;
+	find_vstart = find_vcsr.vstart;
+	case(find_lmul)
+  0.125: find_int_lmul = 1;
+	0.25:find_int_lmul = 2;
+	0.5:find_int_lmul = 3;
+	1:find_int_lmul = 4;
+	2:find_int_lmul = 5;
+	4:find_int_lmul = 6;
+	8:find_int_lmul = 7;
+	endcase
+	find_sew = find_vcsr.sew;
+	find_va_variant = find_vcsr.va_variant;
+	case(find_va_variant)
+    "VV" :find_int_va_variant = 1;
+    "VI" :find_int_va_variant = 2;
+    "VX" :find_int_va_variant = 3;
+    "VF" :find_int_va_variant = 4;
+    "WV" :find_int_va_variant = 5;
+    "WI" :find_int_va_variant = 6;
+    "WX" :find_int_va_variant = 7;
+    "WF" :find_int_va_variant = 8;
+    "VVM":find_int_va_variant = 9;
+    "VIM":find_int_va_variant = 10;
+    "VXM":find_int_va_variant = 11;
+    "VFM":find_int_va_variant = 12; 
+    "VS" :find_int_va_variant = 13;
+    "VM" :find_int_va_variant = 14;
+    "VF2" :find_int_va_variant = 15;
+    "VF4" :find_int_va_variant = 16;
+    "VF8" :find_int_va_variant = 17;
+	endcase
+	endfunction
 
 	function riscv_vreg_t get_vgpr(input string str);
     str = str.toupper();

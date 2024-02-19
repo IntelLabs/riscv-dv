@@ -87,3 +87,7 @@
       `include VCE_INC \
     `endif
 `endif
+
+//`ifndef ONLY_VEC_COV
+//  `define ONLY_VEC_COV 
+//`endif

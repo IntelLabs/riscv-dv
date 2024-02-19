@@ -1839,7 +1839,7 @@ class riscv_instr_cover_group;
     end
 
    `VECTOR_INCLUDE("riscv_instr_cover_group_inc_cg_instantiation.sv")
-
+    if(only_vec_cov == 0)begin
     // RV32I instruction functional coverage instantiation
     `CG_SELECTOR_BEGIN(RV32I)
         add_cg = new();
@@ -2217,6 +2217,7 @@ class riscv_instr_cover_group;
         mepc_alignment_cg = new();
       end
     end
+	end
   endfunction
 
   function void sample(riscv_instr instr);
