@@ -191,6 +191,14 @@ class riscv_vector_instr extends riscv_floating_point_instr;
     }
   }
 
+  constraint vector_vgatherei16_c {
+    if (instr_name == VRGATHEREI16) {
+        if( (16 / m_cfg.vector_cfg.vtype.vsew * m_cfg.vector_cfg.vtype.vlmul) > 1) {
+            vs1 % (16 / m_cfg.vector_cfg.vtype.vsew * m_cfg.vector_cfg.vtype.vlmul) == 0;
+        }
+    }
+  }
+
   // Section 17.5: Vector compress instruction
   // The destination vector register group cannot overlap the source vector register
   // group or the source vector mask register
