@@ -195,6 +195,7 @@ class riscv_vector_instr extends riscv_floating_point_instr;
     if (instr_name == VRGATHEREI16) {
         if( (16 / m_cfg.vector_cfg.vtype.vsew * m_cfg.vector_cfg.vtype.vlmul) > 1) {
             vs1 % (16 / m_cfg.vector_cfg.vtype.vsew * m_cfg.vector_cfg.vtype.vlmul) == 0;
+            !(vd inside {[vs1 : vs1 + (16 / m_cfg.vector_cfg.vtype.vsew * m_cfg.vector_cfg.vtype.vlmul) - 1]}); 
         }
     }
   }
