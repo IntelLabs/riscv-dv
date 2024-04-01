@@ -3,7 +3,7 @@
 
 `define V_INSTR_CG_BEGIN(INSTR_NAME) \
   `INSTR_CG_BEGIN(INSTR_NAME,riscv_vector_instr) \
-     cp_vm  : coverpoint instr.find_vm; \
+     //cp_vm  : coverpoint instr.find_vm; \
 		 cp_vma : coverpoint instr.find_vma; \
      cp_vta : coverpoint instr.find_vta;
 
@@ -12,13 +12,19 @@
 
 class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   //start bins
-  `VSET_INSTR_CG_BEGIN(vsetvli)
-  `CG_END
-  `VSET_INSTR_CG_BEGIN(vsetvl)
-  `CG_END
-  `VSET_INSTR_CG_BEGIN(vsetivli)
-  `CG_END
+  //`VSET_INSTR_CG_BEGIN(vsetvli)
+	//`CG_END
+  //`VSET_INSTR_CG_BEGIN(vsetvl)
+  //`CG_END
+  //`VSET_INSTR_CG_BEGIN(vsetivli)
+	//`CG_END
+
   `V_INSTR_CG_BEGIN(vadd)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -34,11 +40,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-           bins VI = {2}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //       bins VI = {2}; 
+    //    }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
 		//			                                    (binsof(cp_sew) intersect {16});
@@ -56,6 +62,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vsub)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -71,10 +82,10 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
 		//			                                    (binsof(cp_sew) intersect {16});
@@ -92,6 +103,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vrsub)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -107,10 +123,10 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VX = {3}; 
-           bins VI = {2}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VX = {3}; 
+    //       bins VI = {2}; 
+    //    }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
 		//			                                    (binsof(cp_sew) intersect {16});
@@ -128,6 +144,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vwaddu)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -143,12 +164,12 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-           bins WV = {5}; 
-           bins WX = {7}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //       bins WV = {5}; 
+    //       bins WX = {7}; 
+    //    }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
 		//			                                    (binsof(cp_sew) intersect {16});
@@ -160,6 +181,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vwadd)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -175,12 +201,12 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-           bins WV = {5}; 
-           bins WX = {7}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //       bins WV = {5}; 
+    //       bins WX = {7}; 
+    //    }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
 		//			                                    (binsof(cp_sew) intersect {16});
@@ -192,6 +218,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vwsubu)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -207,12 +238,12 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-           bins WV = {5}; 
-           bins WX = {7}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //       bins WV = {5}; 
+    //       bins WX = {7}; 
+    //    }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
 		//			                                    (binsof(cp_sew) intersect {16});
@@ -224,6 +255,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vwsub)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -239,12 +275,12 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-           bins WV = {5}; 
-           bins WX = {7}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //       bins WV = {5}; 
+    //       bins WX = {7}; 
+    //    }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
 		//			                                    (binsof(cp_sew) intersect {16});
@@ -256,6 +292,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vzext)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -271,11 +312,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VF2 = {15}; 
-           bins VF4 = {16}; 
-           bins VF8 = {17}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VF2 = {15}; 
+    //       bins VF4 = {16}; 
+    //       bins VF8 = {17}; 
+    //    }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
 		//			                                    (binsof(cp_sew) intersect {32});
@@ -287,6 +328,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vsext)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -302,11 +348,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VF2 = {15}; 
-           bins VF4 = {16}; 
-           bins VF8 = {17}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VF2 = {15}; 
+    //       bins VF4 = {16}; 
+    //       bins VF8 = {17}; 
+    //    }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
 		//			                                    (binsof(cp_sew) intersect {32});
@@ -318,6 +364,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vadc)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -333,11 +384,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VVM = {9}; 
-           bins VXM = {11}; 
-           bins VIM = {10}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VVM = {9}; 
+    //       bins VXM = {11}; 
+    //       bins VIM = {10}; 
+    //    }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
 		//			                                    (binsof(cp_sew) intersect {16});
@@ -355,6 +406,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmadc)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -370,17 +426,22 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VVM = {9}; 
-           bins VXM = {11}; 
-           bins VIM = {10}; 
-           bins VV = {1}; 
-           bins VX = {3}; 
-           bins VI = {2}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VVM = {9}; 
+    //       bins VXM = {11}; 
+    //       bins VIM = {10}; 
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //       bins VI = {2}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vsbc)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -396,10 +457,10 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VVM = {9}; 
-           bins VXM = {11}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VVM = {9}; 
+    //       bins VXM = {11}; 
+    //    }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
 		//			                                    (binsof(cp_sew) intersect {16});
@@ -417,6 +478,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmsbc)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -432,15 +498,20 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VVM = {9}; 
-           bins VXM = {11}; 
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VVM = {9}; 
+    //       bins VXM = {11}; 
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vand)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -456,11 +527,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-           bins VI = {2}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //       bins VI = {2}; 
+    //    }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
 		//			                                    (binsof(cp_sew) intersect {16});
@@ -478,6 +549,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vor)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -493,11 +569,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-           bins VI = {2}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //       bins VI = {2}; 
+    //    }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
 		//			                                    (binsof(cp_sew) intersect {16});
@@ -515,6 +591,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vxor)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -530,11 +611,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-           bins VI = {2}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //       bins VI = {2}; 
+    //    }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
 		//			                                    (binsof(cp_sew) intersect {16});
@@ -552,6 +633,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vsll)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -567,11 +653,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-           bins VI = {2}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //       bins VI = {2}; 
+    //    }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
 		//			                                    (binsof(cp_sew) intersect {16});
@@ -589,6 +675,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vsrl)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -604,11 +695,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-           bins VI = {2}; 
-        }
+//    cp_variant : coverpoint instr.find_int_va_variant{
+//           bins VV = {1}; 
+//           bins VX = {3}; 
+//           bins VI = {2}; 
+//        }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
 		//			                                    (binsof(cp_sew) intersect {16});
@@ -626,6 +717,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vsra)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -641,11 +737,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-           bins VI = {2}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //       bins VI = {2}; 
+    //    }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
 		//			                                    (binsof(cp_sew) intersect {16});
@@ -663,6 +759,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vnsrl)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -678,11 +779,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins WV = {5}; 
-           bins WX = {7}; 
-           bins WI = {6}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins WV = {5}; 
+    //       bins WX = {7}; 
+    //       bins WI = {6}; 
+    //    }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
 		//			                                    (binsof(cp_sew) intersect {16});
@@ -694,6 +795,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vnsra)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -709,11 +815,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins WV = {5}; 
-           bins WX = {7}; 
-           bins WI = {6}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins WV = {5}; 
+    //       bins WX = {7}; 
+    //       bins WI = {6}; 
+    //    }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
 		//			                                    (binsof(cp_sew) intersect {16});
@@ -725,6 +831,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmseq)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -740,14 +851,19 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-           bins VI = {2}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //       bins VI = {2}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmsne)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -763,14 +879,19 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-           bins VI = {2}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //       bins VI = {2}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmsltu)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -786,13 +907,18 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmslt)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -808,13 +934,18 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmsleu)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -830,14 +961,19 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-           bins VI = {2}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //       bins VI = {2}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmsle)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -853,14 +989,19 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-           bins VI = {2}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //       bins VI = {2}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmsgtu)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -876,13 +1017,18 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VX = {3}; 
-           bins VI = {2}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VX = {3}; 
+    //       bins VI = {2}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmsgt)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -898,13 +1044,18 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VX = {3}; 
-           bins VI = {2}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VX = {3}; 
+    //       bins VI = {2}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vminu)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -920,10 +1071,10 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
 		//			                                    (binsof(cp_sew) intersect {16});
@@ -941,6 +1092,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmin)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -956,10 +1112,10 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
 		//			                                    (binsof(cp_sew) intersect {16});
@@ -977,6 +1133,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmaxu)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -992,10 +1153,10 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
 		//			                                    (binsof(cp_sew) intersect {16});
@@ -1013,6 +1174,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmax)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1028,10 +1194,10 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
 		//			                                    (binsof(cp_sew) intersect {16});
@@ -1049,6 +1215,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmul)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1064,13 +1235,18 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmulh)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1086,13 +1262,18 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmulhu)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1108,13 +1289,18 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmulhsu)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1130,13 +1316,18 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vdivu)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1152,13 +1343,18 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vdiv)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1174,13 +1370,18 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vremu)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1196,13 +1397,18 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vrem)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1218,13 +1424,18 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vwmulu)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1240,13 +1451,18 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vwmul)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1262,13 +1478,18 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vwmulsu)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1284,13 +1505,18 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmacc)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1306,13 +1532,18 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vnmsac)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1328,13 +1559,18 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmadd)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1350,13 +1586,18 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vnmsub)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1372,13 +1613,18 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vwmaccu)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1394,10 +1640,10 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
 		//			                                    (binsof(cp_sew) intersect {16});
@@ -1409,6 +1655,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vwmacc)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1424,10 +1675,10 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
 		//			                                    (binsof(cp_sew) intersect {16});
@@ -1439,6 +1690,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vwmaccsu)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1454,10 +1710,10 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
 		//			                                    (binsof(cp_sew) intersect {16});
@@ -1469,6 +1725,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vwmaccus)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1484,9 +1745,9 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VX = {3}; 
+    //    }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
 		//			                                    (binsof(cp_sew) intersect {16});
@@ -1498,6 +1759,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmerge)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1513,11 +1779,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VVM = {9}; 
-           bins VXM = {11}; 
-           bins VIM = {10}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VVM = {9}; 
+    //       bins VXM = {11}; 
+    //       bins VIM = {10}; 
+    //    }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
 		//			                                    (binsof(cp_sew) intersect {16});
@@ -1535,6 +1801,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmv)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1550,11 +1821,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-           bins VI = {2}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //       bins VI = {2}; 
+    //    }
     //cp_lmul_sew : cross cp_lmul, cp_sew{
     //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
 		//			                                    (binsof(cp_sew) intersect {16});
@@ -1572,6 +1843,13 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vsaddu)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
+		cp_vxrm  : coverpoint instr.find_vxrm[1:0];
+		cp_vxsat  : coverpoint instr.find_vxsat[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1587,14 +1865,21 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-           bins VI = {2}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //       bins VI = {2}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vsadd)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
+		cp_vxrm  : coverpoint instr.find_vxrm[1:0];
+		cp_vxsat  : coverpoint instr.find_vxsat[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1610,14 +1895,21 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-           bins VI = {2}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //       bins VI = {2}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vssubu)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
+		cp_vxrm  : coverpoint instr.find_vxrm[1:0];
+		cp_vxsat  : coverpoint instr.find_vxsat[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1633,13 +1925,20 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vssub)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
+		cp_vxrm  : coverpoint instr.find_vxrm[1:0];
+		cp_vxsat  : coverpoint instr.find_vxsat[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1655,13 +1954,20 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vaaddu)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
+		cp_vxrm  : coverpoint instr.find_vxrm[1:0];
+		cp_vxsat  : coverpoint instr.find_vxsat[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1677,13 +1983,20 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vaadd)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
+		cp_vxrm  : coverpoint instr.find_vxrm[1:0];
+		cp_vxsat  : coverpoint instr.find_vxsat[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1699,13 +2012,20 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vasubu)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
+		cp_vxrm  : coverpoint instr.find_vxrm[1:0];
+		cp_vxsat  : coverpoint instr.find_vxsat[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1721,13 +2041,20 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vasub)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
+		cp_vxrm  : coverpoint instr.find_vxrm[1:0];
+		cp_vxsat  : coverpoint instr.find_vxsat[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1743,13 +2070,20 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vsmul)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
+		cp_vxrm  : coverpoint instr.find_vxrm[1:0];
+		cp_vxsat  : coverpoint instr.find_vxsat[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1765,13 +2099,20 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vssrl)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
+		cp_vxrm  : coverpoint instr.find_vxrm[1:0];
+		cp_vxsat  : coverpoint instr.find_vxsat[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1787,14 +2128,21 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-           bins VI = {2}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //       bins VI = {2}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vssra)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
+		cp_vxrm  : coverpoint instr.find_vxrm[1:0];
+		cp_vxsat  : coverpoint instr.find_vxsat[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1810,14 +2158,21 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VX = {3}; 
-           bins VI = {2}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VX = {3}; 
+    //       bins VI = {2}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vnclipu)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
+		cp_vxrm  : coverpoint instr.find_vxrm[1:0];
+		cp_vxsat  : coverpoint instr.find_vxsat[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1833,14 +2188,21 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins WV = {5}; 
-           bins WX = {7}; 
-           bins WI = {6}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins WV = {5}; 
+    //       bins WX = {7}; 
+    //       bins WI = {6}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vnclip)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
+		cp_vxrm  : coverpoint instr.find_vxrm[1:0];
+		cp_vxsat  : coverpoint instr.find_vxsat[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1856,16 +2218,27 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins WV = {5}; 
-           bins WX = {7}; 
-           bins WI = {6}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins WV = {5}; 
+    //       bins WX = {7}; 
+    //       bins WI = {6}; 
+    //    }
   `CG_END
 
 
   `V_INSTR_CG_BEGIN(vfadd)
-    cp_lmul : coverpoint instr.find_int_lmul{
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
+	  cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
            bins m05 = {3}; 
@@ -1880,13 +2253,24 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfsub)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1902,13 +2286,24 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfrsub)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1924,12 +2319,23 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfwadd)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:15]};
+					 bins vlmax = {16};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1945,15 +2351,26 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VF = {4}; 
-           bins WV = {5}; 
-           bins WF = {8}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VF = {4}; 
+    //       bins WV = {5}; 
+    //       bins WF = {8}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfwsub)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:15]};
+					 bins vlmax = {16};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1969,15 +2386,26 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VF = {4}; 
-           bins WV = {5}; 
-           bins WF = {8}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VF = {4}; 
+    //       bins WV = {5}; 
+    //       bins WF = {8}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfmul)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -1993,13 +2421,24 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfdiv)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2015,13 +2454,24 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfrdiv)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2037,12 +2487,23 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfwmul)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:15]};
+					 bins vlmax = {16};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2058,13 +2519,24 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfmacc)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2080,13 +2552,24 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfnmacc)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2102,13 +2585,24 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfmsac)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2124,13 +2618,24 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfnmsac)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2146,13 +2651,24 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfmadd)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2168,13 +2684,24 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfnmadd)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2190,13 +2717,24 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfmsub)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2212,13 +2750,24 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfnmsub)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2234,13 +2783,24 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfwmacc)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:15]};
+					 bins vlmax = {16};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2256,13 +2816,24 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfwnmacc)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:15]};
+					 bins vlmax = {16};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2278,13 +2849,24 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfwmsac)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:15]};
+					 bins vlmax = {16};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2300,13 +2882,24 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfwnmsac)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:15]};
+					 bins vlmax = {16};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2322,13 +2915,24 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfsqrt_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2347,6 +2951,17 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfrsqrt7_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2365,6 +2980,17 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfrec7_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2383,6 +3009,17 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfmin)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2398,13 +3035,24 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfmax)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2420,13 +3068,24 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfsgnj)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2442,13 +3101,24 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfsgnjn)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2464,13 +3134,24 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfsgnjx)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2486,13 +3167,24 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmfeq)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2508,13 +3200,24 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmfne)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2530,13 +3233,24 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmflt)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2552,13 +3266,24 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmfle)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2574,13 +3299,24 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmfgt)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2596,12 +3332,23 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmfge)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2617,12 +3364,23 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfclass_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2641,6 +3399,17 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfmerge)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2656,12 +3425,23 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VFM = {12}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VFM = {12}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfmv)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2677,12 +3457,23 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfcvt_xu_f_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2701,6 +3492,17 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfcvt_x_f_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2719,6 +3521,17 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfcvt_rtz_xu_f_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2737,6 +3550,17 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfcvt_rtz_x_f_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2755,6 +3579,17 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfcvt_f_xu_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2773,6 +3608,17 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfcvt_f_x_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2791,6 +3637,17 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfwcvt_xu_f_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:15]};
+					 bins vlmax = {16};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2809,6 +3666,17 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfwcvt_x_f_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:15]};
+					 bins vlmax = {16};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2827,6 +3695,17 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfwcvt_rtz_xu_f_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:15]};
+					 bins vlmax = {16};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2845,6 +3724,17 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfwcvt_rtz_x_f_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:15]};
+					 bins vlmax = {16};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2863,6 +3753,17 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfwcvt_f_xu_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2881,6 +3782,17 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfwcvt_f_x_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2899,6 +3811,17 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfwcvt_f_f_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:15]};
+					 bins vlmax = {16};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2917,6 +3840,17 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfncvt_xu_f_w)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2935,6 +3869,17 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfncvt_x_f_w)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2953,6 +3898,17 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfncvt_f_xu_w)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:15]};
+					 bins vlmax = {16};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2971,6 +3927,17 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfncvt_f_x_w)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:15]};
+					 bins vlmax = {16};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -2989,6 +3956,17 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfncvt_f_f_w)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:15]};
+					 bins vlmax = {16};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3007,6 +3985,17 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfncvt_rod_f_f_w)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:15]};
+					 bins vlmax = {16};
+				 }
+    cp_frm  : coverpoint instr.find_frm[2:0];
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags3  : coverpoint instr.find_fflags[3];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3025,6 +4014,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vredsum_vs)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3043,6 +4037,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vredmaxu_vs)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3061,6 +4060,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vredmax_vs)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3079,6 +4083,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vredminu_vs)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3097,6 +4106,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vredmin_vs)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3115,6 +4129,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vredand_vs)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3133,6 +4152,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vredor_vs)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3151,6 +4175,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vredxor_vs)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3169,6 +4198,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vwredsumu_vs)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3187,6 +4221,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vwredsum_vs)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3205,6 +4244,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfredosum_vs)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3223,6 +4267,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfredusum_vs)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3241,6 +4290,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfredmax_vs)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3259,6 +4313,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfredmin_vs)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3277,6 +4336,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfwredosum_vs)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:15]};
+					 bins vlmax = {16};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3295,6 +4359,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfwredusum_vs)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:15]};
+					 bins vlmax = {16};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3313,6 +4382,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmand_mm)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3331,6 +4405,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmnand_mm)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3349,6 +4428,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmandn_mm)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3367,6 +4451,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmxor_mm)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3385,6 +4474,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmor_mm)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3403,6 +4497,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmnor_mm)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3421,6 +4520,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmorn_mm)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3439,6 +4543,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmxnor_mm)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3457,6 +4566,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vpopc_m)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3475,6 +4589,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfirst_m)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3493,6 +4612,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmsbf_m)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3511,6 +4635,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmsif_m)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3529,6 +4658,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmsof_m)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3547,6 +4681,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(viota_m)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3565,6 +4704,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vid_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3583,6 +4727,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmv_x_s)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3601,6 +4750,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmv_s_x)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3619,6 +4773,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfmv_f_s)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3637,6 +4796,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfmv_s_f)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3655,6 +4819,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vslideup)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3670,13 +4839,18 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VI = {2}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VI = {2}; 
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vslidedown)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3692,13 +4866,18 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VI = {2}; 
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VI = {2}; 
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vslide1up)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3714,12 +4893,17 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfslide1up)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3735,12 +4919,17 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vslide1down)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3756,12 +4945,17 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VX = {3}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VX = {3}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vfslide1down)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3777,12 +4971,17 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VF = {4}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VF = {4}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vrgather)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3798,14 +4997,19 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VI = {2}; 
-           bins VX = {3}; 
-           bins VV = {1}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VI = {2}; 
+    //       bins VX = {3}; 
+    //       bins VV = {1}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vrgatherei16)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3821,12 +5025,17 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VV = {1}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VV = {1}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vcompress)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3842,12 +5051,17 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
            bins e32 = {32}; 
            bins e64 = {64}; 
         }
-    cp_variant : coverpoint instr.find_int_va_variant{
-           bins VM = {14}; 
-        }
+    //cp_variant : coverpoint instr.find_int_va_variant{
+    //       bins VM = {14}; 
+    //    }
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmv1r_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:15]};
+					 bins vlmax = {16};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3866,6 +5080,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmv2r_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:31]};
+					 bins vlmax = {32};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3884,6 +5103,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmv4r_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:63]};
+					 bins vlmax = {64};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3902,6 +5126,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vmv8r_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3920,6 +5149,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vle_v)
+	  cp_vl   : coverpoint instr.find_vl{
+           bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3938,6 +5172,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vse_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3956,6 +5195,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vlm_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3974,6 +5218,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vsm_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -3992,6 +5241,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vlse_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -4010,6 +5264,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vsse_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -4028,6 +5287,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vluxei_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -4046,6 +5310,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vloxei_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -4064,6 +5333,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vsuxei_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -4082,6 +5356,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vsoxei_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -4100,6 +5379,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vleff_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -4118,6 +5402,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vlsege_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -4136,6 +5425,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vssege_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -4154,6 +5448,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vlsegeff_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -4172,6 +5471,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vlssege_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -4190,6 +5494,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vsssege_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -4208,6 +5517,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vluxsegei_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -4226,6 +5540,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vloxsegei_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -4244,6 +5563,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vsuxsegei_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -4262,6 +5586,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vsoxsegei_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -4280,6 +5609,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vlre_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -4298,6 +5632,11 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   `CG_END
 
   `V_INSTR_CG_BEGIN(vsr_v)
+	  cp_vl   : coverpoint instr.find_vl{
+			     bins vl0 = {0};
+					 bins vl0vlmax = {[1:127]};
+					 bins vlmax = {128};
+				 }
     cp_lmul : coverpoint instr.find_int_lmul{
            bins m0125 = {1}; 
            bins m025 = {2}; 
@@ -4315,13 +5654,84 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
         }
   `CG_END
 
+	//covergroup allreg_cg with function sample(riscv_vector_instr instr);
+	//	 cp_vd : coverpoint instr.vd;
+	//	 cp_rs1 : coverpoint instr.rs1;
+	//	 cp_rs2 : coverpoint instr.rs2;
+	//	 cp_vs1 : coverpoint instr.vs1;
+	//	 cp_fs1 : coverpoint instr.fs1;
+	//	 cp_vs2 : coverpoint instr.vs2;
+	//	 cp_vs3 : coverpoint instr.vs3;
+	//endgroup
+
+	//covergroup reg_permutation_cg with function sample(riscv_vector_instr instr);
+	//	 cp_rd : coverpoint instr.rd;
+	//	 cp_fd : coverpoint instr.fd;
+	//	 cp_vd : coverpoint instr.vd;
+	//	 cp_rs1 : coverpoint instr.rs1;
+	//	 cp_fs1 : coverpoint instr.fs1;
+	//	 cp_vs1 : coverpoint instr.vs1;
+	//	 cp_vs2 : coverpoint instr.vs2;
+	//endgroup
+  
+	covergroup vsetvli_cg with function sample(bit vsetvli_valid);
+     cp_vsetvli : coverpoint vsetvli_valid{
+            bins hit = {1'b1};
+		 }
+	 endgroup
+	
+	 covergroup vsetvl_cg with function sample(bit vsetvl_valid);
+     cp_vsetvl : coverpoint vsetvl_valid{
+            bins hit = {1'b1};
+		 }
+	 endgroup
+	
+	 covergroup vsetivli_cg with function sample(bit vsetivli_valid);
+     cp_vsetivli : coverpoint vsetivli_valid{
+            bins hit = {1'b1};
+		 }
+	 endgroup
+  
+	covergroup arithmetic_cg with function sample(bit [31:0] binary);
+     cp_vdrd         : coverpoint binary[11:7];
+     cp_vs1rs1simm5  : coverpoint binary[19:15];
+     cp_vs2          : coverpoint binary[24:20];
+     cp_func3fun6    : coverpoint {binary[31:25],binary[14:12]}{
+			 wildcard ignore_bins func3111 = {10'b???????111};
+			 option.auto_bin_max = 1024;
+		 }
+	endgroup
+
+	covergroup load_cg with function sample(bit [31:0] binary);
+     cp_vdvs3        : coverpoint binary[11:7];
+     cp_vs1          : coverpoint binary[19:15];
+     cp_lumoprs2vs2  : coverpoint binary[24:20];
+     cp_nfmewmopvmwidth    : coverpoint {binary[31:25],binary[14:12]}{
+			 option.auto_bin_max = 1024;
+			 wildcard ignore_bins func3001 = {10'b???????001};
+			 wildcard ignore_bins func3010 = {10'b???????010};
+			 wildcard ignore_bins func3100 = {10'b???????100};
+		 }
+	endgroup
+
+	covergroup store_cg with function sample(bit [31:0] binary);
+     cp_vdvs3        : coverpoint binary[11:7];
+     cp_vs1          : coverpoint binary[19:15];
+     cp_sumoprs2vs2  : coverpoint binary[24:20];
+     cp_nfmewmopvmwidth    : coverpoint {binary[31:25],binary[14:12]}{
+			 option.auto_bin_max = 1024;
+			 wildcard ignore_bins func3001 = {10'b???????001};
+			 wildcard ignore_bins func3010 = {10'b???????010};
+			 wildcard ignore_bins func3100 = {10'b???????100};
+		 }
+	endgroup
 
 	function new(riscv_instr_gen_config cfg);
 		super.new(cfg);
     `CG_SELECTOR_BEGIN(RVV)
-    vsetvli_cg = new();
-    vsetvl_cg = new();
-    vsetivli_cg = new();
+    //vsetvli_cg = new();
+    //vsetvl_cg = new();
+    //vsetivli_cg = new();
     vadd_cg = new();
     vsub_cg = new();
     vrsub_cg = new();
@@ -4517,15 +5927,24 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
     vlre_v_cg = new();
     vsr_v_cg = new();
     `CG_SELECTOR_END
+
+		//allreg_cg = new();
+		//reg_permutation_cg = new();
+		arithmetic_cg = new();
+		load_cg = new();
+		store_cg = new();
+    vsetvli_cg = new();
+    vsetvl_cg = new();
+    vsetivli_cg = new();
     `uvm_info(",","riscv_instr_vector_cover_group", UVM_LOW)
 	endfunction
 	
 	
 	function void sample(riscv_instr instr);
     case(instr.instr_name)
-    VSETVLI : `SAMPLE_VSET(vsetvli_cg, instr)
-    VSETVL : `SAMPLE_VSET(vsetvl_cg, instr)
-    VSETIVLI : `SAMPLE_VSET(vsetivli_cg, instr)
+    //VSETVLI : `SAMPLE_VSET(vsetvli_cg, instr)
+    //VSETVL : `SAMPLE_VSET(vsetvl_cg, instr)
+    //VSETIVLI : `SAMPLE_VSET(vsetivli_cg, instr)
     VADD : `SAMPLE_V(vadd_cg, instr)
     VSUB : `SAMPLE_V(vsub_cg, instr)
     VRSUB : `SAMPLE_V(vrsub_cg, instr)

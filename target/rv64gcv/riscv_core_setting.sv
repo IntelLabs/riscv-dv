@@ -29,6 +29,7 @@ privileged_mode_t supported_privileged_mode[] = {MACHINE_MODE};
 // Unsupported instructions
 riscv_instr_name_t unsupported_instr[] = {};
 bit only_vec_cov = 1;
+
 // ISA supported by the processor
 
 //`ifdef ONLY_VEC_COV 

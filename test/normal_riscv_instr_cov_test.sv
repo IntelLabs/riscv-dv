@@ -186,20 +186,20 @@ class riscv_instr_cov_test extends uvm_test;
                if(csr_pair[1] == "8") find_vcsr.lmul = 8;
 						 end
 						 //illegal_spike_changed
-						 //else if(csr_pair[0] == "vtype")begin
-             //  get_val(csr_pair[1],find_vcsr.vtype,.hex(1));
-             //  find_vcsr.vta = find_vcsr.vtype[6];   
-             //  find_vcsr.vma = find_vcsr.vtype[7];   
-             //  //lmul = find_vcsr.vtype[2:0];  
-		         //  //find_vcsr.lmul = get_digital_lmul(lmul);
-   					 //end
+						 else if(csr_pair[0] == "vtype")begin
+               get_val(csr_pair[1],find_vcsr.vtype,.hex(1));
+               find_vcsr.vta = find_vcsr.vtype[6];   
+               find_vcsr.vma = find_vcsr.vtype[7];   
+               //lmul = find_vcsr.vtype[2:0];  
+		           //find_vcsr.lmul = get_digital_lmul(lmul);
+   					 end
 						 //illegal_spike_changed
-						 else if(csr_pair[0] == "ma")
-               find_vcsr.vma = csr_pair[1].atoreal();
-						 else if(csr_pair[0] == "ta")
-               find_vcsr.vta = csr_pair[1].atoreal();
-						 else if(csr_pair[0] == "vm")
-               find_vcsr.vm = csr_pair[1].atoreal();
+						 //else if(csr_pair[0] == "ma")
+             //  find_vcsr.vma = csr_pair[1].atoreal();
+						 //else if(csr_pair[0] == "ta")
+             //  find_vcsr.vta = csr_pair[1].atoreal();
+						 //else if(csr_pair[0] == "vm")
+             //  find_vcsr.vm = csr_pair[1].atoreal();
 						 else if(csr_pair[0] == "fflags")begin
                get_val(csr_pair[1],find_vcsr.fflags,.hex(1));
                //find_vcsr.fflags = csr_pair[1].atoreal();
@@ -221,17 +221,17 @@ class riscv_instr_cov_test extends uvm_test;
            //`uvm_info(`gfn, $sformatf("sample vector csrcase, instr is %s, vcsr.va_variant is %0s, find_va_variant is %0s, vstart is %0b, vl is %0d, sew is %0d, lmul is %0f,vtype is %0b, vta is %0d, vma is %0d, fflags is %0b, vxsat is %0b, vxrm is %0b, frm is %0b",instr.instr_name,find_va_variant,find_vcsr.va_variant,find_vcsr.vstart,find_vcsr.vl,find_vcsr.sew,find_vcsr.lmul,find_vcsr.vtype, find_vcsr.vta, find_vcsr.vma,find_vcsr.fflags,find_vcsr.vxsat,find_vcsr.vxrm, find_vcsr.frm), UVM_LOW)
   	       split_string(trace["operand"], ",", find_operands);
 		         //illegal_spike_changed
-					   //if((instr.instr_name inside {VMERGE, VFMERGE, VADC, VSBC, VMADC, VMSBC}) && (find_operands[3] == "v0"))begin
-             //  find_vcsr.vm = 0;
-             //  `uvm_info(`gfn, $sformatf("find_vm is %0d ,instr_name is %0s",find_vcsr.vm,instr.instr_name), UVM_LOW)
-		         //end else if((find_operands[4] == "v0.t") ||(find_operands[3] == "v0.t") || (find_operands[2] == "v0.t")|| (find_operands[1] == "v0.t"))begin
-             //  find_vcsr.vm = 0;
-             //  `uvm_info(`gfn, $sformatf("find_vm is %0d ,instr_name is %0s",find_vcsr.vm,instr.instr_name), UVM_LOW)
-		         //end
-						 //else begin
-             //  find_vcsr.vm = 1;
-             //  `uvm_info(`gfn, $sformatf("find_vm is %0d ,instr_name is %0s",find_vcsr.vm,instr.instr_name), UVM_LOW)
-						 //end
+					   if((instr.instr_name inside {VMERGE, VFMERGE, VADC, VSBC, VMADC, VMSBC}) && (find_operands[3] == "v0"))begin
+               find_vcsr.vm = 0;
+               `uvm_info(`gfn, $sformatf("find_vm is %0d ,instr_name is %0s",find_vcsr.vm,instr.instr_name), UVM_LOW)
+		         end else if((find_operands[4] == "v0.t") ||(find_operands[3] == "v0.t") || (find_operands[2] == "v0.t")|| (find_operands[1] == "v0.t"))begin
+               find_vcsr.vm = 0;
+               `uvm_info(`gfn, $sformatf("find_vm is %0d ,instr_name is %0s",find_vcsr.vm,instr.instr_name), UVM_LOW)
+		         end
+						 else begin
+               find_vcsr.vm = 1;
+               `uvm_info(`gfn, $sformatf("find_vm is %0d ,instr_name is %0s",find_vcsr.vm,instr.instr_name), UVM_LOW)
+						 end
 					 assign_trace_info_to_instr(instr,find_va_variant);
            //instr.pre_sample();
  

@@ -207,6 +207,15 @@ class riscv_vector_instr extends riscv_floating_point_instr;
     }
   }
 
+  constraint vector_vgatherei16_c {
+    if (instr_name == VRGATHEREI16) {
+        if( (16 / m_cfg.vector_cfg.vtype.vsew * m_cfg.vector_cfg.vtype.vlmul) > 1) {
+            vs1 % (16 / m_cfg.vector_cfg.vtype.vsew * m_cfg.vector_cfg.vtype.vlmul) == 0;
+            !(vd inside {[vs1 : vs1 + (16 / m_cfg.vector_cfg.vtype.vsew * m_cfg.vector_cfg.vtype.vlmul) - 1]}); 
+        }
+    }
+  }
+
   // Section 17.5: Vector compress instruction
   // The destination vector register group cannot overlap the source vector register
   // group or the source vector mask register
@@ -691,20 +700,20 @@ class riscv_vector_instr extends riscv_floating_point_instr;
 						 //vd = get_vgpr(operands[0]);
 						 vs1 =get_vgpr(operands[2]);
 					 	 vs2 =get_vgpr(operands[1]);
-             //`uvm_info(`gfn, $sformatf("do get vreg no va_variant %0s,%0s", vs1,vs2),UVM_LOW)
+             `uvm_info(`gfn, $sformatf("do get vreg no va_variant %0s,%0s", vs1,vs2),UVM_LOW)
 					 end
 					 else begin
              if(find_va_variant == "WV"||find_va_variant == "VV"||find_va_variant == "VVM"||find_va_variant == "VM")begin
                //vd =get_vgpr(operands[0]);
 							 vs2 =get_vgpr(operands[2]);
                vs1 = get_vgpr(operands[1]);
-               //`uvm_info(`gfn, $sformatf("do get vregWV,VV,VVM,VM  %0s,%0s", vs1,vs2),UVM_LOW)
+               `uvm_info(`gfn, $sformatf("do get vregWV,VV,VVM,VM  %0s,%0s", vs1,vs2),UVM_LOW)
 						 end
 						 else if(find_va_variant == "WI"||find_va_variant == "VI"||find_va_variant == "VIM")begin
                //vd =get_vgpr(operands[0]);
 							 vs2 =get_vgpr(operands[1]);
                //get_val(,imm);
-               //`uvm_info(`gfn, $sformatf("do get vregWI,VI,VIM %0s", vs2),UVM_LOW)
+               `uvm_info(`gfn, $sformatf("do get vregWI,VI,VIM %0s", vs2),UVM_LOW)
 					   end
 						 else if(find_va_variant == "VF"||find_va_variant == "VFM")begin
                 //if (instr_name inside {VFMADD, VFNMADD, VFMACC, VFNMACC, VFNMSUB, VFWNMSAC,
@@ -717,7 +726,7 @@ class riscv_vector_instr extends riscv_floating_point_instr;
                     fs1 =  get_fpr(operands[2]);
 							      vs2 =get_vgpr(operands[1]);
                 //  end
-										//`uvm_info(`gfn, $sformatf("do get vregVF,VFM %0s,%0s", vs2,fs1),UVM_LOW)
+										`uvm_info(`gfn, $sformatf("do get vregVF,VFM %0s,%0s", vs2,fs1),UVM_LOW)
 						 end
 						 else if(find_va_variant == "WX"||find_va_variant == "VX"||find_va_variant == "VXM")begin
                 //if (instr_name inside {VMADD, VNMSUB, VMACC, VNMSAC, VWMACCSU, VWMACCU,
@@ -730,13 +739,13 @@ class riscv_vector_instr extends riscv_floating_point_instr;
 							       vs2 =get_vgpr(operands[1]);
 							       rs1 =get_gpr(operands[2]);
 								//	 end
-               //`uvm_info(`gfn, $sformatf("do get vregWX,VX,VXM %0s,%0s", vs2,rs1),UVM_LOW)
+               `uvm_info(`gfn, $sformatf("do get vregWX,VX,VXM %0s,%0s", vs2,rs1),UVM_LOW)
 						 end
 						 else if(find_va_variant == "WF")begin
                //vd =get_vgpr(operands[0]);
 							 vs2 =get_vgpr(operands[1]);
 							 fs1 = get_fpr(operands[2]);
-               //`uvm_info(`gfn, $sformatf("do get vregWF %0s,%0s", fs1,vs2),UVM_LOW)
+               `uvm_info(`gfn, $sformatf("do get vregWF %0s,%0s", fs1,vs2),UVM_LOW)
 						 end
 					 end
 				end
@@ -801,13 +810,15 @@ class riscv_vector_instr extends riscv_floating_point_instr;
         if (instr_name == VMV_X_S)begin
 		      rd = get_gpr(reg_name);
           rd_value = get_gpr_state(reg_name);
+          `uvm_info(`gfn, $sformatf("do update_vec_dst_reg %0s", rd),UVM_LOW)
 				end else if(instr_name == VFMV_F_S)begin
 		      fd = get_fpr(reg_name);
           fd_value = get_gpr_state(reg_name);
+          `uvm_info(`gfn, $sformatf("do update_vec_dst_reg %0s", fd),UVM_LOW)
 				end else begin
 		      vd = get_vgpr(reg_name);
           vd_value = get_vgpr_state(reg_name);
-          `uvm_info(`gfn, $sformatf("do update_vec_dst_reg %0b, %0s", vd_value,vd),UVM_LOW)
+          `uvm_info(`gfn, $sformatf("do update_vec_dst_reg %0b, %0s", rd_value,rd),UVM_LOW)
 				end
 			end
 			VS2_FORMAT : begin
