@@ -545,7 +545,9 @@ class riscv_vector_load_store_instr_stream extends riscv_mem_access_stream;
 
   constraint stride_byte_offset_c {
     solve eew before stride_byte_offset;
-    // Keep a reasonable byte offset range to avoid vector memory address overflow
+    solve data_page_id before stride_byte_offset;
+    // Keep a more reasonable byte offset range to avoid vector memory address overflow
+    data_page[data_page_id].size_in_bytes - (eew / 8) > (VLEN * cfg.vector_cfg.vtype.vlmul / cfg.vector_cfg.vtype.vsew) * stride_byte_offset;
     stride_byte_offset inside {[1 : 128]};
     stride_byte_offset % (eew / 8) == 0;
   }
