@@ -3,9 +3,6 @@
 
 `define V_INSTR_CG_BEGIN(INSTR_NAME) \
   `INSTR_CG_BEGIN(INSTR_NAME,riscv_vector_instr) \
-     //cp_vm  : coverpoint instr.find_vm; \
-		 cp_vma : coverpoint instr.find_vma; \
-     cp_vta : coverpoint instr.find_vta;
 
 `define VSET_INSTR_CG_BEGIN(INSTR_NAME) \
   `INSTR_CG_BEGIN(INSTR_NAME,riscv_vset_instr) \
@@ -19,5660 +16,11632 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
   //`VSET_INSTR_CG_BEGIN(vsetivli)
 	//`CG_END
 
-  `V_INSTR_CG_BEGIN(vadd)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //       bins VI = {2}; 
-    //    }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {16});
-    //      ignore_bins IGNORE_LMUL0125_SEW32 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL0125_SEW64 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW64 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL05_SEW64  = (binsof(cp_lmul) intersect {3} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vsub)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {16});
-    //      ignore_bins IGNORE_LMUL0125_SEW32 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL0125_SEW64 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW64 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL05_SEW64  = (binsof(cp_lmul) intersect {3} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vrsub)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VX = {3}; 
-    //       bins VI = {2}; 
-    //    }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {16});
-    //      ignore_bins IGNORE_LMUL0125_SEW32 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL0125_SEW64 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW64 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL05_SEW64  = (binsof(cp_lmul) intersect {3} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vwaddu)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //       bins WV = {5}; 
-    //       bins WX = {7}; 
-    //    }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {16});
-    //      ignore_bins IGNORE_LMUL0125_SEW32 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vwadd)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //       bins WV = {5}; 
-    //       bins WX = {7}; 
-    //    }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {16});
-    //      ignore_bins IGNORE_LMUL0125_SEW32 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vwsubu)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //       bins WV = {5}; 
-    //       bins WX = {7}; 
-    //    }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {16});
-    //      ignore_bins IGNORE_LMUL0125_SEW32 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vwsub)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //       bins WV = {5}; 
-    //       bins WX = {7}; 
-    //    }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {16});
-    //      ignore_bins IGNORE_LMUL0125_SEW32 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vzext)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VF2 = {15}; 
-    //       bins VF4 = {16}; 
-    //       bins VF8 = {17}; 
-    //    }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW64 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL05_SEW64 = (binsof(cp_lmul) intersect {3} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vsext)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VF2 = {15}; 
-    //       bins VF4 = {16}; 
-    //       bins VF8 = {17}; 
-    //    }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW64 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL05_SEW64 = (binsof(cp_lmul) intersect {3} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vadc)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VVM = {9}; 
-    //       bins VXM = {11}; 
-    //       bins VIM = {10}; 
-    //    }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {16});
-    //      ignore_bins IGNORE_LMUL0125_SEW32 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL0125_SEW64 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW64 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL05_SEW64  = (binsof(cp_lmul) intersect {3} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmadc)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VVM = {9}; 
-    //       bins VXM = {11}; 
-    //       bins VIM = {10}; 
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //       bins VI = {2}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vsbc)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VVM = {9}; 
-    //       bins VXM = {11}; 
-    //    }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {16});
-    //      ignore_bins IGNORE_LMUL0125_SEW32 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL0125_SEW64 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW64 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL05_SEW64  = (binsof(cp_lmul) intersect {3} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmsbc)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VVM = {9}; 
-    //       bins VXM = {11}; 
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vand)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //       bins VI = {2}; 
-    //    }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {16});
-    //      ignore_bins IGNORE_LMUL0125_SEW32 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL0125_SEW64 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW64 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL05_SEW64  = (binsof(cp_lmul) intersect {3} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vor)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //       bins VI = {2}; 
-    //    }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {16});
-    //      ignore_bins IGNORE_LMUL0125_SEW32 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL0125_SEW64 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW64 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL05_SEW64  = (binsof(cp_lmul) intersect {3} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vxor)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //       bins VI = {2}; 
-    //    }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {16});
-    //      ignore_bins IGNORE_LMUL0125_SEW32 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL0125_SEW64 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW64 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL05_SEW64  = (binsof(cp_lmul) intersect {3} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vsll)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //       bins VI = {2}; 
-    //    }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {16});
-    //      ignore_bins IGNORE_LMUL0125_SEW32 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL0125_SEW64 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW64 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL05_SEW64  = (binsof(cp_lmul) intersect {3} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vsrl)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-//    cp_variant : coverpoint instr.find_int_va_variant{
-//           bins VV = {1}; 
-//           bins VX = {3}; 
-//           bins VI = {2}; 
-//        }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {16});
-    //      ignore_bins IGNORE_LMUL0125_SEW32 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL0125_SEW64 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW64 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL05_SEW64  = (binsof(cp_lmul) intersect {3} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vsra)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //       bins VI = {2}; 
-    //    }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {16});
-    //      ignore_bins IGNORE_LMUL0125_SEW32 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL0125_SEW64 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW64 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL05_SEW64  = (binsof(cp_lmul) intersect {3} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vnsrl)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins WV = {5}; 
-    //       bins WX = {7}; 
-    //       bins WI = {6}; 
-    //    }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {16});
-    //      ignore_bins IGNORE_LMUL0125_SEW32 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vnsra)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins WV = {5}; 
-    //       bins WX = {7}; 
-    //       bins WI = {6}; 
-    //    }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {16});
-    //      ignore_bins IGNORE_LMUL0125_SEW32 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmseq)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //       bins VI = {2}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmsne)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //       bins VI = {2}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmsltu)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmslt)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmsleu)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //       bins VI = {2}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmsle)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //       bins VI = {2}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmsgtu)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VX = {3}; 
-    //       bins VI = {2}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmsgt)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VX = {3}; 
-    //       bins VI = {2}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vminu)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {16});
-    //      ignore_bins IGNORE_LMUL0125_SEW32 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL0125_SEW64 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW64 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL05_SEW64  = (binsof(cp_lmul) intersect {3} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmin)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {16});
-    //      ignore_bins IGNORE_LMUL0125_SEW32 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL0125_SEW64 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW64 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL05_SEW64  = (binsof(cp_lmul) intersect {3} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmaxu)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {16});
-    //      ignore_bins IGNORE_LMUL0125_SEW32 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL0125_SEW64 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW64 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL05_SEW64  = (binsof(cp_lmul) intersect {3} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmax)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {16});
-    //      ignore_bins IGNORE_LMUL0125_SEW32 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL0125_SEW64 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW64 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL05_SEW64  = (binsof(cp_lmul) intersect {3} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmul)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmulh)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmulhu)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmulhsu)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vdivu)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vdiv)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vremu)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vrem)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vwmulu)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vwmul)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vwmulsu)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmacc)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vnmsac)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmadd)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vnmsub)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vwmaccu)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {16});
-    //      ignore_bins IGNORE_LMUL0125_SEW32 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vwmacc)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {16});
-    //      ignore_bins IGNORE_LMUL0125_SEW32 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vwmaccsu)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {16});
-    //      ignore_bins IGNORE_LMUL0125_SEW32 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vwmaccus)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VX = {3}; 
-    //    }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {16});
-    //      ignore_bins IGNORE_LMUL0125_SEW32 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmerge)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VVM = {9}; 
-    //       bins VXM = {11}; 
-    //       bins VIM = {10}; 
-    //    }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {16});
-    //      ignore_bins IGNORE_LMUL0125_SEW32 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL0125_SEW64 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW64 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL05_SEW64  = (binsof(cp_lmul) intersect {3} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmv)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //       bins VI = {2}; 
-    //    }
-    //cp_lmul_sew : cross cp_lmul, cp_sew{
-    //      ignore_bins IGNORE_LMUL0125_SEW16 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {16});
-    //      ignore_bins IGNORE_LMUL0125_SEW32 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL0125_SEW64 = (binsof(cp_lmul) intersect {1} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL025_SEW32 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {32});
-    //      ignore_bins IGNORE_LMUL025_SEW64 = (binsof(cp_lmul) intersect {2} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-    //      ignore_bins IGNORE_LMUL05_SEW64  = (binsof(cp_lmul) intersect {3} ) &&
-		//			                                    (binsof(cp_sew) intersect {64});
-		//}
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vsaddu)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-		cp_vxrm  : coverpoint instr.find_vxrm[1:0];
-		cp_vxsat  : coverpoint instr.find_vxsat[0];
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //       bins VI = {2}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vsadd)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-		cp_vxrm  : coverpoint instr.find_vxrm[1:0];
-		cp_vxsat  : coverpoint instr.find_vxsat[0];
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //       bins VI = {2}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vssubu)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-		cp_vxrm  : coverpoint instr.find_vxrm[1:0];
-		cp_vxsat  : coverpoint instr.find_vxsat[0];
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vssub)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-		cp_vxrm  : coverpoint instr.find_vxrm[1:0];
-		cp_vxsat  : coverpoint instr.find_vxsat[0];
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vaaddu)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-		cp_vxrm  : coverpoint instr.find_vxrm[1:0];
-		cp_vxsat  : coverpoint instr.find_vxsat[0];
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vaadd)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-		cp_vxrm  : coverpoint instr.find_vxrm[1:0];
-		cp_vxsat  : coverpoint instr.find_vxsat[0];
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vasubu)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-		cp_vxrm  : coverpoint instr.find_vxrm[1:0];
-		cp_vxsat  : coverpoint instr.find_vxsat[0];
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vasub)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-		cp_vxrm  : coverpoint instr.find_vxrm[1:0];
-		cp_vxsat  : coverpoint instr.find_vxsat[0];
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vsmul)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-		cp_vxrm  : coverpoint instr.find_vxrm[1:0];
-		cp_vxsat  : coverpoint instr.find_vxsat[0];
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vssrl)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-		cp_vxrm  : coverpoint instr.find_vxrm[1:0];
-		cp_vxsat  : coverpoint instr.find_vxsat[0];
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //       bins VI = {2}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vssra)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-		cp_vxrm  : coverpoint instr.find_vxrm[1:0];
-		cp_vxsat  : coverpoint instr.find_vxsat[0];
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VX = {3}; 
-    //       bins VI = {2}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vnclipu)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-		cp_vxrm  : coverpoint instr.find_vxrm[1:0];
-		cp_vxsat  : coverpoint instr.find_vxsat[0];
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins WV = {5}; 
-    //       bins WX = {7}; 
-    //       bins WI = {6}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vnclip)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-		cp_vxrm  : coverpoint instr.find_vxrm[1:0];
-		cp_vxsat  : coverpoint instr.find_vxsat[0];
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins WV = {5}; 
-    //       bins WX = {7}; 
-    //       bins WI = {6}; 
-    //    }
-  `CG_END
-
-
-  `V_INSTR_CG_BEGIN(vfadd)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+`V_INSTR_CG_BEGIN(vadd)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vsub)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vrsub)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vwaddu)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:63]};
+        bins vl64 = {64};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs1 : coverpoint instr.vs1{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs1 : cross cp_lmul, cp_vd, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vd == cp_vs1); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vd == cp_vs1); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1 + 4); 
+		}
+		cp_regslmulvdvs2 : cross cp_lmul, cp_vd, cp_vs2{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vd == cp_vs2); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vd == cp_vs2); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs2); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2 + 4); 
+		}
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vwadd)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:63]};
+        bins vl64 = {64};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs1 : coverpoint instr.vs1{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs1 : cross cp_lmul, cp_vd, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vd == cp_vs1); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vd == cp_vs1); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1 + 4); 
+		}
+		cp_regslmulvdvs2 : cross cp_lmul, cp_vd, cp_vs2{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vd == cp_vs2); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vd == cp_vs2); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs2); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2 + 4); 
+		}
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vwsubu)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:63]};
+        bins vl64 = {64};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs1 : coverpoint instr.vs1{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs1 : cross cp_lmul, cp_vd, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vd == cp_vs1); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vd == cp_vs1); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1 + 4); 
+		}
+		cp_regslmulvdvs2 : cross cp_lmul, cp_vd, cp_vs2{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vd == cp_vs2); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vd == cp_vs2); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs2); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2 + 4); 
+		}
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vwsub)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:63]};
+        bins vl64 = {64};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs1 : coverpoint instr.vs1{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs1 : cross cp_lmul, cp_vd, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vd == cp_vs1); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vd == cp_vs1); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1 + 4); 
+		}
+		cp_regslmulvdvs2 : cross cp_lmul, cp_vd, cp_vs2{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vd == cp_vs2); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vd == cp_vs2); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs2); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2 + 4); 
+		}
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vzext)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:63]};
+        bins vl64 = {64};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs2 : cross cp_lmul, cp_vd, cp_vs2{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vd == cp_vs2); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vd == cp_vs2); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs2); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 1); 
+				bins emulless1_3    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 2); 
+				bins emulless1_4    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 3); 
+				bins emulless1_5    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 4); 
+				bins emulless1_6    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 5); 
+				bins emulless1_7    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 6); 
+				bins emulless1_8    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 7); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 2); 
+				bins emulless2_3    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 4); 
+				bins emulless2_4    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 6); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2 + 4); 
+		}
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vsext)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:63]};
+        bins vl64 = {64};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs2 : cross cp_lmul, cp_vd, cp_vs2{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vd == cp_vs2); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vd == cp_vs2); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs2); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 1); 
+				bins emulless1_3    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 2); 
+				bins emulless1_4    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 3); 
+				bins emulless1_5    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 4); 
+				bins emulless1_6    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 5); 
+				bins emulless1_7    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 6); 
+				bins emulless1_8    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 7); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 2); 
+				bins emulless2_3    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 4); 
+				bins emulless2_4    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 6); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2 + 4); 
+		}
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vadc)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmadc)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vsbc)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmsbc)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vand)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vor)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vxor)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vsll)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vsrl)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vsra)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vnsrl)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:63]};
+        bins vl64 = {64};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs1 : coverpoint instr.vs1{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvs2vd : cross cp_lmul, cp_vs2, cp_vd{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vs2 == cp_vd); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vs2 == cp_vd); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vs2 == cp_vd); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vd); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vd + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vd); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vd + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vd); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vd + 4); 
+		}
+		cp_regslmulvs2vs1 : cross cp_lmul, cp_vs2, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vs2 == cp_vs1); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vs2 == cp_vs1); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vs2 == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vs1 + 4); 
+		}
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vnsra)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:63]};
+        bins vl64 = {64};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs1 : coverpoint instr.vs1{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvs2vd : cross cp_lmul, cp_vs2, cp_vd{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vs2 == cp_vd); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vs2 == cp_vd); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vs2 == cp_vd); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vd); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vd + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vd); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vd + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vd); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vd + 4); 
+		}
+		cp_regslmulvs2vs1 : cross cp_lmul, cp_vs2, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vs2 == cp_vs1); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vs2 == cp_vs1); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vs2 == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vs1 + 4); 
+		}
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmseq)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmsne)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmsltu)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmslt)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmsleu)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmsle)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmsgtu)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmsgt)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vminu)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmin)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmaxu)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmax)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmul)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmulh)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmulhu)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmulhsu)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vdivu)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vdiv)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vremu)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vrem)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vwmulu)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:63]};
+        bins vl64 = {64};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs1 : coverpoint instr.vs1{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs1 : cross cp_lmul, cp_vd, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vd == cp_vs1); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vd == cp_vs1); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1 + 4); 
+		}
+		cp_regslmulvdvs2 : cross cp_lmul, cp_vd, cp_vs2{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vd == cp_vs2); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vd == cp_vs2); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs2); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2 + 4); 
+		}
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vwmul)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:63]};
+        bins vl64 = {64};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs1 : coverpoint instr.vs1{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs1 : cross cp_lmul, cp_vd, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vd == cp_vs1); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vd == cp_vs1); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1 + 4); 
+		}
+		cp_regslmulvdvs2 : cross cp_lmul, cp_vd, cp_vs2{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vd == cp_vs2); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vd == cp_vs2); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs2); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2 + 4); 
+		}
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vwmulsu)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:63]};
+        bins vl64 = {64};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs1 : coverpoint instr.vs1{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs1 : cross cp_lmul, cp_vd, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vd == cp_vs1); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vd == cp_vs1); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1 + 4); 
+		}
+		cp_regslmulvdvs2 : cross cp_lmul, cp_vd, cp_vs2{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vd == cp_vs2); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vd == cp_vs2); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs2); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2 + 4); 
+		}
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmacc)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vnmsac)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmadd)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vnmsub)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vwmaccu)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:63]};
+        bins vl64 = {64};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs1 : coverpoint instr.vs1{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs1 : cross cp_lmul, cp_vd, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vd == cp_vs1); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vd == cp_vs1); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1 + 4); 
+		}
+		cp_regslmulvdvs2 : cross cp_lmul, cp_vd, cp_vs2{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vd == cp_vs2); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vd == cp_vs2); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs2); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2 + 4); 
+		}
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vwmacc)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:63]};
+        bins vl64 = {64};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs1 : coverpoint instr.vs1{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs1 : cross cp_lmul, cp_vd, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vd == cp_vs1); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vd == cp_vs1); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1 + 4); 
+		}
+		cp_regslmulvdvs2 : cross cp_lmul, cp_vd, cp_vs2{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vd == cp_vs2); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vd == cp_vs2); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs2); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2 + 4); 
+		}
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vwmaccsu)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:63]};
+        bins vl64 = {64};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs1 : coverpoint instr.vs1{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs1 : cross cp_lmul, cp_vd, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vd == cp_vs1); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vd == cp_vs1); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1 + 4); 
+		}
+		cp_regslmulvdvs2 : cross cp_lmul, cp_vd, cp_vs2{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vd == cp_vs2); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vd == cp_vs2); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs2); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2 + 4); 
+		}
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vwmaccus)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:63]};
+        bins vl64 = {64};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs2 : cross cp_lmul, cp_vd, cp_vs2{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vd == cp_vs2); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vd == cp_vs2); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs2); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2 + 4); 
+		}
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmerge)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmv)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vsaddu)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vsadd)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vssubu)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vssub)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vaaddu)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vaadd)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vasubu)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vasub)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vsmul)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vssrl)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vssra)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vnclipu)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:63]};
+        bins vl64 = {64};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs1 : coverpoint instr.vs1{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvs2vd : cross cp_lmul, cp_vs2, cp_vd{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vs2 == cp_vd); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vs2 == cp_vd); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vs2 == cp_vd); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vd); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vd + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vd); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vd + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vd); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vd + 4); 
+		}
+		cp_regslmulvs2vs1 : cross cp_lmul, cp_vs2, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vs2 == cp_vs1); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vs2 == cp_vs1); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vs2 == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vs1 + 4); 
+		}
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vnclip)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:63]};
+        bins vl64 = {64};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs1 : coverpoint instr.vs1{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvs2vd : cross cp_lmul, cp_vs2, cp_vd{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vs2 == cp_vd); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vs2 == cp_vd); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vs2 == cp_vd); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vd); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vd + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vd); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vd + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vd); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vd + 4); 
+		}
+		cp_regslmulvs2vs1 : cross cp_lmul, cp_vs2, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} with (cp_vs2 == cp_vs1); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vs2 == cp_vs1); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vs2 == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vs1 + 4); 
+		}
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vfadd)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vfsub)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vfrsub)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vfwadd)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:15]};
+        bins vl16 = {16};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs1 : coverpoint instr.vs1{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs1 : cross cp_lmul, cp_vd, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1 + 4); 
+		}
+		cp_regslmulvdvs2 : cross cp_lmul, cp_vd, cp_vs2{
+        option.cross_auto_bin_max = 0;
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs2); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2 + 4); 
+		}
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vfwsub)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:15]};
+        bins vl16 = {16};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs1 : coverpoint instr.vs1{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs1 : cross cp_lmul, cp_vd, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1 + 4); 
+		}
+		cp_regslmulvdvs2 : cross cp_lmul, cp_vd, cp_vs2{
+        option.cross_auto_bin_max = 0;
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs2); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2 + 4); 
+		}
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vfmul)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vfdiv)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
 		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
-	  cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfsub)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfrdiv)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
 		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfrsub)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfwmul)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:15]};
+        bins vl16 = {16};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs1 : coverpoint instr.vs1{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs1 : cross cp_lmul, cp_vd, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1 + 4); 
+		}
+		cp_regslmulvdvs2 : cross cp_lmul, cp_vd, cp_vs2{
+        option.cross_auto_bin_max = 0;
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs2); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2 + 4); 
+		}
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vfmacc)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vfnmacc)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vfmsac)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vfnmsac)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vfmadd)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vfnmadd)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vfmsub)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vfnmsub)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vfwmacc)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:15]};
+        bins vl16 = {16};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs1 : coverpoint instr.vs1{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs1 : cross cp_lmul, cp_vd, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1 + 4); 
+		}
+		cp_regslmulvdvs2 : cross cp_lmul, cp_vd, cp_vs2{
+        option.cross_auto_bin_max = 0;
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs2); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2 + 4); 
+		}
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vfwnmacc)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:15]};
+        bins vl16 = {16};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs1 : coverpoint instr.vs1{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs1 : cross cp_lmul, cp_vd, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1 + 4); 
+		}
+		cp_regslmulvdvs2 : cross cp_lmul, cp_vd, cp_vs2{
+        option.cross_auto_bin_max = 0;
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs2); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2 + 4); 
+		}
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vfwmsac)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:15]};
+        bins vl16 = {16};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs1 : coverpoint instr.vs1{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs1 : cross cp_lmul, cp_vd, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1 + 4); 
+		}
+		cp_regslmulvdvs2 : cross cp_lmul, cp_vd, cp_vs2{
+        option.cross_auto_bin_max = 0;
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs2); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2 + 4); 
+		}
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vfwnmsac)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:15]};
+        bins vl16 = {16};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs1 : coverpoint instr.vs1{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs1 : cross cp_lmul, cp_vd, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1 + 4); 
+		}
+		cp_regslmulvdvs2 : cross cp_lmul, cp_vd, cp_vs2{
+        option.cross_auto_bin_max = 0;
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs2); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2 + 4); 
+		}
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vfsqrt_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+		cp_fflags4  : coverpoint instr.find_fflags[4];
+		cp_fflags2  : coverpoint instr.find_fflags[2];
+		cp_fflags1  : coverpoint instr.find_fflags[1];
+		cp_fflags0  : coverpoint instr.find_fflags[0];
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vfrsqrt7_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
 		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfwadd)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:15]};
-					 bins vlmax = {16};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfrec7_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
 		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VF = {4}; 
-    //       bins WV = {5}; 
-    //       bins WF = {8}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfwsub)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:15]};
-					 bins vlmax = {16};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfmin)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VF = {4}; 
-    //       bins WV = {5}; 
-    //       bins WF = {8}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfmul)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfmax)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfdiv)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfsgnj)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfrdiv)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfsgnjn)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfwmul)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:15]};
-					 bins vlmax = {16};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfsgnjx)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfmacc)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vmfeq)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfnmacc)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vmfne)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfmsac)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vmflt)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfnmsac)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vmfle)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfmadd)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vmfgt)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfnmadd)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vmfge)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfmsub)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfclass_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfnmsub)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfmerge)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfwmacc)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:15]};
-					 bins vlmax = {16};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfmv)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfwnmacc)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:15]};
-					 bins vlmax = {16};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfcvt_xu_f_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfwmsac)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:15]};
-					 bins vlmax = {16};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfcvt_x_f_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfwnmsac)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:15]};
-					 bins vlmax = {16};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfcvt_rtz_xu_f_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfsqrt_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfcvt_rtz_x_f_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfrsqrt7_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfcvt_f_xu_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfrec7_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfcvt_f_x_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfmin)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfwcvt_xu_f_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:15]};
+        bins vl16 = {16};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs2 : cross cp_lmul, cp_vd, cp_vs2{
+        option.cross_auto_bin_max = 0;
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs2); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2 + 4); 
+		}
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfmax)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfwcvt_x_f_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:15]};
+        bins vl16 = {16};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs2 : cross cp_lmul, cp_vd, cp_vs2{
+        option.cross_auto_bin_max = 0;
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs2); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2 + 4); 
+		}
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfsgnj)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfwcvt_rtz_xu_f_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:15]};
+        bins vl16 = {16};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs2 : cross cp_lmul, cp_vd, cp_vs2{
+        option.cross_auto_bin_max = 0;
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs2); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2 + 4); 
+		}
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfsgnjn)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfwcvt_rtz_x_f_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:15]};
+        bins vl16 = {16};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs2 : cross cp_lmul, cp_vd, cp_vs2{
+        option.cross_auto_bin_max = 0;
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs2); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2 + 4); 
+		}
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfsgnjx)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfwcvt_f_xu_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e16 = {16};
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs2 : cross cp_lmul, cp_vd, cp_vs2{
+        option.cross_auto_bin_max = 0;
+				bins emulless025   = binsof (cp_lmul) intersect {2} with (cp_vd == cp_vs2); 
+				bins emulless05    = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs2); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2 + 4); 
+		}
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vmfeq)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfwcvt_f_x_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e16 = {16};
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs2 : cross cp_lmul, cp_vd, cp_vs2{
+        option.cross_auto_bin_max = 0;
+				bins emulless025   = binsof (cp_lmul) intersect {2} with (cp_vd == cp_vs2); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs2); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2 + 4); 
+		}
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vmfne)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfwcvt_f_f_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:15]};
+        bins vl16 = {16};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs2 : cross cp_lmul, cp_vd, cp_vs2{
+        option.cross_auto_bin_max = 0;
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs2); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs2 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs2 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs2 + 4); 
+		}
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vmflt)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfncvt_xu_f_w)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e16 = {16};
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvs2vd : cross cp_lmul, cp_vs2, cp_vd{
+        option.cross_auto_bin_max = 0;
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vs2 == cp_vd); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vs2 == cp_vd); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vd); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vd + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vd); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vd + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vd); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vd + 4); 
+		}
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vmfle)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfncvt_x_f_w)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e16 = {16};
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvs2vd : cross cp_lmul, cp_vs2, cp_vd{
+        option.cross_auto_bin_max = 0;
+				bins emulless025  = binsof (cp_lmul) intersect {2} with (cp_vs2 == cp_vd); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vs2 == cp_vd); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vd); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vd + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vd); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vd + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vd); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vd + 4); 
+		}
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vmfgt)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfncvt_f_xu_w)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:15]};
+        bins vl16 = {16};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvs2vd : cross cp_lmul, cp_vs2, cp_vd{
+        option.cross_auto_bin_max = 0;
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vs2 == cp_vd); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vd); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vd + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vd); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vd + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vd); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vd + 4); 
+		}
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vmfge)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfncvt_f_x_w)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:15]};
+        bins vl16 = {16};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvs2vd : cross cp_lmul, cp_vs2, cp_vd{
+        option.cross_auto_bin_max = 0;
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vs2 == cp_vd); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vd); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vd + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vd); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vd + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vd); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vd + 4); 
+		}
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfclass_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfncvt_f_f_w)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:15]};
+        bins vl16 = {16};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvs2vd : cross cp_lmul, cp_vs2, cp_vd{
+        option.cross_auto_bin_max = 0;
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vs2 == cp_vd); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vd); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vd + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vd); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vd + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vd); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vd + 4); 
+		}
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfmerge)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfncvt_rod_f_f_w)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VFM = {12}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:15]};
+        bins vl16 = {16};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvs2vd : cross cp_lmul, cp_vs2, cp_vd{
+        option.cross_auto_bin_max = 0;
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vs2 == cp_vd); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vd); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vd + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vd); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vd + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vd); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vd + 4); 
+		}
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfmv)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+
+`V_INSTR_CG_BEGIN(vredsum_vs)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vredmaxu_vs)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vredmax_vs)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vredminu_vs)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vredmin_vs)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vredand_vs)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vredor_vs)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vredxor_vs)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vwredsumu_vs)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs1 : coverpoint instr.vs1{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs1 : cross cp_lmul, cp_vd, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125   = binsof (cp_lmul) intersect {1} with (cp_vd == cp_vs1); 
+				bins emulless025   = binsof (cp_lmul) intersect {2} with (cp_vd == cp_vs1); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1 + 4); 
+				bins emulless8_1    = binsof (cp_lmul) intersect {7} with (cp_vd == cp_vs1); 
+				bins emulless8_2    = binsof (cp_lmul) intersect {7} with (cp_vd == cp_vs1 + 8); 
+		}
+		cp_regslmulvs2vs1 : cross cp_lmul, cp_vs2, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125   = binsof (cp_lmul) intersect {1} with (cp_vs2 == cp_vs1); 
+				bins emulless025   = binsof (cp_lmul) intersect {2} with (cp_vs2 == cp_vs1); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vs2 == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vs1 + 4); 
+				bins emulless8_1    = binsof (cp_lmul) intersect {7} with (cp_vs2 == cp_vs1); 
+				bins emulless8_2    = binsof (cp_lmul) intersect {7} with (cp_vs2 == cp_vs1 + 8); 
+		}
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vwredsum_vs)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs1 : coverpoint instr.vs1{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs1 : cross cp_lmul, cp_vd, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125   = binsof (cp_lmul) intersect {1} with (cp_vd == cp_vs1); 
+				bins emulless025   = binsof (cp_lmul) intersect {2} with (cp_vd == cp_vs1); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1 + 4); 
+				bins emulless8_1    = binsof (cp_lmul) intersect {7} with (cp_vd == cp_vs1); 
+				bins emulless8_2    = binsof (cp_lmul) intersect {7} with (cp_vd == cp_vs1 + 8); 
+		}
+		cp_regslmulvs2vs1 : cross cp_lmul, cp_vs2, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125   = binsof (cp_lmul) intersect {1} with (cp_vs2 == cp_vs1); 
+				bins emulless025   = binsof (cp_lmul) intersect {2} with (cp_vs2 == cp_vs1); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vs2 == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vs1 + 4); 
+				bins emulless8_1    = binsof (cp_lmul) intersect {7} with (cp_vs2 == cp_vs1); 
+				bins emulless8_2    = binsof (cp_lmul) intersect {7} with (cp_vs2 == cp_vs1 + 8); 
+		}
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vfredosum_vs)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfcvt_xu_f_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfredusum_vs)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfcvt_x_f_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfredmax_vs)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfcvt_rtz_xu_f_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfredmin_vs)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfcvt_rtz_x_f_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfwredosum_vs)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
     cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs1 : coverpoint instr.vs1{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs1 : cross cp_lmul, cp_vd, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1 + 4); 
+				bins emulless8_1    = binsof (cp_lmul) intersect {7} with (cp_vd == cp_vs1); 
+				bins emulless8_2    = binsof (cp_lmul) intersect {7} with (cp_vd == cp_vs1 + 8); 
+		}
+		cp_regslmulvs2vs1 : cross cp_lmul, cp_vs2, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vs2 == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vs1 + 4); 
+				bins emulless8_1    = binsof (cp_lmul) intersect {7} with (cp_vs2 == cp_vs1); 
+				bins emulless8_2    = binsof (cp_lmul) intersect {7} with (cp_vs2 == cp_vs1 + 8); 
+		}
+`CG_END
 
-  `V_INSTR_CG_BEGIN(vfcvt_f_xu_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
+
+`V_INSTR_CG_BEGIN(vfwredusum_vs)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
 		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
 		cp_fflags2  : coverpoint instr.find_fflags[2];
 		cp_fflags1  : coverpoint instr.find_fflags[1];
 		cp_fflags0  : coverpoint instr.find_fflags[0];
     cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vfcvt_f_x_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
-		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
-		cp_fflags2  : coverpoint instr.find_fflags[2];
-		cp_fflags1  : coverpoint instr.find_fflags[1];
-		cp_fflags0  : coverpoint instr.find_fflags[0];
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vfwcvt_xu_f_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:15]};
-					 bins vlmax = {16};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
-		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
-		cp_fflags2  : coverpoint instr.find_fflags[2];
-		cp_fflags1  : coverpoint instr.find_fflags[1];
-		cp_fflags0  : coverpoint instr.find_fflags[0];
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vfwcvt_x_f_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:15]};
-					 bins vlmax = {16};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
-		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
-		cp_fflags2  : coverpoint instr.find_fflags[2];
-		cp_fflags1  : coverpoint instr.find_fflags[1];
-		cp_fflags0  : coverpoint instr.find_fflags[0];
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vfwcvt_rtz_xu_f_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:15]};
-					 bins vlmax = {16};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
-		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
-		cp_fflags2  : coverpoint instr.find_fflags[2];
-		cp_fflags1  : coverpoint instr.find_fflags[1];
-		cp_fflags0  : coverpoint instr.find_fflags[0];
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vfwcvt_rtz_x_f_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:15]};
-					 bins vlmax = {16};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
-		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
-		cp_fflags2  : coverpoint instr.find_fflags[2];
-		cp_fflags1  : coverpoint instr.find_fflags[1];
-		cp_fflags0  : coverpoint instr.find_fflags[0];
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vfwcvt_f_xu_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
-		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
-		cp_fflags2  : coverpoint instr.find_fflags[2];
-		cp_fflags1  : coverpoint instr.find_fflags[1];
-		cp_fflags0  : coverpoint instr.find_fflags[0];
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vfwcvt_f_x_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
-		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
-		cp_fflags2  : coverpoint instr.find_fflags[2];
-		cp_fflags1  : coverpoint instr.find_fflags[1];
-		cp_fflags0  : coverpoint instr.find_fflags[0];
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vfwcvt_f_f_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:15]};
-					 bins vlmax = {16};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
-		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
-		cp_fflags2  : coverpoint instr.find_fflags[2];
-		cp_fflags1  : coverpoint instr.find_fflags[1];
-		cp_fflags0  : coverpoint instr.find_fflags[0];
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vfncvt_xu_f_w)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
-		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
-		cp_fflags2  : coverpoint instr.find_fflags[2];
-		cp_fflags1  : coverpoint instr.find_fflags[1];
-		cp_fflags0  : coverpoint instr.find_fflags[0];
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vfncvt_x_f_w)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
-		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
-		cp_fflags2  : coverpoint instr.find_fflags[2];
-		cp_fflags1  : coverpoint instr.find_fflags[1];
-		cp_fflags0  : coverpoint instr.find_fflags[0];
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vfncvt_f_xu_w)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:15]};
-					 bins vlmax = {16};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
-		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
-		cp_fflags2  : coverpoint instr.find_fflags[2];
-		cp_fflags1  : coverpoint instr.find_fflags[1];
-		cp_fflags0  : coverpoint instr.find_fflags[0];
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vfncvt_f_x_w)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:15]};
-					 bins vlmax = {16};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
-		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
-		cp_fflags2  : coverpoint instr.find_fflags[2];
-		cp_fflags1  : coverpoint instr.find_fflags[1];
-		cp_fflags0  : coverpoint instr.find_fflags[0];
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vfncvt_f_f_w)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:15]};
-					 bins vlmax = {16};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
-		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
-		cp_fflags2  : coverpoint instr.find_fflags[2];
-		cp_fflags1  : coverpoint instr.find_fflags[1];
-		cp_fflags0  : coverpoint instr.find_fflags[0];
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vfncvt_rod_f_f_w)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:15]};
-					 bins vlmax = {16};
-				 }
-    cp_frm  : coverpoint instr.find_frm[2:0];
-		cp_fflags4  : coverpoint instr.find_fflags[4];
-		cp_fflags3  : coverpoint instr.find_fflags[3];
-		cp_fflags2  : coverpoint instr.find_fflags[2];
-		cp_fflags1  : coverpoint instr.find_fflags[1];
-		cp_fflags0  : coverpoint instr.find_fflags[0];
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vredsum_vs)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vredmaxu_vs)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vredmax_vs)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vredminu_vs)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vredmin_vs)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vredand_vs)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vredor_vs)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vredxor_vs)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vwredsumu_vs)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vwredsum_vs)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vfredosum_vs)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vfredusum_vs)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vfredmax_vs)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vfredmin_vs)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vfwredosum_vs)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:15]};
-					 bins vlmax = {16};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vfwredusum_vs)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:15]};
-					 bins vlmax = {16};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmand_mm)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmnand_mm)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmandn_mm)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmxor_mm)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmor_mm)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmnor_mm)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmorn_mm)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmxnor_mm)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vpopc_m)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vfirst_m)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmsbf_m)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmsif_m)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmsof_m)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(viota_m)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vid_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmv_x_s)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmv_s_x)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vfmv_f_s)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vfmv_s_f)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vslideup)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VI = {2}; 
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vslidedown)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VI = {2}; 
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vslide1up)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vfslide1up)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vslide1down)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VX = {3}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vfslide1down)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VF = {4}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vrgather)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VI = {2}; 
-    //       bins VX = {3}; 
-    //       bins VV = {1}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vrgatherei16)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VV = {1}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vcompress)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-    //cp_variant : coverpoint instr.find_int_va_variant{
-    //       bins VM = {14}; 
-    //    }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmv1r_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:15]};
-					 bins vlmax = {16};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmv2r_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:31]};
-					 bins vlmax = {32};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmv4r_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:63]};
-					 bins vlmax = {64};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vmv8r_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vle_v)
-	  cp_vl   : coverpoint instr.find_vl{
-           bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vse_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vlm_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vsm_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vlse_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vsse_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vluxei_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vloxei_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vsuxei_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vsoxei_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vleff_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vlsege_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vssege_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vlsegeff_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vlssege_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vsssege_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vluxsegei_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vloxsegei_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vsuxsegei_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vsoxsegei_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vlre_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-  `V_INSTR_CG_BEGIN(vsr_v)
-	  cp_vl   : coverpoint instr.find_vl{
-			     bins vl0 = {0};
-					 bins vl0vlmax = {[1:127]};
-					 bins vlmax = {128};
-				 }
-    cp_lmul : coverpoint instr.find_int_lmul{
-           bins m0125 = {1}; 
-           bins m025 = {2}; 
-           bins m05 = {3}; 
-           bins m1 = {4}; 
-           bins m2 = {5}; 
-           bins m4 = {6}; 
-           bins m8 = {7}; 
-        }
-    cp_sew : coverpoint instr.find_sew{
-           bins e8 = {8}; 
-           bins e16 = {16}; 
-           bins e32 = {32}; 
-           bins e64 = {64}; 
-        }
-  `CG_END
-
-	//covergroup allreg_cg with function sample(riscv_vector_instr instr);
-	//	 cp_vd : coverpoint instr.vd;
-	//	 cp_rs1 : coverpoint instr.rs1;
-	//	 cp_rs2 : coverpoint instr.rs2;
-	//	 cp_vs1 : coverpoint instr.vs1;
-	//	 cp_fs1 : coverpoint instr.fs1;
-	//	 cp_vs2 : coverpoint instr.vs2;
-	//	 cp_vs3 : coverpoint instr.vs3;
-	//endgroup
-
-	//covergroup reg_permutation_cg with function sample(riscv_vector_instr instr);
-	//	 cp_rd : coverpoint instr.rd;
-	//	 cp_fd : coverpoint instr.fd;
-	//	 cp_vd : coverpoint instr.vd;
-	//	 cp_rs1 : coverpoint instr.rs1;
-	//	 cp_fs1 : coverpoint instr.fs1;
-	//	 cp_vs1 : coverpoint instr.vs1;
-	//	 cp_vs2 : coverpoint instr.vs2;
-	//endgroup
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e32 = {32};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+    }
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs1 : coverpoint instr.vs1{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvdvs1 : cross cp_lmul, cp_vd, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vd == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vd == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vd == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vd == cp_vs1 + 4); 
+				bins emulless8_1    = binsof (cp_lmul) intersect {7} with (cp_vd == cp_vs1); 
+				bins emulless8_2    = binsof (cp_lmul) intersect {7} with (cp_vd == cp_vs1 + 8); 
+		}
+		cp_regslmulvs2vs1 : cross cp_lmul, cp_vs2, cp_vs1{
+        option.cross_auto_bin_max = 0;
+				bins emulless05   = binsof (cp_lmul) intersect {3} with (cp_vs2 == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} with (cp_vs2 == cp_vs1 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} with (cp_vs2 == cp_vs1 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} with (cp_vs2 == cp_vs1 + 4); 
+				bins emulless8_1    = binsof (cp_lmul) intersect {7} with (cp_vs2 == cp_vs1); 
+				bins emulless8_2    = binsof (cp_lmul) intersect {7} with (cp_vs2 == cp_vs1 + 8); 
+		}
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmand_mm)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmnand_mm)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmandn_mm)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmxor_mm)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmor_mm)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmnor_mm)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmorn_mm)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmxnor_mm)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vpopc_m)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vfirst_m)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmsbf_m)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmsif_m)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmsof_m)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(viota_m)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vid_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmv_x_s)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmv_s_x)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vfmv_f_s)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vfmv_s_f)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vslideup)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vslidedown)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vslide1up)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vfslide1up)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vslide1down)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vfslide1down)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:31]};
+        bins vl32 = {32};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vrgather)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vrgatherei16)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+        ignore_bins m8e8 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+		}
+		cp_vd : coverpoint instr.vd{
+			type_option.weight = 0; 
+		}
+		cp_vs1 : coverpoint instr.vs1{
+			type_option.weight = 0; 
+		}
+		cp_vs2 : coverpoint instr.vs2{
+			type_option.weight = 0; 
+		}
+		cp_regslmulvs1vd : cross cp_lmul, cp_vs1, cp_vd,cp_sew{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} && binsof (cp_sew) intersect {8} with (cp_vs1 == cp_vd); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} && binsof (cp_sew) intersect {8} with (cp_vs1 == cp_vd); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} && binsof (cp_sew) intersect {8} with (cp_vs1 == cp_vd); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} && binsof (cp_sew) intersect {8} with (cp_vs1 == cp_vd); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} && binsof (cp_sew) intersect {8} with (cp_vs1 == cp_vd + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} && binsof (cp_sew) intersect {8} with (cp_vs1 == cp_vd); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} && binsof (cp_sew) intersect {8} with (cp_vs1 == cp_vd + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} && binsof (cp_sew) intersect {8} with (cp_vs1 == cp_vd); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} && binsof (cp_sew) intersect {8} with (cp_vs1 == cp_vd + 4); 
+		}
+		cp_regslmulvs1vs2 : cross cp_lmul, cp_vs1, cp_vs2,cp_sew{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} && binsof (cp_sew) intersect {8} with (cp_vs1 == cp_vs2); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} && binsof (cp_sew) intersect {8} with (cp_vs1 == cp_vs2); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} && binsof (cp_sew) intersect {8} with (cp_vs1 == cp_vs2); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} && binsof (cp_sew) intersect {8} with (cp_vs1 == cp_vs2); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} && binsof (cp_sew) intersect {8} with (cp_vs1 == cp_vs2 + 1); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} && binsof (cp_sew) intersect {8} with (cp_vs1 == cp_vs2); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} && binsof (cp_sew) intersect {8} with (cp_vs1 == cp_vs2 + 2); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} && binsof (cp_sew) intersect {8} with (cp_vs1 == cp_vs2); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} && binsof (cp_sew) intersect {8} with (cp_vs1 == cp_vs2 + 4); 
+		}
+		cp_regslmulvdvs1 : cross cp_lmul, cp_vd, cp_vs1,cp_sew{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} && binsof (cp_sew) intersect {32,64} with (cp_vd == cp_vs1); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} && binsof (cp_sew) intersect {32,64} with (cp_vd == cp_vs1); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} && binsof (cp_sew) intersect {32,64} with (cp_vd == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} && binsof (cp_sew) intersect {32,64} with (cp_vd == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} && binsof (cp_sew) intersect {32,64} with (cp_vd == cp_vs1 + 1); 
+				bins emulless1_3    = binsof (cp_lmul) intersect {4} && binsof (cp_sew) intersect {64} with (cp_vd == cp_vs1 + 2); 
+				bins emulless1_4    = binsof (cp_lmul) intersect {4} && binsof (cp_sew) intersect {64} with (cp_vd == cp_vs1 + 3); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} && binsof (cp_sew) intersect {32,64} with (cp_vd == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} && binsof (cp_sew) intersect {32,64} with (cp_vd == cp_vs1 + 2); 
+				bins emulless2_3    = binsof (cp_lmul) intersect {5} && binsof (cp_sew) intersect {64} with (cp_vd == cp_vs1 + 4); 
+				bins emulless2_4    = binsof (cp_lmul) intersect {5} && binsof (cp_sew) intersect {64} with (cp_vd == cp_vs1 + 6); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} && binsof (cp_sew) intersect {32,64} with (cp_vd == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} && binsof (cp_sew) intersect {32,64} with (cp_vd == cp_vs1 + 4); 
+		}
+		cp_regslmulvs2vs1 : cross cp_lmul, cp_vs2, cp_vs1,cp_sew{
+        option.cross_auto_bin_max = 0;
+				bins emulless0125 = binsof (cp_lmul) intersect {1} && binsof (cp_sew) intersect {32,64} with (cp_vs2 == cp_vs1); 
+				bins emulless025  = binsof (cp_lmul) intersect {2} && binsof (cp_sew) intersect {32,64} with (cp_vs2 == cp_vs1); 
+				bins emulless05   = binsof (cp_lmul) intersect {3} && binsof (cp_sew) intersect {32,64} with (cp_vs2 == cp_vs1); 
+				bins emulless1_1    = binsof (cp_lmul) intersect {4} && binsof (cp_sew) intersect {32,64} with (cp_vs2 == cp_vs1); 
+				bins emulless1_2    = binsof (cp_lmul) intersect {4} && binsof (cp_sew) intersect {32,64} with (cp_vs2 == cp_vs1 + 1); 
+				bins emulless1_3    = binsof (cp_lmul) intersect {4} && binsof (cp_sew) intersect {64} with (cp_vs2 == cp_vs1 + 2); 
+				bins emulless1_4    = binsof (cp_lmul) intersect {4} && binsof (cp_sew) intersect {64} with (cp_vs2 == cp_vs1 + 3); 
+				bins emulless2_1    = binsof (cp_lmul) intersect {5} && binsof (cp_sew) intersect {32,64} with (cp_vs2 == cp_vs1); 
+				bins emulless2_2    = binsof (cp_lmul) intersect {5} && binsof (cp_sew) intersect {32,64} with (cp_vs2 == cp_vs1 + 2); 
+				bins emulless2_3    = binsof (cp_lmul) intersect {5} && binsof (cp_sew) intersect {64} with (cp_vs2 == cp_vs1 + 4); 
+				bins emulless2_4    = binsof (cp_lmul) intersect {5} && binsof (cp_sew) intersect {64} with (cp_vs2 == cp_vs1 + 6); 
+				bins emulless4_1    = binsof (cp_lmul) intersect {6} && binsof (cp_sew) intersect {32,64} with (cp_vs2 == cp_vs1); 
+				bins emulless4_2    = binsof (cp_lmul) intersect {6} && binsof (cp_sew) intersect {32,64} with (cp_vs2 == cp_vs1 + 4); 
+		}
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vcompress)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmv1r_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmv2r_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmv4r_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vmv8r_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vle_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vse_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vlm_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vsm_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vlse_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vsse_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vluxei_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vloxei_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vsuxei_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vsoxei_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vleff_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vlsege_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+        ignore_bins m8e8 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vssege_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+        ignore_bins m8e8 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vlsegeff_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+        ignore_bins m8e8 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vlssege_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+        ignore_bins m8e8 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vsssege_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+        ignore_bins m8e8 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vluxsegei_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:63]};
+        bins vl64 = {64};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vloxsegei_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:63]};
+        bins vl64 = {64};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vsuxsegei_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:63]};
+        bins vl64 = {64};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vsoxsegei_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:63]};
+        bins vl64 = {64};
+    }
+    cp_vm : coverpoint instr.find_vm;
+    cp_vmvma : cross cp_vm, cp_vma{
+        ignore_bins vm1 = binsof(cp_vm) intersect {1};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+        ignore_bins m0125e64 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64};
+        ignore_bins m0125e32 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32};
+        ignore_bins m0125e16 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16};
+        ignore_bins m025e64 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64};
+        ignore_bins m025e32 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32};
+        ignore_bins m05e64 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64};
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vlre_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m0125e16vl1 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {1};
+        bins m0125e32vl0 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {0};
+        bins m0125e64vl0 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {0};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m025e32vl1 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {1};
+        bins m025e64vl0 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {0};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m05e64vl1 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {1};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
+`V_INSTR_CG_BEGIN(vsr_v)
+cp_vma : coverpoint instr.find_vma;
+    cp_vta : coverpoint instr.find_vta;
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+    cp_sew : coverpoint instr.find_sew{
+        bins e8 = {8};
+        bins e16 = {16};
+        bins e32 = {32};
+        bins e64 = {64};
+    }
+    cp_vl : coverpoint instr.find_vl{
+        bins vl0 = {0};
+        bins vl0vlmax = {[0:127]};
+        bins vl128 = {128};
+    }
+    cp_lmulsew : cross cp_lmul, cp_sew {
+    }
+    cp_lmulsewvl : cross cp_lmul, cp_sew ,cp_vl{
+        option.cross_auto_bin_max = 0;
+        bins m0125e8vl2 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {2};
+        bins m0125e16vl1 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {1};
+        bins m0125e32vl0 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {0};
+        bins m0125e64vl0 = binsof(cp_lmul) intersect {1} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {0};
+        bins m025e8vl4 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {4};
+        bins m025e16vl2 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {2};
+        bins m025e32vl1 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {1};
+        bins m025e64vl0 = binsof(cp_lmul) intersect {2} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {0};
+        bins m05e8vl8 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {8};
+        bins m05e16vl4 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {4};
+        bins m05e32vl2 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {2};
+        bins m05e64vl1 = binsof(cp_lmul) intersect {3} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {1};
+        bins m1e8vl16 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {16};
+        bins m1e16vl8 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {8};
+        bins m1e32vl4 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {4};
+        bins m1e64vl2 = binsof(cp_lmul) intersect {4} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {2};
+        bins m2e8vl32 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {32};
+        bins m2e16vl16 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {16};
+        bins m2e32vl8 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {8};
+        bins m2e64vl4 = binsof(cp_lmul) intersect {5} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {4};
+        bins m4e8vl64 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {64};
+        bins m4e16vl32 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {32};
+        bins m4e32vl16 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {16};
+        bins m4e64vl8 = binsof(cp_lmul) intersect {6} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {8};
+        bins m8e8vl128 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {8} && binsof(cp_vl) intersect {128};
+        bins m8e16vl64 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {16} && binsof(cp_vl) intersect {64};
+        bins m8e32vl32 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {32} && binsof(cp_vl) intersect {32};
+        bins m8e64vl16 = binsof(cp_lmul) intersect {7} && binsof(cp_sew) intersect {64} && binsof(cp_vl) intersect {16};
+    }
+`CG_END
+
+
   
 	covergroup vsetvli_cg with function sample(bit vsetvli_valid);
      cp_vsetvli : coverpoint vsetvli_valid{
@@ -5696,38 +11665,165 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
      cp_vdrd         : coverpoint binary[11:7];
      cp_vs1rs1simm5  : coverpoint binary[19:15];
      cp_vs2          : coverpoint binary[24:20];
+     cp_vm           : coverpoint binary[25];
      cp_func3fun6    : coverpoint {binary[31:25],binary[14:12]}{
-			 wildcard ignore_bins func3111 = {10'b???????111};
-			 option.auto_bin_max = 1024;
+		   wildcard ignore_bins func3111 = {10'b???????111};
+		   option.auto_bin_max = 1024;
+		 }
+		 cp_regs : cross cp_vdrd,cp_vs1rs1simm5,cp_vs2,cp_func3fun6{
+		   			option.cross_auto_bin_max = 0;
+            wildcard bins vs1vs2000 = binsof (cp_func3fun6) intersect {10'b???????000} with (cp_vs1rs1simm5 == cp_vs2 != cp_vdrd);
+            wildcard bins vs1vs2001 = binsof (cp_func3fun6) intersect {10'b???????001} with (cp_vs1rs1simm5 == cp_vs2 != cp_vdrd);
+            wildcard bins vs1vs2010 = binsof (cp_func3fun6) intersect {10'b???????010} with (cp_vs1rs1simm5 == cp_vs2 != cp_vdrd);
+            wildcard bins vs1vs2011 = binsof (cp_func3fun6) intersect {10'b???????011} with (cp_vs1rs1simm5 == cp_vs2 != cp_vdrd);
+            wildcard bins vs1vs2101 = binsof (cp_func3fun6) intersect {10'b???????101} with (cp_vs1rs1simm5 == cp_vs2 != cp_vdrd);
+            wildcard bins vs1vs2110 = binsof (cp_func3fun6) intersect {10'b???????110} with (cp_vs1rs1simm5 == cp_vs2 != cp_vdrd);
+            wildcard bins vs1vs2100 = binsof (cp_func3fun6) intersect {10'b???????100} with (cp_vs1rs1simm5 == cp_vs2 != cp_vdrd);
+            wildcard bins vdvs1000 = binsof(cp_func3fun6) intersect {10'b???????000} with (cp_vdrd == cp_vs1rs1simm5 != cp_vs2);
+            wildcard bins vdvs1001 = binsof(cp_func3fun6) intersect {10'b???????001} with (cp_vdrd == cp_vs1rs1simm5 != cp_vs2);
+            wildcard bins vdvs1010 = binsof(cp_func3fun6) intersect {10'b???????010} with (cp_vdrd == cp_vs1rs1simm5 != cp_vs2);
+            wildcard bins vdvs1011 = binsof(cp_func3fun6) intersect {10'b???????011} with (cp_vdrd == cp_vs1rs1simm5 != cp_vs2);
+            wildcard bins vdvs1101 = binsof(cp_func3fun6) intersect {10'b???????101} with (cp_vdrd == cp_vs1rs1simm5 != cp_vs2);
+            wildcard bins vdvs1110 = binsof(cp_func3fun6) intersect {10'b???????110} with (cp_vdrd == cp_vs1rs1simm5 != cp_vs2);
+            wildcard bins vdvs1100 = binsof(cp_func3fun6) intersect {10'b???????100} with (cp_vdrd == cp_vs1rs1simm5 != cp_vs2);
+            wildcard bins vdvs2000 = binsof(cp_func3fun6) intersect {10'b???????000} with (cp_vdrd == cp_vs2 != cp_vs1rs1simm5);
+            wildcard bins vdvs2001 = binsof(cp_func3fun6) intersect {10'b???????001} with (cp_vdrd == cp_vs2 != cp_vs1rs1simm5);
+            wildcard bins vdvs2010 = binsof(cp_func3fun6) intersect {10'b???????010} with (cp_vdrd == cp_vs2 != cp_vs1rs1simm5);
+            wildcard bins vdvs2011 = binsof(cp_func3fun6) intersect {10'b???????011} with (cp_vdrd == cp_vs2 != cp_vs1rs1simm5);
+            wildcard bins vdvs2101 = binsof(cp_func3fun6) intersect {10'b???????101} with (cp_vdrd == cp_vs2 != cp_vs1rs1simm5);
+            wildcard bins vdvs2110 = binsof(cp_func3fun6) intersect {10'b???????110} with (cp_vdrd == cp_vs2 != cp_vs1rs1simm5);
+            wildcard bins vdvs2100 = binsof(cp_func3fun6) intersect {10'b???????100} with (cp_vdrd == cp_vs2 != cp_vs1rs1simm5);
+            wildcard bins vdvs1vs2000 = binsof(cp_func3fun6) intersect {10'b???????000} with (cp_vdrd == cp_vs1rs1simm5 == cp_vs2);
+            wildcard bins vdvs1vs2001 = binsof(cp_func3fun6) intersect {10'b???????001} with (cp_vdrd == cp_vs1rs1simm5 == cp_vs2);
+            wildcard bins vdvs1vs2010 = binsof(cp_func3fun6) intersect {10'b???????010} with (cp_vdrd == cp_vs1rs1simm5 == cp_vs2);
+            wildcard bins vdvs1vs2011 = binsof(cp_func3fun6) intersect {10'b???????011} with (cp_vdrd == cp_vs1rs1simm5 == cp_vs2);
+            wildcard bins vdvs1vs2101 = binsof(cp_func3fun6) intersect {10'b???????101} with (cp_vdrd == cp_vs1rs1simm5 == cp_vs2);
+            wildcard bins vdvs1vs2110 = binsof(cp_func3fun6) intersect {10'b???????110} with (cp_vdrd == cp_vs1rs1simm5 == cp_vs2);
+            wildcard bins vdvs1vs2100 = binsof(cp_func3fun6) intersect {10'b???????100} with (cp_vdrd == cp_vs1rs1simm5 == cp_vs2);
+		 }
+		 cp_vmregs : cross cp_vm, cp_vdrd, cp_vs1rs1simm5, cp_vs2{
+		   			option.cross_auto_bin_max = 0;
+            bins vdrd00000  = binsof(cp_vm) intersect {1'b0} with (cp_vdrd == 5'b00000);
+		  			bins vs100000 = binsof(cp_vm) intersect {1'b0} with (cp_vs1rs1simm5 == 5'b00000);
+		  			bins vs200000 = binsof(cp_vm) intersect {1'b0} with (cp_vs2 == 5'b00000);
 		 }
 	endgroup
 
 	covergroup load_cg with function sample(bit [31:0] binary);
+     cp_vm           : coverpoint binary[25];
      cp_vdvs3        : coverpoint binary[11:7];
      cp_vs1          : coverpoint binary[19:15];
      cp_lumoprs2vs2  : coverpoint binary[24:20];
      cp_nfmewmopvmwidth    : coverpoint {binary[31:25],binary[14:12]}{
-			 option.auto_bin_max = 1024;
-			 wildcard ignore_bins func3001 = {10'b???????001};
-			 wildcard ignore_bins func3010 = {10'b???????010};
-			 wildcard ignore_bins func3100 = {10'b???????100};
+		   option.auto_bin_max = 1024;
+		   wildcard ignore_bins func3001 = {10'b???????001};
+		   wildcard ignore_bins func3010 = {10'b???????010};
+		   wildcard ignore_bins func3100 = {10'b???????100};
+		 }
+		 cp_unitstrided : cross cp_nfmewmopvmwidth,cp_lumoprs2vs2{
+       wildcard ignore_bins mop11 = binsof (cp_nfmewmopvmwidth) intersect {10'b????11????}; 
+       wildcard ignore_bins mop10 = binsof (cp_nfmewmopvmwidth) intersect {10'b????10????}; 
+       wildcard ignore_bins mop01 = binsof (cp_nfmewmopvmwidth) intersect {10'b????01????}; 
+		   ignore_bins lumup = binsof (cp_lumoprs2vs2) intersect {5'b00001,5'b00010,5'b00011,5'b00100,5'b00101,5'b00110,5'b00111,5'b01001,5'b01010,5'b01100,5'b01101,5'b01110,5'b01111,5'b10001,5'b10010,5'b10011,5'b10100,5'b10101,5'b10110,5'b10111,5'b11000,5'b11001,5'b11010,5'b11011,5'b11100,5'b11101,5'b11110,5'b11111};
+		 }
+		 cp_indexed : cross cp_nfmewmopvmwidth,cp_vdvs3,cp_lumoprs2vs2{
+		   option.cross_auto_bin_max = 0;
+       wildcard bins mop01 = binsof (cp_nfmewmopvmwidth) intersect {10'b????01????} with (cp_vdvs3 == cp_lumoprs2vs2); 
+       wildcard bins mop11 = binsof (cp_nfmewmopvmwidth) intersect {10'b????11????} with (cp_vdvs3 == cp_lumoprs2vs2); 
+		 }
+		 cp_vmregs : cross cp_vm, cp_vdvs3, cp_vs1, cp_lumoprs2vs2{
+		   			option.cross_auto_bin_max = 0;
+            bins vdvs300000  = binsof(cp_vm) intersect {1'b0} with (cp_vdvs3 == 5'b00000);
+		  			bins vs200000 = binsof(cp_vm) intersect {1'b0} with (cp_lumoprs2vs2 == 5'b00000);
 		 }
 	endgroup
 
 	covergroup store_cg with function sample(bit [31:0] binary);
+     cp_vm           : coverpoint binary[25];
      cp_vdvs3        : coverpoint binary[11:7];
      cp_vs1          : coverpoint binary[19:15];
      cp_sumoprs2vs2  : coverpoint binary[24:20];
      cp_nfmewmopvmwidth    : coverpoint {binary[31:25],binary[14:12]}{
-			 option.auto_bin_max = 1024;
-			 wildcard ignore_bins func3001 = {10'b???????001};
-			 wildcard ignore_bins func3010 = {10'b???????010};
-			 wildcard ignore_bins func3100 = {10'b???????100};
+		   option.auto_bin_max = 1024;
+		   wildcard ignore_bins func3001 = {10'b???????001};
+		   wildcard ignore_bins func3010 = {10'b???????010};
+		   wildcard ignore_bins func3100 = {10'b???????100};
+		 }
+		 cp_unitstrided : cross cp_nfmewmopvmwidth,cp_sumoprs2vs2{
+       wildcard ignore_bins mop11 = binsof (cp_nfmewmopvmwidth) intersect {10'b????11????}; 
+       wildcard ignore_bins mop10 = binsof (cp_nfmewmopvmwidth) intersect {10'b????10????}; 
+       wildcard ignore_bins mop01 = binsof (cp_nfmewmopvmwidth) intersect {10'b????01????}; 
+		   ignore_bins sumup = binsof (cp_sumoprs2vs2) intersect {5'b00001,5'b00010,5'b00011,5'b00100,5'b00101,5'b00110,5'b00111,5'b01001,5'b01010,5'b01100,5'b01101,5'b01110,5'b01111,5'b10001,5'b10010,5'b10011,5'b10100,5'b10101,5'b10110,5'b10111,5'b11000,5'b11001,5'b11010,5'b11011,5'b11100,5'b11101,5'b11110,5'b11111,5'b10000};
+		 }
+		 cp_indexed : cross cp_nfmewmopvmwidth,cp_vdvs3,cp_sumoprs2vs2{
+		   option.cross_auto_bin_max = 0;
+       wildcard bins mop01 = binsof (cp_nfmewmopvmwidth) intersect {10'b????01????} with (cp_vdvs3 == cp_sumoprs2vs2); 
+       wildcard bins mop11 = binsof (cp_nfmewmopvmwidth) intersect {10'b????11????} with (cp_vdvs3 == cp_sumoprs2vs2); 
+		 }
+		 cp_vmregs : cross cp_vm, cp_vdvs3, cp_vs1, cp_sumoprs2vs2{
+		   			option.cross_auto_bin_max = 0;
+            bins vdvs300000  = binsof(cp_vm) intersect {1'b0} with (cp_vdvs3 == 5'b00000);
+		  			bins vs200000 = binsof(cp_vm) intersect {1'b0} with (cp_sumoprs2vs2 == 5'b00000);
 		 }
 	endgroup
 
+	`V_INSTR_CG_BEGIN(vlvta)
+     cp_vta : coverpoint instr.find_vta;
+		 cp_vl  : coverpoint instr.find_vl{
+       bins vl1 = {1};
+		 }
+		 cp_vlvta : cross cp_vl, cp_vta{
+		  option.cross_auto_bin_max = 0;
+       bins vl1vta1 = binsof (cp_vl) intersect {1} && binsof (cp_vta) intersect {1};
+			 bins vl1vta0 = binsof (cp_vl) intersect {1} && binsof (cp_vta) intersect {0};
+	   }
+	`CG_END
+	
+	`V_INSTR_CG_BEGIN(lmulvdvs3)
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+		cp_vdvs3 : coverpoint instr.vd;
+		cp_lmulvdvs3 : cross cp_lmul, cp_vdvs3;
+	`CG_END
+	
+	`V_INSTR_CG_BEGIN(lmulvs1)
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+		cp_vs1 : coverpoint instr.vs1;
+		cp_lmulvs1 : cross cp_lmul, cp_vs1;
+	`CG_END
+	
+	`V_INSTR_CG_BEGIN(lmulvs2)
+    cp_lmul : coverpoint instr.find_int_lmul{
+        bins m0125 = {1};
+        bins m025 = {2};
+        bins m05 = {3};
+        bins m1 = {4};
+        bins m2 = {5};
+        bins m4 = {6};
+        bins m8 = {7};
+    }
+		cp_vs2 : coverpoint instr.vs2;
+		cp_lmulvs2 : cross cp_lmul, cp_vs2;
+	`CG_END
+
 	function new(riscv_instr_gen_config cfg);
 		super.new(cfg);
+    if(riscv_instr_pkg::only_vec_cov == 2'b11 || riscv_instr_pkg::only_vec_cov == 2'b01)begin
     `CG_SELECTOR_BEGIN(RVV)
     //vsetvli_cg = new();
     //vsetvl_cg = new();
@@ -5936,7 +12032,12 @@ class riscv_instr_vector_cover_group extends riscv_instr_cover_group;
     vsetvli_cg = new();
     vsetvl_cg = new();
     vsetivli_cg = new();
+    vlvta_cg = new();
+    lmulvdvs3_cg = new();
+    lmulvs1_cg = new();
+    lmulvs2_cg = new();
     `uvm_info(",","riscv_instr_vector_cover_group", UVM_LOW)
+	end
 	endfunction
 	
 	

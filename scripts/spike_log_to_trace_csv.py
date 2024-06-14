@@ -27,28 +27,20 @@ sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
 from riscv_trace_csv import *
 from lib import *
 
-
 RD_RE = re.compile(r"(core\s+\d+:\s+)?(?P<pri>\d) 0x(?P<addr>[a-f0-9]+?) " "\((?P<bin>.*?)\).*? (?P<reg>[xf]\s*\d{1,2}?)\s+?0x(?P<val>[a-f0-9]+)")
+VRD_RE = re.compile(r"core\s+\d+:\s+(?P<pri>[0-3]) 0x[a-f0-9]+? \(0x[a-f0-9]+?\).*?c8_vstart 0x(?P<vstart>[a-f0-9]+).*?e(?P<sew>\d+).*?m(?P<lmul>f?\d+).*?l(?P<vl>\d+)")
 VREG_RE = re.compile(r"v ?(?P<vreg>\d+)\s+?0x(?P<vval>[a-f0-9]+)")    
+FRM_RE = re.compile(r"core\s+\d+:\s+(?P<pri>[0-3]) 0x[a-f0-9]+? \(0x[a-f0-9]+?\).*?c2_frm 0x(?P<frm>[a-f0-9]+)")
+VXRM_RE = re.compile(r"core\s+\d+:\s+(?P<pri>[0-3]) 0x[a-f0-9]+? \(0x[a-f0-9]+?\).*?c10_vxrm 0x(?P<vxrm>[a-f0-9]+)")
 VTYPE_RE = re.compile(r"core\s+\d+:\s+(?P<pri>[0-3]) 0x[a-f0-9]+? \(0x[a-f0-9]+?\).*?c3105_vtype 0x(?P<vtype>[a-f0-9]+)")
 CORE_RE = re.compile(r"core\s+\d+:\s+0x(?P<addr>[a-f0-9]+?) \(0x(?P<bin>.*?)\) (?P<instr>.*?)$")
 ADDR_RE = re.compile(r"(?P<rd>[a-z0-9]+?),(?P<imm>[\-0-9]+?)\((?P<rs1>[a-z0-9]+)\)")
 ILLE_RE = re.compile(r"trap_illegal_instruction")
 VLOAD_RD_RE = re.compile(r"core\s+\d+:\s+(?P<pri>[0-3]) 0x[a-f0-9]+? \(0x[a-f0-9]+?\).*?e(?P<sew>\d+).*?m(?P<lmul>f?\d+).*?l(?P<vl>\d+) (?P<regs>.*).*?c8_vstart 0x(?P<vstart>[a-f0-9]+) (?P<mems>.*)")
+VXSAT_RE = re.compile(r"core\s+\d+:\s+(?P<pri>[0-3]) 0x[a-f0-9]+? \(0x[a-f0-9]+?\).*?c9_vxsat 0x(?P<vxsat>[a-f0-9]+)")
+FFLAGS_RE = re.compile(r"core\s+\d+:\s+(?P<pri>[0-3]) 0x[a-f0-9]+? \(0x[a-f0-9]+?\).*?c1_fflags 0x(?P<fflags>[a-f0-9]+)")
 LOGGER = logging.getLogger()
 
-VRD_RE = re.compile(r"core\s+\d+:\s+(?P<pri>[0-3]) 0x[a-f0-9]+? \(0x[a-f0-9]+?\).*?c8_vstart 0x(?P<vstart>[a-f0-9]+).*?e(?P<sew>\d+).*?m(?P<lmul>f?\d+).*?l(?P<vl>\d+)")
-SEW_RE = re.compile(r".*?vsew=(?P<sew>\d+)")
-LMUL_RE = re.compile(r".*?vflmul=(?P<lmul>f?\d+)")
-VL_RE = re.compile(r".*?vl=(?P<vl>\d+)")
-FRM_RE = re.compile(r".*?frm=0x(?P<frm>[a-f0-9]+)")
-MA_RE = re.compile(r".*?ma=(?P<ma>\d+)")
-TA_RE = re.compile(r".*?ta=(?P<ta>\d+)")
-FFLAGS_RE = re.compile(r".*?fflags=0x(?P<fflags>[a-f0-9]+)")
-VXRM_RE = re.compile(r".*?vxrm=0x(?P<vxrm>[a-f0-9]+)")
-VXSAT_RE = re.compile(r".*?vxsat=0x(?P<vxsat>[a-f0-9]+)")
-VM_RE = re.compile(r".*?vm=(?P<vm>\d+)")
-VSTART_RE = re.compile(r".*?vstart=0x(?P<vstart>[a-f0-9]+)")
 
 def process_instr(trace):
     if trace.instr == "jal":
@@ -200,13 +192,13 @@ def read_spike_trace(path, full_trace):
                 else:
                     print("Line matches both non-vector-load and vector-load patterns. ")
                     sys.exit(1)
-                # lmul = vrd_match.group('lmul')
-                # if lmul[0] == 'f':
-                #     lmul = '1/' + lmul[1:]
-                # instr.csr.append('vstart' + ':' + vrd_match.group('vstart'))
-                # instr.csr.append('sew' + ':' + vrd_match.group('sew'))
-                # instr.csr.append('lmul' + ':' + vrd_match.group('lmul'))
-                # instr.csr.append('vl' + ':' + vrd_match.group('vl'))
+                lmul = vrd_match.group('lmul')
+                if lmul[0] == 'f':
+                    lmul = '1/' + lmul[1:]
+                instr.csr.append('vstart' + ':' + vrd_match.group('vstart'))
+                instr.csr.append('sew' + ':' + vrd_match.group('sew'))
+                instr.csr.append('lmul' + ':' + vrd_match.group('lmul'))
+                instr.csr.append('vl' + ':' + vrd_match.group('vl'))
 
                 instr.mode = vrd_match.group('pri')
                 for v in VREG_RE.finditer(line):
@@ -217,36 +209,6 @@ def read_spike_trace(path, full_trace):
                 # Update c2_frm
                 instr.csr.append('frm' + ':' + frm_match.group('frm'))
                                                                         
-            ta_match = TA_RE.match(line)
-            if ta_match:
-                # Update c2_frm
-                instr.csr.append('ta' + ':' + ta_match.group('ta'))
-            
-            vm_match = VM_RE.match(line)
-            if vm_match:
-                # Update c2_frm
-                instr.csr.append('vm' + ':' + vm_match.group('vm'))
-            
-            ma_match = MA_RE.match(line)
-            if ma_match:
-                # Update c2_frm
-                instr.csr.append('ma' + ':' + ma_match.group('ma'))
-            
-            sew_match = SEW_RE.match(line)
-            if sew_match:
-                # Update c2_frm
-                instr.csr.append('sew' + ':' + sew_match.group('sew'))
-            
-            lmul_match = LMUL_RE.match(line)
-            if lmul_match:
-                # Update c2_frm
-                instr.csr.append('lmul' + ':' + lmul_match.group('lmul'))
-            
-            vl_match = VL_RE.match(line)
-            if vl_match:
-                # Update c2_frm
-                instr.csr.append('vl' + ':' + vl_match.group('vl'))
-            
             vxrm_match = VXRM_RE.match(line)
             if vxrm_match:
                 # Update c10_vxrm
@@ -260,11 +222,6 @@ def read_spike_trace(path, full_trace):
             if vxsat_match:
                 # Update c9_vxsat
                 instr.csr.append('vxsat' + ':' + vxsat_match.group('vxsat'))
-            
-            vstart_match = VSTART_RE.match(line)
-            if vstart_match:
-                # Update c9_vxsat
-                instr.csr.append('vstart' + ':' + vstart_match.group('vstart'))
             
             fflags_match = FFLAGS_RE.match(line)
             if fflags_match:

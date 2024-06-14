@@ -852,6 +852,7 @@ class riscv_vector_instr extends riscv_floating_point_instr;
 
 			end
 		endcase
+          `uvm_info(`gfn, $sformatf("do update_vec_dst_regfinal %0b, %0s", rd_value,rd),UVM_LOW)
   endfunction : update_dst_regs
   
 	function void update_vec_csr(find_vcsr_t find_vcsr);
